@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #FAF7F2;      /* Warm paper canvas background */
+  --color-cream-light: #FCFAF7;
+  --color-cream: #F5EFE4;
+  --color-cream-dark: #E6DBC6;
+  
+  --color-peach-light: #FFF0EA;
+  --color-peach: #FCDFD7;
+  
+  --color-gold-artistic: #C5A059; /* Vintage Gold */
+  --color-gold-rose: #B76E79;
+  --color-gold-soft: #D4AF37;
+  
+  --color-charcoal: #262421;     /* Ink/charcoal black */
+  --color-charcoal-light: #54504A;
+  
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Outfit", Inter, sans-serif;
+  --font-script: "Caveat", cursive;
+  
+  --shadow-premium: 0 16px 48px -12px rgba(84, 80, 74, 0.1);
+  --shadow-polaroid: 0 8px 24px -6px rgba(0, 0, 0, 0.15), 0 2px 6px -1px rgba(0, 0, 0, 0.08);
+  --shadow-gold: 0 8px 30px -4px rgba(197, 160, 89, 0.15);
+}
+
+/* Custom 3D Utilities */
+@utility perspective-1000 {
+  perspective: 1200px;
+}
+
+@utility preserve-3d {
+  transform-style: preserve-3d;
+}
+
+@utility backface-hidden {
+  backface-visibility: hidden;
+}
+
+@utility transform-origin-left {
+  transform-origin: left center;
+}
+
+@utility canvas-texture {
+  position: relative;
+  background-color: #FAF7F2;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+}
+
+@utility polaroid-frame {
+  @apply bg-white p-3 pb-8 shadow-polaroid border border-cream-dark/40;
+}
+
+@utility gold-gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-gold-artistic via-gold-rose to-gold-artistic;
+}
+
+@utility glass-panel {
+  @apply bg-white/85 backdrop-blur-md border border-cream-dark/50;
+}
+
+body {
+  @apply bg-canvas text-charcoal font-sans antialiased overflow-x-hidden;
+  background-image: 
+    radial-gradient(rgba(197, 160, 89, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+h1, h2, h3, h4 {
+  @apply font-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E6DBC6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B76E79;
+}

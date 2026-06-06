@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: kalaakar_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      # Mount SQLite db and uploads folder to host to preserve persistent states
+      - ./database.sqlite:/usr/src/app/database.sqlite
+      - ./uploads:/usr/src/app/uploads
+    env_file:
+      - .env
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
