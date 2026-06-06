@@ -111,7 +111,8 @@ router.post('/auth/login', (req, res) => {
     return res.status(400).json({ message: 'Email and password are required' });
   }
 
-  db.get(`SELECT * FROM users WHERE email = ?`, [email], (err, user) => {
+  const cleanedEmail = email.trim().toLowerCase();
+  db.get(`SELECT * FROM users WHERE LOWER(email) = LOWER(?)`, [cleanedEmail], (err, user) => {
     if (err) {
       return res.status(500).json({ message: 'Database error' });
     }

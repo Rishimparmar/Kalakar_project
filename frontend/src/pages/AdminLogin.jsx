@@ -30,7 +30,7 @@ const AdminLogin = () => {
     }
 
     try {
-      await api.login(email.trim(), password.trim());
+      await api.login(email.trim().toLowerCase(), password.trim());
       navigate('/admin/dashboard');
     } catch (err) {
       setErrorMsg(err.response?.data?.message || 'Invalid administrator credentials.');
@@ -70,6 +70,9 @@ const AdminLogin = () => {
               placeholder="admin@kalaakar.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoCapitalize="none"
+              autoComplete="email"
+              autoCorrect="off"
               className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose text-charcoal"
             />
           </div>

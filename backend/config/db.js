@@ -154,6 +154,27 @@ if (dbConnectionString) {
         await pool.query(sql);
       }
       console.log('PostgreSQL Tables initialized successfully.');
+
+      // Seed Default Admin User in PostgreSQL/Supabase if it doesn't exist
+      try {
+        const adminEmail = 'admin@kalaakar.com';
+        const res = await pool.query('SELECT id FROM users WHERE email = $1', [adminEmail]);
+        if (res.rows.length === 0) {
+          const hash = bcrypt.hashSync('admin123', 10);
+          const userInsert = await pool.query(
+            "INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING id",
+            ['Kalaakar Admin', adminEmail, hash, 'admin']
+          );
+          const userId = userInsert.rows[0].id;
+          await pool.query(
+            "INSERT INTO admins (user_id, permissions) VALUES ($1, $2) ON CONFLICT (user_id) DO NOTHING",
+            [userId, 'all']
+          );
+          console.log('Seeded default admin in PostgreSQL (admin@kalaakar.com / admin123)');
+        }
+      } catch (seedErr) {
+        console.error('Error seeding default admin in PostgreSQL:', seedErr.message);
+      }
     },
 
     // Translate SQLite style query placeholders (e.g. "?") to PostgreSQL style (e.g. "$1", "$2")
