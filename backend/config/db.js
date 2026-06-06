@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 
-const dbConnectionString = process.env.SUPABASE_DB_URL;
+const dbConnectionString = process.env.SUPABASE_DB_URL ? process.env.SUPABASE_DB_URL.replace(/^"|"$/g, '').trim() : null;
 
 let db;
 

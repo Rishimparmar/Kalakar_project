@@ -29,15 +29,24 @@ const upload = multer({ storage: storage });
 async function handleFileUpload(file) {
   if (!file) return null;
   
-  const supabaseKey = process.env.SUPABASE_KEY;
-  const dbUrl = process.env.SUPABASE_DB_URL;
+  const supabaseKey = process.env.SUPABASE_KEY ? process.env.SUPABASE_KEY.replace(/^"|"$/g, '').trim() : null;
+  const dbUrl = process.env.SUPABASE_DB_URL ? process.env.SUPABASE_DB_URL.replace(/^"|"$/g, '').trim() : null;
   const localPath = `/uploads/${file.filename}`;
   
   if (supabaseKey && dbUrl) {
     try {
-      const match = dbUrl.match(/@db\.(.+?)\.supabase\.co/);
-      if (match) {
-        const projectId = match[1];
+      let projectId = '';
+      const matchDirect = dbUrl.match(/@db\.(.+?)\.supabase\.co/);
+      if (matchDirect) {
+        projectId = matchDirect[1];
+      } else {
+        const matchPooler = dbUrl.match(/postgres\.(.+?):/);
+        if (matchPooler) {
+          projectId = matchPooler[1];
+        }
+      }
+      
+      if (projectId) {
         const bucketName = 'kalakar-uploads';
         const filename = `${Date.now()}-${file.filename}`;
         
