@@ -228,7 +228,7 @@ const CustomOrder = () => {
               Order Another Artwork
             </button>
             <a
-              href={`https://wa.me/+919876543210?text=Hello%20Kalaakar!%20I%20just%20placed%20order%20${submitSuccess.number}.%20Can%20we%20discuss%20design%20details?`}
+              href={`https://wa.me/916355303793?text=Hello%20Kalaakar!%20I%20just%20placed%20order%20${submitSuccess.number}.%20Can%20we%20discuss%20design%20details?`}
               target="_blank"
               rel="noopener noreferrer"
               className="border border-cream-dark/80 text-charcoal hover:bg-canvas/50 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all"
@@ -413,7 +413,7 @@ const CustomOrder = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="e.g. +91 98765 43210"
+                    placeholder="e.g. +91 63553 03793"
                     className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose"
                   />
                 </div>
@@ -500,7 +500,7 @@ const CustomOrder = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="e.g. +91 98765 43210"
+                    placeholder="e.g. +91 63553 03793"
                     className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose"
                   />
                 </div>

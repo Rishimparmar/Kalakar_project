@@ -97,7 +97,7 @@ const Contact = () => {
             <div>
               <h4 className="font-serif font-bold text-sm text-charcoal">WhatsApp consultation</h4>
               <p className="text-xs text-charcoal-light font-light mt-1">Consult with our artist directly.</p>
-              <a href="https://wa.me/+919876543210" target="_blank" rel="noopener noreferrer" className="text-xs text-gold-rose font-semibold block mt-1.5 hover:underline">+91 98765 43210</a>
+              <a href="https://wa.me/916355303793" target="_blank" rel="noopener noreferrer" className="text-xs text-gold-rose font-semibold block mt-1.5 hover:underline">+91 63553 03793</a>
             </div>
           </div>
 
@@ -167,7 +167,7 @@ const Contact = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="e.g. +91 98765 43210"
+                    placeholder="e.g. +91 63553 03793"
                     className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose"
                   />
                 </div>

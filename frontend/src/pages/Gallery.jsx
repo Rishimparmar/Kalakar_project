@@ -30,47 +30,56 @@ const Gallery = () => {
   const fallbackItems = [
     {
       id: 'f1',
+      title: 'Eternal Bond Wedding Sketch',
+      category_name: 'Monochrome Magic',
+      image_url: '/couple_sketch.jpg',
+      dimensions: 'A3 Size Frame',
+      medium: 'Charcoal & Graphite on Archival paper',
+      year: '2026'
+    },
+    {
+      id: 'f2',
+      title: 'Everlasting Paper Rose Bouquet',
+      category_name: 'Forever Blooms',
+      image_url: '/paper_roses.jpg',
+      dimensions: '12" Bouquet Height',
+      medium: 'Premium Matte Craft Cardstock',
+      year: '2026'
+    },
+    {
+      id: 'f3',
+      title: 'Handcrafted Multi-Layer Explosion Box',
+      category_name: 'Treasures of Memories',
+      image_url: '/explosion_box.jpg',
+      dimensions: '10" x 10" (Opened)',
+      medium: 'Craft Cardstock & Ribbon accents',
+      year: '2026'
+    },
+    {
+      id: 'f4',
+      title: 'Lord Buddha Lippan Art Painting',
+      category_name: 'Crafted for Your Corner',
+      image_url: '/buddha_painting.jpg',
+      dimensions: '12" Round Panel',
+      medium: 'Acrylics, Mirror Tiles on MDF Board',
+      year: '2026'
+    },
+    {
+      id: 'f5',
       title: 'Hand-drawn Indian Couple Portrait',
-      category_name: 'Sketch Art',
+      category_name: 'Memories in Colors',
       image_url: '/parents_portrait.png',
       dimensions: 'A3 Size Frame',
       medium: 'Colored Pencil on Archival Drawing Sheet',
       year: '2022'
     },
     {
-      id: 'f2',
-      title: 'Customized Name Ring Holder',
-      category_name: 'Handmade Gifts',
+      id: 'f6',
+      title: 'Tejas & Bhargavi Name Ring Holder',
+      category_name: 'The Forever Nest',
       image_url: '/ring_holder.png',
       dimensions: '8" Round velvet base',
       medium: 'Glitter Loop Outlines & Paper Florals',
-      year: '2021'
-    },
-    {
-      id: 'f3',
-      title: 'Krishna Mandala Bookmark',
-      category_name: 'Sketch Art',
-      image_url: '/krishna_bookmark.png',
-      dimensions: '3" x 9" Bookmark Strip',
-      medium: 'Black Ink Silhouette & Concentric Patterns',
-      year: '2020'
-    },
-    {
-      id: 'f4',
-      title: 'Vibrant Paper Lotus Decor',
-      category_name: 'Paper Crafts',
-      image_url: '/paper_lotus.png',
-      dimensions: '12" x 12" base',
-      medium: 'Handfolded Premium Craft Cardstock',
-      year: '2025'
-    },
-    {
-      id: 'f5',
-      title: 'Intricate Rabbit Mandala Sketch',
-      category_name: 'Sketch Art',
-      image_url: '/mandala_rabbit.png',
-      dimensions: 'A4 size paper',
-      medium: 'Fineliner ink and orange graphite shadings',
       year: '2021'
     }
   ];
@@ -78,11 +87,23 @@ const Gallery = () => {
   // Merge backend gallery items with fallback placeholders
   const displayItems = galleryItems.length > 0 ? galleryItems : fallbackItems;
 
+  const fallbackCategories = [
+    { name: 'Memories in Colors' },
+    { name: 'Monochrome Magic' },
+    { name: 'Crafted for Your Corner' },
+    { name: 'Blooming Memories Bouquet' },
+    { name: 'Treasures of Memories' },
+    { name: 'Walls That Speak' },
+    { name: 'Forever Blooms' },
+    { name: 'The Forever Nest' }
+  ];
+
+  const displayCategories = categories.length > 0 ? categories : fallbackCategories;
+
   const filteredItems = displayItems.filter((item) => {
     const matchesCategory =
       selectedCategory === 'All' ||
-      item.category_name.toLowerCase().includes(selectedCategory.toLowerCase()) ||
-      (item.category_name === 'Handmade Gifts' && selectedCategory === 'Gifts');
+      item.category_name.toLowerCase() === selectedCategory.toLowerCase();
       
     const matchesSearch =
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -108,7 +129,7 @@ const Gallery = () => {
       <div className="border-t border-cream-dark/50 pt-16 mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         {/* Category Tabs */}
         <div className="flex flex-wrap gap-2.5">
-          {['All', 'Sketch Art', 'Handmade Gifts', 'Paper Crafts', 'Cotton Crafts'].map((cat) => (
+          {['All', ...displayCategories.map(c => c.name)].map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
@@ -244,7 +265,7 @@ const Gallery = () => {
 
               <div className="mt-8 pt-6 border-t border-cream-dark/40 flex flex-col space-y-3">
                 <a
-                  href={`https://wa.me/+919876543210?text=Hello%20Kalaakar!%20I'm%20interested%20in%20commissioning%20something%20similar%20to%20"${encodeURIComponent(selectedArtwork.title)}".`}
+                  href={`https://wa.me/916355303793?text=Hello%20Kalaakar!%20I'm%20interested%20in%20commissioning%20something%20similar%20to%20"${encodeURIComponent(selectedArtwork.title)}".`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full text-center bg-gradient-to-r from-gold-rose to-gold-soft text-white font-medium py-3 rounded-full shadow-premium uppercase tracking-wider text-xs"

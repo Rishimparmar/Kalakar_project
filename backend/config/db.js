@@ -421,7 +421,7 @@ db.serialize(() => {
   const settings = [
     { key: 'site_name', value: 'Kalaakar' },
     { key: 'site_tagline', value: 'Turning Memories Into Art' },
-    { key: 'contact_whatsapp', value: '+919876543210' },
+    { key: 'contact_whatsapp', value: '+916355303793' },
     { key: 'contact_instagram', value: '@kalaakar.art' },
     { key: 'contact_email', value: 'hello@kalaakar.com' },
     { key: 'contact_location', value: 'Mumbai, India' }
@@ -433,10 +433,14 @@ db.serialize(() => {
 
   // Seed Default Categories
   const defaultCategories = [
-    ['Sketch Art', 'sketch-art', 'Custom pencil portraits, charcoal sketch, couple portraits.'],
-    ['Handmade Gifts', 'handmade-gifts', 'Handcrafted gift boxes, scrapbook items, customized cards.'],
-    ['Paper Crafts', 'paper-crafts', 'Quilling art, paper flowers, 3D paper sculptures.'],
-    ['Cotton Crafts', 'cotton-crafts', 'Macrame wall hangings, cotton decorations, plush craft.']
+    ['Memories in Colors', 'memories-in-colors', 'Turn your favorite moments into vibrant masterpieces.'],
+    ['Monochrome Magic', 'monochrome-magic', 'Classic sketches that never go out of style.'],
+    ['Crafted for Your Corner', 'crafted-for-your-corner', 'Decor that tells your story.'],
+    ['Blooming Memories Bouquet', 'blooming-memories-bouquet', 'Where photographs blossom into unforgettable gifts.'],
+    ['Treasures of Memories', 'treasures-of-memories', 'Open the box, relive the moments.'],
+    ['Walls That Speak', 'walls-that-speak', 'Beautiful creations that bring life to every wall.'],
+    ['Forever Blooms', 'forever-blooms', 'Flowers that never fade, memories that never end.'],
+    ['The Forever Nest', 'the-forever-nest', 'A beautiful home for your precious promise.']
   ];
 
   defaultCategories.forEach(cat => {
@@ -444,27 +448,157 @@ db.serialize(() => {
   });
 
   // Seed Default Products/Pricing
-  db.all(`SELECT id FROM categories`, [], (err, rows) => {
+  db.all(`SELECT id, name FROM categories`, [], (err, rows) => {
     if (err || !rows.length) return;
     
-    const sketchId = rows[0].id;
-    const giftsId = rows[1].id;
+    const categoryMap = {};
+    rows.forEach(r => { categoryMap[r.name] = r.id; });
 
-    db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
-      (?, 'Single Face Pencil Sketch (A4)', 'Handmade pencil portrait of single face on professional A4 artist paper', 1500.00),
-      (?, 'Couple Pencil Sketch (A4)', 'Handmade couple pencil portrait on professional A4 artist paper', 2500.00),
-      (?, 'Single Face Pencil Sketch (A3)', 'Handmade pencil portrait of single face on professional A3 artist paper', 2800.00),
-      (?, 'Couple Pencil Sketch (A3)', 'Handmade couple pencil portrait on professional A3 artist paper', 4200.00),
-      (?, 'Family Portrait Sketch (A3)', 'Family sketch with multiple faces on A3 artist paper', 5500.00)`, 
-      [sketchId, sketchId, sketchId, sketchId, sketchId]
-    );
+    const memoriesInColorsId = categoryMap['Memories in Colors'];
+    const monochromeMagicId = categoryMap['Monochrome Magic'];
+    const foreverNestId = categoryMap['The Forever Nest'];
+    const treasuresOfMemoriesId = categoryMap['Treasures of Memories'];
 
-    db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
-      (?, 'Engagement Ring Holder (Wooden)', 'Custom resin and wood ring holder decorated with dried flowers', 1800.00),
-      (?, 'Paper Craft Explosion Box', 'Handcrafted multi-layered exploding gift box with photo slots', 1200.00),
-      (?, 'Personalized Glass Frame Decor', 'Dried flower glass frame with customized text overlay', 2200.00)`,
-      [giftsId, giftsId, giftsId]
-    );
+    if (memoriesInColorsId) {
+      db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
+        (?, 'Single Face Color Sketch (A4)', 'Handmade colored pencil portrait of single face on professional A4 artist paper', 1800.00),
+        (?, 'Couple Color Sketch (A4)', 'Handmade couple colored pencil portrait on professional A4 artist paper', 2800.00),
+        (?, 'Couple Color Sketch (A3)', 'Handmade couple colored pencil portrait on professional A3 artist paper', 4500.00)`,
+        [memoriesInColorsId, memoriesInColorsId, memoriesInColorsId]
+      );
+    }
+
+    if (monochromeMagicId) {
+      db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
+        (?, 'Single Face Pencil Sketch (A4)', 'Handmade pencil portrait of single face on professional A4 artist paper', 1500.00),
+        (?, 'Couple Pencil Sketch (A4)', 'Handmade couple pencil portrait on professional A4 artist paper', 2500.00),
+        (?, 'Couple Pencil Sketch (A3)', 'Handmade couple pencil portrait on professional A3 artist paper', 4200.00)`,
+        [monochromeMagicId, monochromeMagicId, monochromeMagicId]
+      );
+    }
+
+    if (foreverNestId) {
+      db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
+        (?, 'Engagement Ring Holder (Wooden)', 'Custom resin and wood ring holder decorated with dried flowers', 1800.00)`,
+        [foreverNestId]
+      );
+    }
+
+    if (treasuresOfMemoriesId) {
+      db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
+        (?, 'Paper Craft Explosion Box', 'Handcrafted multi-layered exploding gift box with photo slots', 1200.00)`,
+        [treasuresOfMemoriesId]
+      );
+    }
+  });
+
+  // Seed Default Gallery Items
+  const galleryItems = [
+    {
+      category_name: 'Monochrome Magic',
+      title: 'Eternal Bond Wedding Sketch',
+      description: 'An exquisite hand-drawn graphite and charcoal wedding couple portrait capturing the finest details of bridal jewelry and emotions.',
+      image_url: '/couple_sketch.jpg',
+      dimensions: 'A3 Size Frame',
+      medium: 'Charcoal & Graphite on Archival paper',
+      year: '2026',
+      is_featured: 1
+    },
+    {
+      category_name: 'Forever Blooms',
+      title: 'Everlasting Paper Rose Bouquet',
+      description: 'Delicately hand-folded red and pink cardstock roses, meticulously styled into a luxury bouquet that lasts forever.',
+      image_url: '/paper_roses.jpg',
+      dimensions: '12" Bouquet Height',
+      medium: 'Premium Matte Craft Cardstock',
+      year: '2026',
+      is_featured: 1
+    },
+    {
+      category_name: 'Treasures of Memories',
+      title: 'Handcrafted Multi-Layer Explosion Box',
+      description: 'A premium handcrafted exploding gift box featuring layered photo panels, custom pocket folds, and decorative top embellishments.',
+      image_url: '/explosion_box.jpg',
+      dimensions: '10" x 10" (Opened)',
+      medium: 'Craft Cardstock & Ribbon accents',
+      year: '2026',
+      is_featured: 1
+    },
+    {
+      category_name: 'Crafted for Your Corner',
+      title: 'Lord Buddha Lippan Art Painting',
+      description: 'Hand-painted Lord Buddha circular wooden panel set in a vibrant lotus background and detailed with concentric mirror tiles (Lippan work).',
+      image_url: '/buddha_painting.jpg',
+      dimensions: '12" Round Panel',
+      medium: 'Acrylics, Mirror Tiles on MDF Board',
+      year: '2026',
+      is_featured: 1
+    },
+    {
+      category_name: 'Memories in Colors',
+      title: 'Hand-drawn Indian Couple Portrait',
+      description: 'A detailed colored pencil commission capturing life-like parent smiles.',
+      image_url: '/parents_portrait.png',
+      dimensions: 'A3 Size Frame',
+      medium: 'Colored Pencil on Archival Drawing Sheet',
+      year: '2022',
+      is_featured: 0
+    },
+    {
+      category_name: 'The Forever Nest',
+      title: 'Tejas & Bhargavi Name Ring Holder',
+      description: 'Custom ring holder decorated with dried flowers and custom lettering.',
+      image_url: '/ring_holder.png',
+      dimensions: '8" Round velvet base',
+      medium: 'Glitter Loop Outlines & Paper Florals',
+      year: '2021',
+      is_featured: 0
+    },
+    {
+      category_name: 'Crafted for Your Corner',
+      title: 'Krishna Mandala Bookmark',
+      description: 'Lord Krishna silhouette drawing bordered with fine concentric mandalas.',
+      image_url: '/krishna_bookmark.png',
+      dimensions: '3" x 9" Bookmark Strip',
+      medium: 'Black Ink Silhouette & Concentric Patterns',
+      year: '2020',
+      is_featured: 0
+    },
+    {
+      category_name: 'Crafted for Your Corner',
+      title: 'Vibrant Paper Lotus Decor',
+      description: 'Handfolded pink and teal lotuses designed to make home celebrations bloom.',
+      image_url: '/paper_lotus.png',
+      dimensions: '12" x 12" base',
+      medium: 'Handfolded Premium Craft Cardstock',
+      year: '2025',
+      is_featured: 0
+    },
+    {
+      category_name: 'Monochrome Magic',
+      title: 'Intricate Rabbit Mandala Sketch',
+      description: 'A detailed rabbit drawing layered with mandala ink textures.',
+      image_url: '/mandala_rabbit.png',
+      dimensions: 'A4 size paper',
+      medium: 'Fineliner ink and orange graphite shadings',
+      year: '2021',
+      is_featured: 0
+    }
+  ];
+
+  galleryItems.forEach(item => {
+    db.get(`SELECT id FROM categories WHERE name = ?`, [item.category_name], (err, catRow) => {
+      if (catRow) {
+        db.get(`SELECT id FROM gallery WHERE image_url = ?`, [item.image_url], (err, galRow) => {
+          if (!galRow) {
+            db.run(`INSERT INTO gallery (category_id, title, description, image_url, dimensions, medium, year, is_featured) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, 
+              [catRow.id, item.title, item.description, item.image_url, item.dimensions, item.medium, item.year, item.is_featured]
+            );
+          }
+        });
+      }
+    });
   });
 
   // Seed Admin user

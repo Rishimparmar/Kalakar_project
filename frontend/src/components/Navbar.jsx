@@ -73,7 +73,14 @@ const Navbar = () => {
             Track Order
           </Link>
 
-          {isAdmin && (
+          {!isAdmin ? (
+            <Link
+              to="/admin/login"
+              className="text-xs uppercase tracking-wider text-charcoal-light hover:text-gold-artistic hover:border-gold-artistic/60 px-3 py-1.5 border border-cream-dark/60 rounded transition-all font-semibold"
+            >
+              Login
+            </Link>
+          ) : (
             <Link
               to="/admin/dashboard"
               className="text-xs uppercase tracking-wider text-gold-soft font-semibold border border-gold-soft/30 hover:border-gold-soft px-3 py-1.5 rounded flex items-center gap-1 transition-all hover:bg-gold-soft/5"
@@ -84,7 +91,7 @@ const Navbar = () => {
 
           <Link
             to="/custom-order"
-            className="bg-gradient-to-r from-gold-rose to-gold-soft text-white text-sm font-medium px-5 py-2.5 rounded-full shadow-premium hover:shadow-gold hover:scale-[1.02] transition-all"
+            className="bg-gradient-to-r from-gold-rose to-gold-soft text-white text-sm font-medium px-5 py-2.5 rounded-full shadow-premium hover:shadow-gold hover:scale-[1.02] transition-all border border-white/20 dark:border-gold-soft/50 dark:shadow-[0_0_15px_rgba(212,175,55,0.3)]"
           >
             Book Custom Art
           </Link>
@@ -125,7 +132,14 @@ const Navbar = () => {
               Track Custom Order
             </Link>
 
-            {isAdmin && (
+            {!isAdmin ? (
+              <Link
+                to="/admin/login"
+                className="text-lg font-serif border-b border-cream-dark/30 pb-2 text-charcoal"
+              >
+                Artist Login
+              </Link>
+            ) : (
               <Link
                 to="/admin/dashboard"
                 className="text-lg font-serif border-b border-cream-dark/30 pb-2 text-gold-soft"
@@ -138,7 +152,7 @@ const Navbar = () => {
           <div className="mt-8">
             <Link
               to="/custom-order"
-              className="w-full text-center block bg-gradient-to-r from-gold-rose to-gold-soft text-white font-medium py-3 rounded-full shadow-premium"
+              className="w-full text-center block bg-gradient-to-r from-gold-rose to-gold-soft text-white font-medium py-3 rounded-full shadow-premium border border-white/20 dark:border-gold-soft/50 dark:shadow-[0_0_15px_rgba(212,175,55,0.3)]"
             >
               Book Custom Art / Gift
             </Link>

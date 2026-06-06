@@ -66,7 +66,7 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Link
                 to="/custom-order"
-                className="bg-gradient-to-r from-gold-rose to-gold-artistic text-white font-medium px-8 py-3.5 rounded-full shadow-premium hover:shadow-gold hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+                className="bg-gradient-to-r from-gold-rose to-gold-artistic text-white font-medium px-8 py-3.5 rounded-full shadow-premium hover:shadow-gold hover:scale-[1.02] transition-all flex items-center justify-center gap-2 border border-white/20 dark:border-gold-soft/50 dark:shadow-[0_0_20px_rgba(212,175,55,0.3)]"
               >
                 Book Custom Art <ArrowRight size={16} />
               </Link>
@@ -100,6 +100,113 @@ const Home = () => {
             <Sketchbook />
           </div>
 
+        </div>
+      </section>
+
+      {/* SIGNATURE ATELIER MASTERPIECES */}
+      <section className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative overflow-hidden">
+        {/* Background glow effects */}
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gold-rose/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 bg-gold-artistic/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="text-center max-w-3xl mx-auto mb-20 relative z-10">
+          <div className="inline-flex items-center gap-1.5 bg-gold-rose/10 text-gold-rose px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-4">
+            <Sparkles size={12} className="animate-pulse" /> Signature Collection
+          </div>
+          <h2 className="font-serif text-3xl md:text-5xl font-bold text-charcoal tracking-tight leading-tight">
+            Featured Atelier Masterpieces
+          </h2>
+          <p className="text-sm md:text-base text-charcoal-light font-light mt-4 max-w-xl mx-auto leading-relaxed">
+            Discover our newly added, hand-curated custom commissions. Meticulously detailed and made with raw artistic passion.
+          </p>
+        </div>
+
+        {/* Extraordinary Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+          {[
+            {
+              title: "Eternal Bond Wedding Sketch",
+              category: "Monochrome Magic",
+              tagline: "Classic sketches that never go out of style.",
+              image: "/couple_sketch.jpg",
+              medium: "Charcoal & Pencil",
+              price: "₹2,500"
+            },
+            {
+              title: "Everlasting Paper Rose Bouquet",
+              category: "Forever Blooms",
+              tagline: "Flowers that never fade, memories that never end.",
+              image: "/paper_roses.jpg",
+              medium: "Craft Cardstock",
+              price: "₹1,100"
+            },
+            {
+              title: "Treasures of Memories Explosion Box",
+              category: "Treasures of Memories",
+              tagline: "Open the box, relive the moments.",
+              image: "/explosion_box.jpg",
+              medium: "Cardstock & Folds",
+              price: "₹1,200"
+            },
+            {
+              title: "Lord Buddha Lippan Painting",
+              category: "Crafted for Your Corner",
+              tagline: "Decor that tells your story.",
+              image: "/buddha_painting.jpg",
+              medium: "Acrylics & Mirror Work",
+              price: "₹1,900"
+            }
+          ].map((item, idx) => (
+            <div 
+              key={idx}
+              className="group relative bg-white/70 backdrop-blur-md rounded-3xl overflow-hidden border border-cream-dark/30 shadow-premium hover:shadow-gold-rose/20 hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col justify-between"
+            >
+              {/* Image Container with extraordinary overlay zoom */}
+              <div className="h-80 w-full overflow-hidden bg-cream-light relative">
+                <img 
+                  src={item.image} 
+                  alt={item.title} 
+                  className="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 ease-out"
+                />
+                
+                {/* Modern subtle border gradient accent inside image */}
+                <div className="absolute inset-0 border-[8px] border-transparent group-hover:border-white/10 transition-all duration-500 rounded-3xl pointer-events-none"></div>
+
+                {/* Glassmorphic category floating tag */}
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-gold-rose font-bold text-[9px] uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-md border border-white/20">
+                  {item.category}
+                </div>
+                
+                {/* Soft gradient bottom overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                  <span className="text-[10px] text-gold-rose font-bold uppercase tracking-wider block mb-1">Medium & Details</span>
+                  <p className="text-xs text-white/90 font-light">{item.medium} • {item.price}</p>
+                </div>
+              </div>
+
+              {/* Card Details */}
+              <div className="p-6 flex-grow flex flex-col justify-between">
+                <div>
+                  <h3 className="font-serif text-lg font-bold text-charcoal group-hover:text-gold-rose transition-colors duration-300 line-clamp-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-[11px] text-charcoal-light font-light italic mt-2 leading-relaxed">
+                    "{item.tagline}"
+                  </p>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-cream-dark/40 flex justify-between items-center">
+                  <span className="text-[10px] uppercase tracking-wider text-charcoal-light/60 font-semibold">Limited Commission</span>
+                  <Link 
+                    to={`/gallery?search=${encodeURIComponent(item.category)}`}
+                    className="text-[10px] text-gold-soft hover:text-gold-rose font-bold uppercase tracking-widest flex items-center gap-1 transition-colors"
+                  >
+                    View Gallery <ArrowRight size={10} />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -164,13 +271,60 @@ const Home = () => {
               Request Custom Quote
             </Link>
             <a
-              href="https://wa.me/+919876543210"
+              href="https://wa.me/916355303793"
               target="_blank"
               rel="noopener noreferrer"
               className="border border-white/20 text-white hover:bg-white/5 font-medium px-8 py-3.5 rounded-full flex items-center justify-center gap-2 transition-all"
             >
               <Phone size={16} /> Consult on WhatsApp
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ARTIST SPOTLIGHT */}
+      <section className="bg-cream/15 py-24 border-t border-cream-dark/30">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left: Image Container */}
+          <div className="lg:col-span-5 relative group">
+            <div className="w-full h-[400px] bg-white p-3 pb-8 shadow-polaroid border border-cream-dark/40 rounded-2xl overflow-hidden hover:rotate-1 hover:scale-[1.01] transition-all duration-500 bg-white">
+              <img 
+                src="/couple_sketch.jpg" 
+                alt="Mahek Thakor pencil sketch" 
+                className="w-full h-[88%] object-cover rounded-lg"
+              />
+              <div className="text-center pt-3 font-script text-xl text-gold-rose font-bold">
+                Hand-drawn Sketch by Mahek Thakor
+              </div>
+            </div>
+            <div className="absolute -bottom-4 -left-4 bg-charcoal text-white px-4 py-2 rounded-lg text-[10px] uppercase tracking-wider font-semibold shadow-lg">
+              Artist Signed Commission
+            </div>
+          </div>
+
+          {/* Right: Narrative Story */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="inline-flex items-center gap-1.5 bg-gold-rose/10 text-gold-rose px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase">
+              <Heart size={12} className="fill-gold-rose" /> Father & Daughter Legacy
+            </div>
+            <h2 className="font-serif text-3xl md:text-5xl font-bold text-charcoal tracking-tight leading-tight">
+              The Soul Behind the Art: <br/>
+              <span className="gold-gradient-text">Mahek Thakor</span>
+            </h2>
+            <p className="text-sm md:text-base text-charcoal-light font-light leading-relaxed">
+              Kalaakar is more than an art studio; it is a testament to sheer dedication, independent strength, and a father's belief. Founded by **Mahek Thakor**, a young artist who poured her heart and hard work into sketching her own destiny, the studio was built on a foundation of independent dreams.
+            </p>
+            <p className="text-sm md:text-base text-charcoal-light font-light leading-relaxed">
+              Empowered by her father—her biggest support and guide—Mahek turned her raw passion into a thriving creative enterprise. His encouragement allowed her to carve her own path, build her own life, and start this business on her own strength. This beautiful legacy of love, support, and tireless artistry is woven into every custom piece she touches.
+            </p>
+            <div className="pt-2">
+              <Link 
+                to="/about"
+                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold-soft hover:text-gold-rose transition-colors"
+              >
+                Read Our Story <ArrowRight size={12} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

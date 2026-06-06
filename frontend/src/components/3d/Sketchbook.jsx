@@ -9,39 +9,39 @@ const journalPages = [
     note: 'Turning Memories Into Art'
   },
   {
-    title: 'Indian Couple Portrait',
-    category: 'Handmade Colored Sketch',
-    image: '/parents_portrait.png',
+    title: 'Eternal Bond Wedding Sketch',
+    category: 'Monochrome Magic',
+    image: '/couple_sketch.jpg',
     isCover: false,
-    note: 'A detailed colored pencil commission capturing life-like parent smiles.'
+    note: 'A detailed graphite and charcoal wedding sketch capturing delicate details.'
   },
   {
-    title: 'Krishna Mandala Bookmark',
-    category: 'Ink & Silhouette Art',
-    image: '/krishna_bookmark.png',
+    title: 'Everlasting Paper Rose Bouquet',
+    category: 'Forever Blooms',
+    image: '/paper_roses.jpg',
     isCover: false,
-    note: 'Lord Krishna silhouette bordered with fine black-and-white patterns.'
+    note: 'Delicate hand-folded matte cardstock roses that hold their beauty forever.'
   },
   {
-    title: 'Customized Ring Holder',
-    category: 'Wedding Keepsakes',
+    title: 'Handcrafted Explosion Box',
+    category: 'Treasures of Memories',
+    image: '/explosion_box.jpg',
+    isCover: false,
+    note: 'An opening box of multi-layered memories, cardstock folds, and pockets.'
+  },
+  {
+    title: 'Lord Buddha Lippan Art Painting',
+    category: 'Crafted for Your Corner',
+    image: '/buddha_painting.jpg',
+    isCover: false,
+    note: 'Circular wooden panel hand-painted with acrylics and concentric mirror work.'
+  },
+  {
+    title: 'Tejas & Bhargavi Ring Holder',
+    category: 'The Forever Nest',
     image: '/ring_holder.png',
     isCover: false,
-    note: 'Names Tejas & Bhargavi inside gold/silver rings on a plush green velvet base.'
-  },
-  {
-    title: 'Intricate Rabbit Mandala',
-    category: 'Graphite & Pencil Art',
-    image: '/mandala_rabbit.png',
-    isCover: false,
-    note: 'A detailed hand-drawn rabbit layered with warm orange & brown shades.'
-  },
-  {
-    title: 'Lotus Paper Crafts',
-    category: 'Event Decorations',
-    image: '/paper_lotus.png',
-    isCover: false,
-    note: 'Handfolded pink and teal lotuses designed to make home celebrations bloom.'
+    note: 'Engagement name-hoops on a velvet pad bordered with elegant dried florals.'
   }
 ];
 

@@ -41,33 +41,38 @@ const About = () => {
         </div>
 
         <div className="lg:col-span-7 flex flex-col space-y-6">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold text-charcoal">
-            Every Detail, Handcrafted
-          </h2>
+          <div>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-gold-rose font-bold block mb-1">The Artist Behind the Canvas</span>
+            <h2 className="font-serif text-2xl md:text-4xl font-bold text-charcoal">
+              Mahek Thakor
+            </h2>
+          </div>
+          
           <p className="text-sm md:text-base text-charcoal-light font-light leading-relaxed">
-            Our name, <strong>Kalaakar</strong> (meaning "Artist"), reflects our core philosophy. We specialize in looking at your digital photographs—blurry, old, or brand new—and reimagining them on canvas, inside wooden blocks, or within glass boxes.
+            Kalaakar is the realization of a dream built on sheer dedication and family bond. Founded by **Mahek Thakor**, a young artist who poured her heart and hard work into sketching her own destiny, Kalaakar represents a journey of tireless hard work and raw passion.
           </p>
+          
           <p className="text-sm md:text-base text-charcoal-light font-light leading-relaxed">
-            Whether it is capturing the fine lines of a parent's face, preserving wedding roses in a resin engagement ring holder, or weaving macrame wall hangings for home decor, we treat every commission as a museum exhibition.
+            Behind Mahek's success stands her father—her ultimate pillar of strength. His unwavering support and belief empowered Mahek to build her own life and start her own business on her own strength. This father-daughter bond and legacy of independent craftsmanship are infused into every sketch, flower bouquet, and customized box she creates.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-cream-dark/40">
             <div className="flex items-start space-x-3">
               <div className="bg-gold-rose/10 p-2 rounded-lg text-gold-rose">
                 <Heart size={18} />
               </div>
               <div>
-                <h4 className="font-serif font-bold text-sm">Emotional Resonance</h4>
-                <p className="text-xs text-charcoal-light font-light mt-1">We frame feelings, not just images. We capture smiles, bonds, and promises.</p>
+                <h4 className="font-serif font-bold text-sm">Father's Support & Belief</h4>
+                <p className="text-xs text-charcoal-light font-light mt-1">Empowered by parental support to build her own life and start a creative studio.</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
               <div className="bg-gold-soft/10 p-2 rounded-lg text-gold-soft">
-                <Shield size={18} />
+                <Sparkles size={18} />
               </div>
               <div>
-                <h4 className="font-serif font-bold text-sm">Museum-Grade Materials</h4>
-                <p className="text-xs text-charcoal-light font-light mt-1">Archival paper, premium wood, crystal-clear casting resin that won't yellow.</p>
+                <h4 className="font-serif font-bold text-sm">Resilient Handcrafting</h4>
+                <p className="text-xs text-charcoal-light font-light mt-1">Every sketch commission, paper flower, and mirror art is hand-styled on her own strength.</p>
               </div>
             </div>
           </div>

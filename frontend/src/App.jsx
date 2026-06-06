@@ -16,7 +16,7 @@ import AdminDashboard from './pages/AdminDashboard';
 
 // WhatsApp Floating Button Component
 const WhatsAppButton = () => {
-  const whatsappNumber = '+919876543210'; // Dynamically configured
+  const whatsappNumber = '+916355303793'; // Dynamically configured
   const message = encodeURIComponent("Hello Kalaakar! I'm interested in ordering a customized handmade artwork.");
   
   return (

@@ -136,6 +136,49 @@ const OrderTracking = () => {
                 </div>
               )}
             </div>
+
+            {/* UPI Payment Section */}
+            {(trackingData.order.status === 'in_progress' || trackingData.order.status === 'completed') && (
+              <div className="mt-8 pt-8 border-t border-cream-dark/40 text-center space-y-4">
+                <div>
+                  <span className="text-[10px] uppercase tracking-wider text-gold-rose font-bold">Secure Payment Desk</span>
+                  <h4 className="font-serif text-sm font-bold text-charcoal mt-1">Pay with UPI Scan</h4>
+                </div>
+                
+                {/* Dynamically generated QR Code using public API */}
+                <div className="bg-canvas border border-cream-dark/40 p-4 rounded-2xl inline-block shadow-inner">
+                  <img 
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(
+                      `upi://pay?pa=6355303793@okaxis&pn=Kalaakar&am=${trackingData.order.price}&tn=${trackingData.order.order_number}&cu=INR`
+                    )}`}
+                    alt="UPI QR Code" 
+                    className="w-40 h-40 object-contain mx-auto mix-blend-multiply"
+                  />
+                </div>
+                
+                <p className="text-[10px] text-charcoal-light leading-relaxed font-light">
+                  Scan this QR code using **GPay, PhonePe, Paytm, or BHIM** to make a direct secure payment of **₹{trackingData.order.price}** for Order #{trackingData.order.order_number}.
+                </p>
+
+                <div className="flex flex-col gap-2">
+                  <a 
+                    href={`upi://pay?pa=6355303793@okaxis&pn=Kalaakar&am=${trackingData.order.price}&tn=${trackingData.order.order_number}&cu=INR`}
+                    className="w-full text-center bg-gradient-to-r from-gold-rose to-gold-soft text-white font-medium py-2 rounded-xl text-xs shadow-premium hover:opacity-90 transition-opacity"
+                  >
+                    Open in Wallet/UPI App
+                  </a>
+                  <button 
+                    onClick={() => {
+                      navigator.clipboard.writeText('6355303793@okaxis');
+                      alert('UPI ID copied to clipboard: 6355303793@okaxis');
+                    }}
+                    className="w-full text-center border border-cream-dark/60 text-charcoal-light hover:bg-canvas/50 py-2 rounded-xl text-[10px] font-semibold uppercase tracking-wider transition-all"
+                  >
+                    Copy UPI ID
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Pipeline Progress Right */}
