@@ -159,8 +159,8 @@ if (dbConnectionString) {
       try {
         const adminEmail = 'admin@kalaakar.com';
         const res = await pool.query('SELECT id FROM users WHERE email = $1', [adminEmail]);
+        const hash = bcrypt.hashSync('admin123', 10);
         if (res.rows.length === 0) {
-          const hash = bcrypt.hashSync('admin123', 10);
           const userInsert = await pool.query(
             "INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING id",
             ['Kalaakar Admin', adminEmail, hash, 'admin']
@@ -171,6 +171,11 @@ if (dbConnectionString) {
             [userId, 'all']
           );
           console.log('Seeded default admin in PostgreSQL (admin@kalaakar.com / admin123)');
+        } else {
+          const userId = res.rows[0].id;
+          await pool.query("UPDATE users SET role = 'admin', password_hash = $1 WHERE id = $2", [hash, userId]);
+          await pool.query("INSERT INTO admins (user_id, permissions) VALUES ($1, 'all') ON CONFLICT (user_id) DO NOTHING", [userId]);
+          console.log('Ensured admin credentials and role are set in PostgreSQL');
         }
       } catch (seedErr) {
         console.error('Error seeding default admin in PostgreSQL:', seedErr.message);
@@ -443,13 +448,17 @@ db.serialize(() => {
     { key: 'site_name', value: 'Kalaakar' },
     { key: 'site_tagline', value: 'Turning Memories Into Art' },
     { key: 'contact_whatsapp', value: '+916355303793' },
-    { key: 'contact_instagram', value: '@kalaakar.art' },
-    { key: 'contact_email', value: 'hello@kalaakar.com' },
-    { key: 'contact_location', value: 'Mumbai, India' }
+    { key: 'contact_instagram', value: 'https://www.instagram.com/___kalaakar____?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+    { key: 'contact_email', value: 'mahekthakor023@gmail.com' },
+    { key: 'contact_location', value: 'Bharuch, India' }
   ];
 
   settings.forEach(s => {
-    db.run(`INSERT OR IGNORE INTO website_settings (key, value) VALUES (?, ?)`, [s.key, s.value]);
+    db.run(`INSERT OR IGNORE INTO website_settings (key, value) VALUES (?, ?)`, [s.key, s.value], function(err) {
+      if (!err && this.changes === 0) {
+        db.run(`UPDATE website_settings SET value = ? WHERE key = ?`, [s.value, s.key]);
+      }
+    });
   });
 
   // Seed Default Categories
@@ -625,8 +634,8 @@ db.serialize(() => {
   // Seed Admin user
   const adminEmail = 'admin@kalaakar.com';
   db.get(`SELECT id FROM users WHERE email = ?`, [adminEmail], (err, row) => {
+    const hash = bcrypt.hashSync('admin123', 10);
     if (!row) {
-      const hash = bcrypt.hashSync('admin123', 10);
       db.run(`INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)`, 
         ['Kalaakar Admin', adminEmail, hash, 'admin'], 
         function(err) {
@@ -639,6 +648,13 @@ db.serialize(() => {
           }
         }
       );
+    } else {
+      db.run(`UPDATE users SET role = 'admin', password_hash = ? WHERE id = ?`, [hash, row.id], (err) => {
+        if (err) console.error('Error resetting admin user details:', err.message);
+      });
+      db.run(`INSERT OR IGNORE INTO admins (user_id, permissions) VALUES (?, 'all')`, [row.id], (err) => {
+        if (err) console.error('Error ensuring admin permissions:', err.message);
+      });
     }
   });
 
@@ -650,17 +666,32 @@ db.serialize(() => {
     ['How is the price calculated for custom gifts?', 'Pricing is dynamic and depends on the artwork type (e.g. Sketch Art, Paper Craft), selected dimensions (A4, A3), and additional features like framing or custom text boxes.', 'Pricing']
   ];
   faqs.forEach(f => {
-    db.run(`INSERT OR IGNORE INTO faq (question, answer, category) VALUES (?, ?, ?)`, f);
+    db.get(`SELECT id FROM faq WHERE question = ?`, [f[0]], (err, row) => {
+      if (!row) {
+        db.run(`INSERT INTO faq (question, answer, category) VALUES (?, ?, ?)`, f);
+      }
+    });
   });
 
   // Seed initial Testimonials
   const testims = [
-    ['Rohan Sharma', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150', 'Absolutely stunning artwork! The pencil sketch of my parents for their anniversary was so lifelike. They both had tears in their eyes. Highly recommended!', 5, 1],
-    ['Sneha Patel', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150', 'The resin ring holder I ordered for my wedding is a work of art. The placement of the dried flowers and the smooth finish is pure luxury.', 5, 1],
-    ['Kabir Mehta', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150', 'Beautiful paper craft explosion box! Extremely detailed and neatly made. It made my girlfriend’s birthday incredibly special.', 5, 1]
+    ['Kush Thakor', 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150', 'Absolutely brilliant work! The couple pencil sketch I ordered for my sister\'s wedding was incredibly detailed and lifelike. The framing was also very premium.', 5, 1],
+    ['Jay Parmar', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150', 'The resin wedding ring holder is simply gorgeous. Mahek preserved the engagement roses beautifully. It looks like a high-end luxury piece on our nightstand.', 5, 1],
+    ['Tejas Parmar', 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150', 'Outstanding paper craft explosion box! Every layer had a surprise, and the photo slots were perfectly aligned. The attention to detail is remarkable.', 5, 1],
+    ['Khushbu Parmar', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150', 'I ordered custom floral resin bookmarks as return gifts, and everyone loved them. The finish is crystal clear and smooth. Will definitely order again!', 5, 1],
+    ['Jenish Parmar', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150', 'The Lord Buddha Lippan art is stunning. The circular wooden panel has beautiful mirror work that catches light beautifully. Excellent wall decor.', 5, 1],
+    ['Rishi Parmar', 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150', 'The A3 color pencil sketch of my parents was emotional and perfect. The shading and texture of the hair/skin were flawless. Truly gifted artist!', 5, 1]
   ];
-  testims.forEach(t => {
-    db.run(`INSERT OR IGNORE INTO testimonials (name, avatar_url, review, rating, is_approved) VALUES (?, ?, ?, ?, ?)`, t);
+
+  db.run(`DELETE FROM testimonials`, [], (err) => {
+    if (err) {
+      console.error('Error clearing testimonials:', err.message);
+    } else {
+      testims.forEach(t => {
+        db.run(`INSERT INTO testimonials (name, avatar_url, review, rating, is_approved) VALUES (?, ?, ?, ?, ?)`, t);
+      });
+      console.log('Seeded new testimonials');
+    }
   });
 });
 

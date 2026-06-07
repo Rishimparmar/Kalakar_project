@@ -86,7 +86,7 @@ const Contact = () => {
             <div>
               <h4 className="font-serif font-bold text-sm text-charcoal">Email Studio</h4>
               <p className="text-xs text-charcoal-light font-light mt-1">Submit inquiries or reference folders.</p>
-              <a href="mailto:hello@kalaakar.com" className="text-xs text-gold-soft font-semibold block mt-1.5 hover:underline">hello@kalaakar.com</a>
+              <a href="mailto:mahekthakor023@gmail.com" className="text-xs text-gold-soft font-semibold block mt-1.5 hover:underline">mahekthakor023@gmail.com</a>
             </div>
           </div>
 
@@ -107,7 +107,7 @@ const Contact = () => {
             </div>
             <div>
               <h4 className="font-serif font-bold text-sm text-charcoal">Location</h4>
-              <p className="text-xs text-charcoal-light font-light mt-1">Based in Mumbai, Maharashtra, India. Shipments delivered nationwide.</p>
+              <p className="text-xs text-charcoal-light font-light mt-1">Based in Bharuch, Gujarat, India. Shipments delivered nationwide.</p>
             </div>
           </div>
         </div>
@@ -203,10 +203,10 @@ const Contact = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div>
             <span className="text-[10px] uppercase tracking-[0.25em] text-gold-rose font-bold">Instagram Grid Sync</span>
-            <h2 className="font-serif text-2xl font-bold text-charcoal mt-0.5">Follow @kalaakar.art</h2>
+            <h2 className="font-serif text-2xl font-bold text-charcoal mt-0.5">Follow ___kalaakar____</h2>
           </div>
           <a
-            href="https://instagram.com/kalaakar.art"
+            href="https://www.instagram.com/___kalaakar____?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs font-semibold uppercase tracking-wider text-gold-rose hover:text-gold-soft underline flex items-center gap-1.5 mt-2 md:mt-0"

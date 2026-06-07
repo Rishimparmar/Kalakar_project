@@ -33,7 +33,11 @@ const AdminLogin = () => {
       await api.login(email.trim().toLowerCase(), password.trim());
       navigate('/admin/dashboard');
     } catch (err) {
-      setErrorMsg(err.response?.data?.message || 'Invalid administrator credentials.');
+      if (!err.response) {
+        setErrorMsg('Unable to connect to the server. Please verify that the backend API is online.');
+      } else {
+        setErrorMsg(err.response?.data?.message || 'Invalid administrator credentials.');
+      }
     } finally {
       setLoading(false);
     }

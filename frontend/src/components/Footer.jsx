@@ -79,15 +79,15 @@ const Footer = () => {
           <h3 className="font-serif text-lg text-gold-artistic mb-4">Connect With Artist</h3>
           <div className="flex items-center space-x-3 text-sm font-light text-white/70">
             <Mail size={16} className="text-gold-rose" />
-            <a href="mailto:hello@kalaakar.com" className="hover:text-gold-rose transition-colors">hello@kalaakar.com</a>
+            <a href="mailto:mahekthakor023@gmail.com" className="hover:text-gold-rose transition-colors">mahekthakor023@gmail.com</a>
           </div>
           <div className="flex items-center space-x-3 text-sm font-light text-white/70">
             <MapPin size={16} className="text-gold-rose" />
-            <span>Mumbai, Maharashtra, India</span>
+            <span>Bharuch, Gujarat, India</span>
           </div>
           <div className="flex items-center space-x-3 text-sm font-light text-white/70">
             <Instagram size={16} className="text-gold-rose" />
-            <a href="https://instagram.com/kalaakar.art" target="_blank" rel="noopener noreferrer" className="hover:text-gold-rose transition-colors">@kalaakar.art</a>
+            <a href="https://www.instagram.com/___kalaakar____?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="hover:text-gold-rose transition-colors">___kalaakar____</a>
           </div>
           
           <div className="pt-2">
