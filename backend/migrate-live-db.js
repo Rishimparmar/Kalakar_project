@@ -132,16 +132,6 @@ const galleryItems = [
     is_featured: 0
   },
   {
-    category_name: 'Monochrome Magic',
-    title: 'Serene Glance Portrait Sketch',
-    description: 'A hand-drawn graphite portrait highlighting subtle reflections on glasses and realistic hair shading.',
-    image_url: '/woman_glasses_sketch.jpg',
-    dimensions: 'A4 Size Frame',
-    medium: 'Graphite & Charcoal on Medium Grain Paper',
-    year: '2026',
-    is_featured: 0
-  },
-  {
     category_name: 'Walls That Speak',
     title: 'Peacock Tassel Toran Hanging',
     description: 'Traditional handcrafted toran featuring colorful circular designs, mirrors, bead strings, and dangling peacock accents.',
@@ -158,16 +148,6 @@ const galleryItems = [
     image_url: '/photo_bouquet.jpg',
     dimensions: '14" Height',
     medium: 'Laminated Photo Prints & Luxury Wrapping Paper',
-    year: '2026',
-    is_featured: 0
-  },
-  {
-    category_name: 'Monochrome Magic',
-    title: 'Self-Portrait Selfie Sketch',
-    description: 'A modern pencil sketch capturing a selfie reflection, blending bold shadow play and loose linework styles.',
-    image_url: '/man_selfie_sketch.jpg',
-    dimensions: 'A4 Size Frame',
-    medium: 'Graphite & Ink Linework on Paper',
     year: '2026',
     is_featured: 0
   }

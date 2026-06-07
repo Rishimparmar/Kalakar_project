@@ -83,15 +83,6 @@ const Gallery = () => {
       year: '2021'
     },
     {
-      id: 'f7',
-      title: 'Serene Glance Portrait Sketch',
-      category_name: 'Monochrome Magic',
-      image_url: '/woman_glasses_sketch.jpg',
-      dimensions: 'A4 Size Frame',
-      medium: 'Graphite & Charcoal on Medium Grain Paper',
-      year: '2026'
-    },
-    {
       id: 'f8',
       title: 'Peacock Tassel Toran Hanging',
       category_name: 'Walls That Speak',
@@ -107,15 +98,6 @@ const Gallery = () => {
       image_url: '/photo_bouquet.jpg',
       dimensions: '14" Height',
       medium: 'Laminated Photo Prints & Luxury Wrapping Paper',
-      year: '2026'
-    },
-    {
-      id: 'f10',
-      title: 'Self-Portrait Selfie Sketch',
-      category_name: 'Monochrome Magic',
-      image_url: '/man_selfie_sketch.jpg',
-      dimensions: 'A4 Size Frame',
-      medium: 'Graphite & Ink Linework on Paper',
       year: '2026'
     }
   ];
