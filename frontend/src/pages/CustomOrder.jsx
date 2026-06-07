@@ -260,7 +260,7 @@ const CustomOrder = () => {
               activeTab === 'commission' ? 'text-gold-rose border-b-2 border-gold-rose' : 'text-charcoal-light hover:text-charcoal'
             }`}
           >
-            Commission Commission
+            Commission
           </button>
           <button
             onClick={() => { setActiveTab('quote'); setErrorMsg(''); }}
