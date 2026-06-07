@@ -247,7 +247,7 @@ if (dbConnectionString) {
         .replace(/INSERT OR REPLACE INTO website_settings/gi, 'INSERT INTO website_settings');
 
       // Append specific ON CONFLICT clauses for tables that require it
-      if (sql.includes('website_settings')) {
+      if (sql.includes('website_settings') && sql.trim().toUpperCase().startsWith('INSERT')) {
         if (sql.includes('REPLACE')) {
           translated += ' ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = CURRENT_TIMESTAMP';
         } else {
