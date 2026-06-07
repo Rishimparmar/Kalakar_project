@@ -177,8 +177,58 @@ if (dbConnectionString) {
           await pool.query("INSERT INTO admins (user_id, permissions) VALUES ($1, 'all') ON CONFLICT (user_id) DO NOTHING", [userId]);
           console.log('Ensured admin credentials and role are set in PostgreSQL');
         }
+
+        // Seed/Update settings in PostgreSQL
+        const pgSettings = [
+          { key: 'site_name', value: 'Kalaakar' },
+          { key: 'site_tagline', value: 'Turning Memories Into Art' },
+          { key: 'contact_whatsapp', value: '+916355303793' },
+          { key: 'contact_instagram', value: 'https://www.instagram.com/___kalaakar____?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+          { key: 'contact_email', value: 'mahekthakor023@gmail.com' },
+          { key: 'contact_location', value: 'Bharuch, India' }
+        ];
+        for (const s of pgSettings) {
+          await pool.query(
+            `INSERT INTO website_settings (key, value) VALUES ($1, $2) 
+             ON CONFLICT (key) DO UPDATE SET value = $2, updated_at = CURRENT_TIMESTAMP`, 
+            [s.key, s.value]
+          );
+        }
+        console.log('PostgreSQL Website settings updated.');
+
+        // Clean up duplicate FAQs and seed defaults in PostgreSQL
+        await pool.query("DELETE FROM faq WHERE id NOT IN (SELECT MIN(id) FROM (SELECT id, question FROM faq) as f GROUP BY question)");
+        const pgFaqs = [
+          ['How long does it take to make a custom portrait?', 'Typically, it takes 5 to 7 business days to complete a sketch portrait, depending on the complexity and paper size. Delivery takes another 2-4 days.', 'Delivery'],
+          ['Can I request changes to my custom sketch?', 'Yes! We send you a preview photo of the completed sketch before framing and shipping. You can request minor modifications at this stage.', 'Customization'],
+          ['Do you offer express shipping?', 'Yes, we have express shipping options available at checkout for an additional fee, which speeds up shipping to 24-48 hours after completion.', 'Delivery'],
+          ['How is the price calculated for custom gifts?', 'Pricing is dynamic and depends on the artwork type (e.g. Sketch Art, Paper Craft), selected dimensions (A4, A3), and additional features like framing or custom text boxes.', 'Pricing']
+        ];
+        for (const f of pgFaqs) {
+          const existCheck = await pool.query("SELECT id FROM faq WHERE question = $1", [f[0]]);
+          if (existCheck.rows.length === 0) {
+            await pool.query("INSERT INTO faq (question, answer, category) VALUES ($1, $2, $3)", f);
+          }
+        }
+        console.log('PostgreSQL FAQs verified and seeded.');
+
+        // Recreate testimonials in PostgreSQL with new Indian names
+        const pgTestims = [
+          ['Kush Thakor', 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150', 'Absolutely brilliant work! The couple pencil sketch I ordered for my sister\'s wedding was incredibly detailed and lifelike. The framing was also very premium.', 5, 1],
+          ['Jay Parmar', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150', 'The resin wedding ring holder is simply gorgeous. Mahek preserved the engagement roses beautifully. It looks like a high-end luxury piece on our nightstand.', 5, 1],
+          ['Tejas Parmar', 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150', 'Outstanding paper craft explosion box! Every layer had a surprise, and the photo slots were perfectly aligned. The attention to detail is remarkable.', 5, 1],
+          ['Khushbu Parmar', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150', 'I ordered custom floral resin bookmarks as return gifts, and everyone loved them. The finish is crystal clear and smooth. Will definitely order again!', 5, 1],
+          ['Jenish Parmar', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150', 'The Lord Buddha Lippan art is stunning. The circular wooden panel has beautiful mirror work that catches light beautifully. Excellent wall decor.', 5, 1],
+          ['Rishi Parmar', 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150', 'The A3 color pencil sketch of my parents was emotional and perfect. The shading and texture of the hair/skin were flawless. Truly gifted artist!', 5, 1]
+        ];
+        await pool.query("DELETE FROM testimonials");
+        for (const t of pgTestims) {
+          await pool.query("INSERT INTO testimonials (name, avatar_url, review, rating, is_approved) VALUES ($1, $2, $3, $4, $5)", t);
+        }
+        console.log('PostgreSQL Testimonials recreated successfully.');
+
       } catch (seedErr) {
-        console.error('Error seeding default admin in PostgreSQL:', seedErr.message);
+        console.error('Error seeding default data in PostgreSQL:', seedErr.message);
       }
     },
 
