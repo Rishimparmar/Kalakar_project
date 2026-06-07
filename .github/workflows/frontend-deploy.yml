@@ -33,7 +33,7 @@ jobs:
           npm run build
         env:
           # Production API Gateway URL
-          VITE_API_URL: https://api.mybusiness.in/api
+          VITE_API_URL: https://kalakar-project.onrender.com/api
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
