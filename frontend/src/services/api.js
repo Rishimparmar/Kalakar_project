@@ -11,9 +11,12 @@ const apiClient = axios.create({
 export const getUploadUrl = (filePath) => {
   if (!filePath) return '';
   if (filePath.startsWith('http')) return filePath;
-  // Derive backend base from API_URL (removing /api suffix)
-  const base = API_URL.replace(/\/api$/, '');
-  return `${base}${filePath}`;
+  if (filePath.startsWith('/uploads/')) {
+    // Derive backend base from API_URL (removing /api suffix)
+    const base = API_URL.replace(/\/api$/, '');
+    return `${base}${filePath}`;
+  }
+  return filePath;
 };
 
 // Request interceptor to attach JWT token

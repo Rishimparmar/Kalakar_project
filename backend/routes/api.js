@@ -274,7 +274,7 @@ router.put('/orders/:id/status', requireAdmin, (req, res) => {
     if (err) return res.status(500).json({ message: err.message });
     if (!order) return res.status(404).json({ message: 'Order not found' });
 
-    let updateQuery = `UPDATE custom_orders SET status = ?, updated_at = CURRENT_TIMESTAMP`;
+    let updateQuery = `UPDATE custom_orders SET status = ?`;
     const params = [status];
 
     if (price !== undefined) {
