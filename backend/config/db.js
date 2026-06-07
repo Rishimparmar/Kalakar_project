@@ -271,12 +271,20 @@ if (dbConnectionString) {
     },
 
     get: function(sql, params = [], callback) {
+      let finalParams = params;
+      let finalCallback = callback;
+      if (typeof params === 'function') {
+        finalCallback = params;
+        finalParams = [];
+      }
+
       const pgSql = this.translateSql(sql);
-      pool.query(pgSql, params, (err, res) => {
+      const cleanParams = finalParams.map(p => p === undefined ? null : p);
+      pool.query(pgSql, cleanParams, (err, res) => {
         if (err) {
-          if (callback) callback(err);
+          if (finalCallback) finalCallback(err);
         } else {
-          if (callback) callback(null, res.rows[0]);
+          if (finalCallback) finalCallback(null, res.rows && res.rows[0] ? res.rows[0] : null);
         }
       });
     },
@@ -291,7 +299,8 @@ if (dbConnectionString) {
       }
 
       const pgSql = this.translateSql(sql);
-      pool.query(pgSql, finalParams, (err, res) => {
+      const cleanParams = finalParams.map(p => p === undefined ? null : p);
+      pool.query(pgSql, cleanParams, (err, res) => {
         if (err) {
           if (finalCallback) finalCallback(err);
         } else {
@@ -309,7 +318,8 @@ if (dbConnectionString) {
       }
 
       const pgSql = this.translateSql(sql);
-      pool.query(pgSql, finalParams, function(err, res) {
+      const cleanParams = finalParams.map(p => p === undefined ? null : p);
+      pool.query(pgSql, cleanParams, function(err, res) {
         if (err) {
           if (finalCallback) finalCallback(err);
         } else {
