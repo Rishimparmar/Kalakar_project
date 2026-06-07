@@ -31,46 +31,11 @@ const pool = new Pool({
 
 const defaultCategories = [
   ['Memories in Colors', 'memories-in-colors', 'Turn your favorite moments into vibrant masterpieces.'],
-  ['Monochrome Magic', 'monochrome-magic', 'Classic sketches that never go out of style.'],
   ['Crafted for Your Corner', 'crafted-for-your-corner', 'Decor that tells your story.'],
-  ['Blooming Memories Bouquet', 'blooming-memories-bouquet', 'Where photographs blossom into unforgettable gifts.'],
-  ['Treasures of Memories', 'treasures-of-memories', 'Open the box, relive the moments.'],
-  ['Walls That Speak', 'walls-that-speak', 'Beautiful creations that bring life to every wall.'],
-  ['Forever Blooms', 'forever-blooms', 'Flowers that never fade, memories that never end.'],
-  ['The Forever Nest', 'the-forever-nest', 'A beautiful home for your precious promise.']
+  ['Walls That Speak', 'walls-that-speak', 'Beautiful creations that bring life to every wall.']
 ];
 
 const galleryItems = [
-  {
-    category_name: 'Monochrome Magic',
-    title: 'Eternal Bond Wedding Sketch',
-    description: 'An exquisite hand-drawn graphite and charcoal wedding couple portrait capturing the finest details of bridal jewelry and emotions.',
-    image_url: '/couple_sketch.jpg',
-    dimensions: 'A3 Size Frame',
-    medium: 'Charcoal & Graphite on Archival paper',
-    year: '2026',
-    is_featured: 1
-  },
-  {
-    category_name: 'Forever Blooms',
-    title: 'Everlasting Paper Rose Bouquet',
-    description: 'Delicately hand-folded red and pink cardstock roses, meticulously styled into a luxury bouquet that lasts forever.',
-    image_url: '/paper_roses.jpg',
-    dimensions: '12" Bouquet Height',
-    medium: 'Premium Matte Craft Cardstock',
-    year: '2026',
-    is_featured: 1
-  },
-  {
-    category_name: 'Treasures of Memories',
-    title: 'Handcrafted Multi-Layer Explosion Box',
-    description: 'A premium handcrafted exploding gift box featuring layered photo panels, custom pocket folds, and decorative top embellishments.',
-    image_url: '/explosion_box.jpg',
-    dimensions: '10" x 10" (Opened)',
-    medium: 'Craft Cardstock & Ribbon accents',
-    year: '2026',
-    is_featured: 1
-  },
   {
     category_name: 'Crafted for Your Corner',
     title: 'Lord Buddha Lippan Art Painting',
@@ -92,26 +57,6 @@ const galleryItems = [
     is_featured: 0
   },
   {
-    category_name: 'The Forever Nest',
-    title: 'Tejas & Bhargavi Name Ring Holder',
-    description: 'Custom ring holder decorated with dried flowers and custom lettering.',
-    image_url: '/ring_holder.png',
-    dimensions: '8" Round velvet base',
-    medium: 'Glitter Loop Outlines & Paper Florals',
-    year: '2021',
-    is_featured: 0
-  },
-  {
-    category_name: 'Crafted for Your Corner',
-    title: 'Krishna Mandala Bookmark',
-    description: 'Lord Krishna silhouette drawing bordered with fine concentric mandalas.',
-    image_url: '/krishna_bookmark.png',
-    dimensions: '3" x 9" Bookmark Strip',
-    medium: 'Black Ink Silhouette & Concentric Patterns',
-    year: '2020',
-    is_featured: 0
-  },
-  {
     category_name: 'Crafted for Your Corner',
     title: 'Vibrant Paper Lotus Decor',
     description: 'Handfolded pink and teal lotuses designed to make home celebrations bloom.',
@@ -122,16 +67,6 @@ const galleryItems = [
     is_featured: 0
   },
   {
-    category_name: 'Monochrome Magic',
-    title: 'Intricate Rabbit Mandala Sketch',
-    description: 'A detailed rabbit drawing layered with mandala ink textures.',
-    image_url: '/mandala_rabbit.png',
-    dimensions: 'A4 size paper',
-    medium: 'Fineliner ink and orange graphite shadings',
-    year: '2021',
-    is_featured: 0
-  },
-  {
     category_name: 'Walls That Speak',
     title: 'Peacock Tassel Toran Hanging',
     description: 'Traditional handcrafted toran featuring colorful circular designs, mirrors, bead strings, and dangling peacock accents.',
@@ -139,15 +74,55 @@ const galleryItems = [
     dimensions: '3ft Width',
     medium: 'Embroidery, Wooden beads, Mirror panels & Woolen tassels',
     year: '2026',
+    is_featured: 1
+  },
+  {
+    category_name: 'Walls That Speak',
+    title: 'Celestial Phoenix Mandala Art',
+    description: 'Vibrant colored pencil and ink illustration of a phoenix with a detailed mandala backdrop on black cardstock.',
+    image_url: '/phoenix_mandala.jpg',
+    dimensions: '12" x 12" Frame',
+    medium: 'Prismacolor Pencils & White Gel Pen on Black Board',
+    year: '2026',
+    is_featured: 1
+  },
+  {
+    category_name: 'Memories in Colors',
+    title: 'Lord Ganesha & Lotus Portrait',
+    description: 'Vibrant color pencil sketch of Lord Ganesha combined with a blooming purple lotus flower.',
+    image_url: '/ganesha_lotus.jpg',
+    dimensions: 'A4 Size Frame',
+    medium: 'Colored Pencil & Soft Pastels on Paper',
+    year: '2026',
+    is_featured: 1
+  },
+  {
+    category_name: 'Memories in Colors',
+    title: 'Under the Starry Night Painting',
+    description: 'A touching painting depicting a parent carrying a child on their shoulders, gazing at a starry night sky and full moon.',
+    image_url: '/starry_sky_parent_child.jpg',
+    dimensions: 'A4 Size Canvas',
+    medium: 'Acrylic Paint on Archival Canvas Paper',
+    year: '2026',
+    is_featured: 1
+  },
+  {
+    category_name: 'Crafted for Your Corner',
+    title: 'Bespoke Red Paper Roses Bouquet',
+    description: 'Meticulously handfolded bright red paper roses styled into a classic everlasting hand bouquet.',
+    image_url: '/red_paper_roses.jpg',
+    dimensions: '12" Bouquet Height',
+    medium: 'Premium Cardstock & Green floral wire',
+    year: '2026',
     is_featured: 0
   },
   {
-    category_name: 'Blooming Memories Bouquet',
-    title: 'Cherished Moments Photo Bouquet',
-    description: 'A unique handmade bouquet arrangement combining printed photograph cutouts, premium floral wrapping, and a customizable bestie tag.',
-    image_url: '/photo_bouquet.jpg',
-    dimensions: '14" Height',
-    medium: 'Laminated Photo Prints & Luxury Wrapping Paper',
+    category_name: 'Crafted for Your Corner',
+    title: 'Everlasting Pink Paper Roses Bouquet',
+    description: 'Hand-rolled pastel pink roses arranged in a gorgeous decorative bouquet.',
+    image_url: '/pink_paper_roses.jpg',
+    dimensions: '12" Bouquet Height',
+    medium: 'Premium Cardstock & Wrapping accents',
     year: '2026',
     is_featured: 0
   }

@@ -17,9 +17,9 @@ const CustomOrder = () => {
     name: '',
     email: '',
     phone: '',
-    artwork_type: 'Single Pencil Sketch (A4)',
+    artwork_type: 'Personalized Glass Frame Decor',
     size_selection: 'A4',
-    color_preference: 'Monochrome Graphite',
+    color_preference: 'Gold Accent Highlights',
     faces_count: '1',
     message: '',
     delivery_date: '',
@@ -45,35 +45,29 @@ const CustomOrder = () => {
     let price = 1500;
     const type = formData.artwork_type.toLowerCase();
     const size = formData.size_selection;
-    const faces = parseInt(formData.faces_count) || 1;
 
-    if (type.includes('sketch')) {
-      // Base: A4 Sketch (1500) or A3 (2800)
-      if (size === 'A3') {
-        price = 2800;
-      } else {
-        price = 1500;
-      }
-      // Add price per extra face
-      if (faces > 1) {
-        price += (faces - 1) * 1000;
-      }
-      // Gold highlights
-      if (formData.color_preference.includes('Gold')) {
-        price += 300;
-      }
-    } else if (type.includes('ring')) {
-      price = 1800; // Resin dome base
-    } else if (type.includes('explosion') || type.includes('box')) {
-      price = 1200;
-    } else if (type.includes('frame') || type.includes('glass')) {
+    if (type.includes('glass') || type.includes('frame')) {
       price = 2200;
+    } else if (type.includes('buddha') || type.includes('lippan')) {
+      price = 1500;
+    } else if (type.includes('lotus') && !type.includes('ganesha')) {
+      price = 1200;
+    } else if (type.includes('toran') || type.includes('tassel') || type.includes('hanging')) {
+      price = 1800;
+    } else if (type.includes('phoenix') || type.includes('mandala')) {
+      price = 2000;
+    } else if (type.includes('ganesha')) {
+      price = 1500;
+    } else if (type.includes('starry') || type.includes('sky')) {
+      price = 1800;
+    } else if (type.includes('rose') || type.includes('bouquet')) {
+      price = 1600;
     } else {
-      price = formData.budget ? parseFloat(formData.budget) : 2000;
+      price = 2000;
     }
 
     setEstimatedPrice(price);
-  }, [formData.artwork_type, formData.size_selection, formData.faces_count, formData.color_preference, formData.budget]);
+  }, [formData.artwork_type, formData.size_selection, formData.budget]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -164,9 +158,9 @@ const CustomOrder = () => {
       name: '',
       email: '',
       phone: '',
-      artwork_type: 'Single Pencil Sketch (A4)',
+      artwork_type: 'Personalized Glass Frame Decor',
       size_selection: 'A4',
-      color_preference: 'Monochrome Graphite',
+      color_preference: 'Gold Accent Highlights',
       faces_count: '1',
       message: '',
       delivery_date: '',
@@ -299,12 +293,14 @@ const CustomOrder = () => {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose"
                   >
-                    <option value="Single Pencil Sketch (A4)">Pencil Sketch Portrait (A4)</option>
-                    <option value="Single Pencil Sketch (A3)">Pencil Sketch Portrait (A3)</option>
-                    <option value="Engagement Ring Holder">Engagement Ring Holder (Resin/Wood)</option>
-                    <option value="Paper Craft Explosion Box">Paper Craft Explosion Box</option>
                     <option value="Personalized Glass Frame Decor">Personalized Glass Frame Decor</option>
-                    <option value="Cotton Macrame Decor">Cotton Macrame Decor</option>
+                    <option value="Lord Buddha Lippan Art Painting">Lord Buddha Lippan Art Painting</option>
+                    <option value="Vibrant Paper Lotus Decor">Vibrant Paper Lotus Decor</option>
+                    <option value="Peacock Tassel Toran Hanging">Peacock Tassel Toran Hanging</option>
+                    <option value="Celestial Phoenix Mandala Art">Celestial Phoenix Mandala Art</option>
+                    <option value="Lord Ganesha & Lotus Portrait">Lord Ganesha & Lotus Portrait</option>
+                    <option value="Under the Starry Night Painting">Under the Starry Night Painting</option>
+                    <option value="Bespoke Paper Roses Bouquet">Bespoke Paper Roses Bouquet</option>
                   </select>
                 </div>
 
@@ -333,9 +329,9 @@ const CustomOrder = () => {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose"
                   >
-                    <option value="Monochrome Graphite">Monochrome Graphite (Pencil Look)</option>
-                    <option value="Charcoal Rich Black">Charcoal Rich Black (Deep Contrast)</option>
                     <option value="Gold Accent Highlights">Golden Highlights (Acrylic accents)</option>
+                    <option value="Multi-color Detailing">Vibrant Multi-color Detailing</option>
+                    <option value="Acrylics on Board/Canvas">Acrylics on Board/Canvas</option>
                     <option value="Dried Flowers Resin">Resin embedded flowers</option>
                   </select>
                 </div>

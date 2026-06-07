@@ -56,11 +56,11 @@ const Home = () => {
             
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-charcoal leading-tight">
               Bespoke Handcrafted <br />
-              <span className="gold-gradient-text">Gifts & Sketch Art</span>
+              <span className="gold-gradient-text">Gifting & Fine Art</span>
             </h1>
             
             <p className="text-base md:text-lg text-charcoal-light font-light leading-relaxed max-w-xl">
-              We mold, sketch, and assemble customized treasures. Capture your moments with pencil sketch portraits, floral resin engagement ring holders, cotton event decor, and paper craft boxes.
+              We design and paint customized treasures. Capture your moments with vibrant mandala drawings, personalized glass frame decor, and starry night canvas paintings.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -125,28 +125,28 @@ const Home = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
           {[
             {
-              title: "Eternal Bond Wedding Sketch",
-              category: "Monochrome Magic",
-              tagline: "Classic sketches that never go out of style.",
-              image: "/couple_sketch.jpg",
-              medium: "Charcoal & Pencil",
-              price: "₹2,500"
+              title: "Celestial Phoenix Mandala Art",
+              category: "Walls That Speak",
+              tagline: "Vibrant and detailed mandala masterpieces.",
+              image: "/phoenix_mandala.jpg",
+              medium: "Pencils & Gel Pen",
+              price: "₹2,000"
             },
             {
-              title: "Everlasting Paper Rose Bouquet",
-              category: "Forever Blooms",
-              tagline: "Flowers that never fade, memories that never end.",
-              image: "/paper_roses.jpg",
-              medium: "Craft Cardstock",
-              price: "₹1,100"
+              title: "Lord Ganesha & Lotus Portrait",
+              category: "Memories in Colors",
+              tagline: "Turn your devotions into colorful artwork.",
+              image: "/ganesha_lotus.jpg",
+              medium: "Colored Pencil & Pastels",
+              price: "₹1,500"
             },
             {
-              title: "Treasures of Memories Explosion Box",
-              category: "Treasures of Memories",
-              tagline: "Open the box, relive the moments.",
-              image: "/explosion_box.jpg",
-              medium: "Cardstock & Folds",
-              price: "₹1,200"
+              title: "Under the Starry Night Painting",
+              category: "Memories in Colors",
+              tagline: "Acrylic paints capturing beautiful night skies.",
+              image: "/starry_sky_parent_child.jpg",
+              medium: "Acrylic Paint on Canvas",
+              price: "₹1,800"
             },
             {
               title: "Lord Buddha Lippan Painting",
@@ -215,9 +215,9 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="font-script text-3xl text-gold-rose">The Studio Catalog</span>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-charcoal mt-1">Specialty Handmade Gifts</h2>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-charcoal mt-1">Specialty Handcrafted Paintings</h2>
             <p className="text-xs md:text-sm text-charcoal-light font-light mt-3">
-              Explore our boutique offerings. We preserve real flowers, fold detailed explode boxes, and frame botanical collages to mirror your milestones.
+              Explore our boutique offerings. We design detailed mandalas, paint canvas illustrations, and design everlasting floral presentations to mirror your milestones.
             </p>
           </div>
           <GiftShowcase />

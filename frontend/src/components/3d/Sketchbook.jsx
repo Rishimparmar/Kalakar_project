@@ -9,25 +9,25 @@ const journalPages = [
     note: 'Turning Memories Into Art'
   },
   {
-    title: 'Eternal Bond Wedding Sketch',
-    category: 'Monochrome Magic',
-    image: '/couple_sketch.jpg',
+    title: 'Celestial Phoenix Mandala Art',
+    category: 'Walls That Speak',
+    image: '/phoenix_mandala.jpg',
     isCover: false,
-    note: 'A detailed graphite and charcoal wedding sketch capturing delicate details.'
+    note: 'Intricate and colorful mandala drawing of a rising phoenix on black cardstock.'
   },
   {
-    title: 'Everlasting Paper Rose Bouquet',
-    category: 'Forever Blooms',
-    image: '/paper_roses.jpg',
+    title: 'Lord Ganesha & Lotus Portrait',
+    category: 'Memories in Colors',
+    image: '/ganesha_lotus.jpg',
     isCover: false,
-    note: 'Delicate hand-folded matte cardstock roses that hold their beauty forever.'
+    note: 'Vibrant color pencil sketch of Lord Ganesha combined with a blooming purple lotus.'
   },
   {
-    title: 'Handcrafted Explosion Box',
-    category: 'Treasures of Memories',
-    image: '/explosion_box.jpg',
+    title: 'Under the Starry Night Painting',
+    category: 'Memories in Colors',
+    image: '/starry_sky_parent_child.jpg',
     isCover: false,
-    note: 'An opening box of multi-layered memories, cardstock folds, and pockets.'
+    note: 'Acrylic paint canvas depicting a parent carrying a child on their shoulders looking at starry night.'
   },
   {
     title: 'Lord Buddha Lippan Art Painting',
@@ -35,13 +35,6 @@ const journalPages = [
     image: '/buddha_painting.jpg',
     isCover: false,
     note: 'Circular wooden panel hand-painted with acrylics and concentric mirror work.'
-  },
-  {
-    title: 'Tejas & Bhargavi Ring Holder',
-    category: 'The Forever Nest',
-    image: '/ring_holder.png',
-    isCover: false,
-    note: 'Engagement name-hoops on a velvet pad bordered with elegant dried florals.'
   }
 ];
 

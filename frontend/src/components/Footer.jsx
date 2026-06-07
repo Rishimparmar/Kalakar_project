@@ -66,11 +66,11 @@ const Footer = () => {
         <div>
           <h3 className="font-serif text-lg text-gold-artistic mb-4">Gifting Specialties</h3>
           <ul className="space-y-2.5 text-sm font-light text-white/70">
-            <li>Custom Sketch Portraits</li>
-            <li>Engagement Ring Holders</li>
-            <li>Cotton Craft Decorations</li>
-            <li>Paper Craft Explosion Boxes</li>
-            <li>Anniversary & Wedding Gifts</li>
+            <li>Vibrant Mandala Art</li>
+            <li>Personalized Glass Decor</li>
+            <li>Lord Ganesha Lotus Art</li>
+            <li>Starry Night Acrylic Paintings</li>
+            <li>Everlasting Paper Flowers</li>
           </ul>
         </div>
 

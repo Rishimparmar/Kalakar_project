@@ -5,82 +5,32 @@ const giftItems = [
   {
     id: 'colors-sketch',
     name: 'Memories in Colors',
-    image: '/parents_portrait.png',
+    image: '/starry_sky_parent_child.jpg',
     tagline: 'Turn your favorite moments into vibrant masterpieces.',
-    desc: 'A hand-drawn colored pencil portrait capturing life-like smiles and rich colors. Perfect for anniversaries, birthdays, or family memory walls.',
-    materials: ['Colored Pencils', 'Archival Paper', 'Premium MDF frame'],
-    dimensions: 'A3 Size Frame',
-    estCommission: '₹2,800'
-  },
-  {
-    id: 'monochrome-sketch',
-    name: 'Monochrome Magic',
-    image: '/couple_sketch.jpg',
-    tagline: 'Classic sketches that never go out of style.',
-    desc: 'Exquisite hand-drawn graphite and charcoal portrait detailing couples and memories. Highlighted by high contrast and fine texturing.',
-    materials: ['Charcoal', 'Graphite', 'Textured paper', 'Black wood frame'],
-    dimensions: 'A3 Size Frame',
-    estCommission: '₹2,500'
+    desc: 'Stunning hand-painted starry sky acrylic canvas depicting a parent carrying a child on their shoulders. A beautiful expression of familial love.',
+    materials: ['Acrylic paints', 'Canvas sheet', 'Premium framing options'],
+    dimensions: 'A4 Size Canvas',
+    estCommission: '₹1,800'
   },
   {
     id: 'decor-ideas',
     name: 'Crafted for Your Corner',
     image: '/buddha_painting.jpg',
     tagline: 'Decor that tells your story.',
-    desc: 'Stunning hand-painted Lord Buddha circular MDF canvas with detailed mirror work (Lippan Art). Ideal as an accent piece for entryways or meditation corners.',
-    materials: ['MDF Round Base', 'Acrylic Painting', 'Concentric Mirrors'],
+    desc: 'Hand-painted Lord Buddha circular MDF wooden canvas panel detailed with concentric mirrors (Lippan Art work) to bring peace to any entryway.',
+    materials: ['MDF Round Base', 'Acrylic Painting', 'Concentric Mirror Work'],
     dimensions: '12" Round Panel',
     estCommission: '₹1,900'
   },
   {
-    id: 'photo-bouquet',
-    name: 'Blooming Memories Bouquet',
-    image: '/paper_lotus.png',
-    tagline: 'Where photographs blossom into unforgettable gifts.',
-    desc: 'A customized bouquet where your favorite family and couple photos are artistically shaped and clustered like blooming flowers, combined with handcrafted paper flowers.',
-    materials: ['Photo prints', 'Stem supports', 'Decorative wrapping', 'Ribbons'],
-    dimensions: '14" Bouquet Height',
-    estCommission: '₹1,600'
-  },
-  {
-    id: 'photo-box',
-    name: 'Treasures of Memories',
-    image: '/explosion_box.jpg',
-    tagline: 'Open the box, relive the moments.',
-    desc: 'A multi-layered handcrafted exploding photo box with multiple folds, photo slots, secret pockets, and a flower ornament top. Unfolds as a beautiful timeline.',
-    materials: ['Premium cardstock', 'Satin ribbons', 'Photo panels'],
-    dimensions: '10" x 10" (Opened)',
-    estCommission: '₹1,200'
-  },
-  {
     id: 'wall-hangings',
     name: 'Walls That Speak',
-    image: '/krishna_bookmark.png',
+    image: '/phoenix_mandala.jpg',
     tagline: 'Beautiful creations that bring life to every wall.',
-    desc: 'Premium cotton macrame wall hanging or Lippan Art panels designed to add texture, warmth, and artistic vibes to your living space.',
-    materials: ['Organic cotton cord', 'Polished driftwood', 'Wooden beads'],
-    dimensions: '18" x 24" Wall space',
-    estCommission: '₹1,500'
-  },
-  {
-    id: 'flower-bouquet',
-    name: 'Forever Blooms',
-    image: '/paper_roses.jpg',
-    tagline: 'Flowers that never fade, memories that never end.',
-    desc: 'Delicately hand-folded red and pink cardstock roses clustered into a bouquet. It never fades, serving as a permanent memory of love and appreciation.',
-    materials: ['Matte cardstock', 'Rose foliage', 'Lace wrap'],
-    dimensions: '12" Bouquet Height',
-    estCommission: '₹1,100'
-  },
-  {
-    id: 'ring-holder',
-    name: 'The Forever Nest',
-    image: '/ring_holder.png',
-    tagline: 'A beautiful home for your precious promise.',
-    desc: 'Custom ring platter with name engraving, dried botanicals, and gold highlights. Perfect for engagement ceremonies and wedding keepsakes.',
-    materials: ['Velvet base', 'Dried flowers', 'Glitter hoops'],
-    dimensions: '8" Round base',
-    estCommission: '₹1,800'
+    desc: 'Vibrant colored pencil phoenix mandala drawing bordered by intricate hand-drawn concentric lines. Adds rich, colorful texture to any empty wall space.',
+    materials: ['Prismacolor pencils', 'White gel pen', 'Black board'],
+    dimensions: '12" x 12" Frame',
+    estCommission: '₹2,000'
   }
 ];
 

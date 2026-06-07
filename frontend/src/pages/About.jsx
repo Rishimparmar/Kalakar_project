@@ -2,10 +2,10 @@ import { Sparkles, Calendar, Heart, Shield } from 'lucide-react';
 
 const About = () => {
   const milestones = [
-    { year: '2022', title: 'The First Sketch', desc: 'Started with simple graphite sketch commissions from a small desk at home.' },
-    { year: '2023', title: 'Resin & Florals', desc: 'Introduced botanical preservation and customized wooden ring holders for weddings.' },
+    { year: '2022', title: 'The First Canvas', desc: 'Started with simple mandala drawings and customized glass paintings from a small desk at home.' },
+    { year: '2023', title: 'Resin & Florals', desc: 'Introduced botanical preservation and customized floral home decor.' },
     { year: '2024', title: 'Kalaakar is Born', desc: 'Officially branded as Kalaakar - Turning Memories Into Art, serving customers globally.' },
-    { year: '2025', title: 'Creative Collective', desc: 'Expanded into event decorations, paper craft installations, and cotton crafts.' }
+    { year: '2025', title: 'Creative Collective', desc: 'Expanded into event decorations, mandala drawing series, and starry night canvas paintings.' }
   ];
 
   return (
@@ -27,7 +27,7 @@ const About = () => {
           <div className="w-full h-[450px] bg-cream-dark rounded-2xl overflow-hidden shadow-premium relative">
             {/* High-quality Unsplash image illustrating an artist handcrafting/sketching */}
             <img 
-              src="/mandala_rabbit.png" 
+              src="/phoenix_mandala.jpg" 
               alt="Handmade sketching process" 
               className="w-full h-full object-cover"
             />
@@ -53,7 +53,7 @@ const About = () => {
           </p>
           
           <p className="text-sm md:text-base text-charcoal-light font-light leading-relaxed">
-            Behind Mahek's success stands her father—her ultimate pillar of strength. His unwavering support and belief empowered Mahek to build her own life and start her own business on her own strength. This father-daughter bond and legacy of independent craftsmanship are infused into every sketch, flower bouquet, and customized box she creates.
+            Behind Mahek's success stands her father—her ultimate pillar of strength. His unwavering support and belief empowered Mahek to build her own life and start her own business on her own strength. This father-daughter bond and legacy of independent craftsmanship are infused into every mandala, flower bouquet, and customized canvas painting she creates.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-cream-dark/40">
@@ -72,7 +72,7 @@ const About = () => {
               </div>
               <div>
                 <h4 className="font-serif font-bold text-sm">Resilient Handcrafting</h4>
-                <p className="text-xs text-charcoal-light font-light mt-1">Every sketch commission, paper flower, and mirror art is hand-styled on her own strength.</p>
+                <p className="text-xs text-charcoal-light font-light mt-1">Every mandala artwork, paper flower, and mirror art is hand-styled on her own strength.</p>
               </div>
             </div>
           </div>

@@ -524,13 +524,8 @@ db.serialize(() => {
   // Seed Default Categories
   const defaultCategories = [
     ['Memories in Colors', 'memories-in-colors', 'Turn your favorite moments into vibrant masterpieces.'],
-    ['Monochrome Magic', 'monochrome-magic', 'Classic sketches that never go out of style.'],
     ['Crafted for Your Corner', 'crafted-for-your-corner', 'Decor that tells your story.'],
-    ['Blooming Memories Bouquet', 'blooming-memories-bouquet', 'Where photographs blossom into unforgettable gifts.'],
-    ['Treasures of Memories', 'treasures-of-memories', 'Open the box, relive the moments.'],
-    ['Walls That Speak', 'walls-that-speak', 'Beautiful creations that bring life to every wall.'],
-    ['Forever Blooms', 'forever-blooms', 'Flowers that never fade, memories that never end.'],
-    ['The Forever Nest', 'the-forever-nest', 'A beautiful home for your precious promise.']
+    ['Walls That Speak', 'walls-that-speak', 'Beautiful creations that bring life to every wall.']
   ];
 
   defaultCategories.forEach(cat => {
@@ -545,39 +540,33 @@ db.serialize(() => {
     rows.forEach(r => { categoryMap[r.name] = r.id; });
 
     const memoriesInColorsId = categoryMap['Memories in Colors'];
-    const monochromeMagicId = categoryMap['Monochrome Magic'];
-    const foreverNestId = categoryMap['The Forever Nest'];
-    const treasuresOfMemoriesId = categoryMap['Treasures of Memories'];
+    const craftedForYourCornerId = categoryMap['Crafted for Your Corner'];
+    const wallsThatSpeakId = categoryMap['Walls That Speak'];
 
     if (memoriesInColorsId) {
       db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
-        (?, 'Single Face Color Sketch (A4)', 'Handmade colored pencil portrait of single face on professional A4 artist paper', 1800.00),
-        (?, 'Couple Color Sketch (A4)', 'Handmade couple colored pencil portrait on professional A4 artist paper', 2800.00),
-        (?, 'Couple Color Sketch (A3)', 'Handmade couple colored pencil portrait on professional A3 artist paper', 4500.00)`,
+        (?, 'Lord Ganesha & Lotus Portrait', 'Vibrant color pencil sketch of Lord Ganesha combined with a blooming purple lotus flower', 1500.00),
+        (?, 'Under the Starry Night Painting', 'Acrylic painting on canvas depicting a parent carrying a child on their shoulders looking at starry sky', 1800.00),
+        (?, 'Hand-drawn Indian Couple Portrait', 'A detailed colored pencil commission capturing life-like parent smiles', 2500.00)`,
         [memoriesInColorsId, memoriesInColorsId, memoriesInColorsId]
       );
     }
 
-    if (monochromeMagicId) {
+    if (craftedForYourCornerId) {
       db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
-        (?, 'Single Face Pencil Sketch (A4)', 'Handmade pencil portrait of single face on professional A4 artist paper', 1500.00),
-        (?, 'Couple Pencil Sketch (A4)', 'Handmade couple pencil portrait on professional A4 artist paper', 2500.00),
-        (?, 'Couple Pencil Sketch (A3)', 'Handmade couple pencil portrait on professional A3 artist paper', 4200.00)`,
-        [monochromeMagicId, monochromeMagicId, monochromeMagicId]
+        (?, 'Personalized Glass Frame Decor', 'Custom glass frame decor customized to order', 2200.00),
+        (?, 'Lord Buddha Lippan Art Painting', 'Lord Buddha circular wooden panel detailed with concentric mirror tiles (Lippan work)', 1500.00),
+        (?, 'Vibrant Paper Lotus Decor', 'Handfolded pink and teal lotuses designed to make home celebrations bloom', 1200.00),
+        (?, 'Bespoke Paper Roses Bouquet', 'Meticulously handfolded paper roses styled into a classic bouquet', 1600.00)`,
+        [craftedForYourCornerId, craftedForYourCornerId, craftedForYourCornerId, craftedForYourCornerId]
       );
     }
 
-    if (foreverNestId) {
+    if (wallsThatSpeakId) {
       db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
-        (?, 'Engagement Ring Holder (Wooden)', 'Custom resin and wood ring holder decorated with dried flowers', 1800.00)`,
-        [foreverNestId]
-      );
-    }
-
-    if (treasuresOfMemoriesId) {
-      db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
-        (?, 'Paper Craft Explosion Box', 'Handcrafted multi-layered exploding gift box with photo slots', 1200.00)`,
-        [treasuresOfMemoriesId]
+        (?, 'Peacock Tassel Toran Hanging', 'Traditional handcrafted peacock tassel toran wall hanging decoration with mirror panels', 1800.00),
+        (?, 'Celestial Phoenix Mandala Art', 'Detailed colored pencil phoenix drawing with fine mandala backdrop details', 2000.00)`,
+        [wallsThatSpeakId, wallsThatSpeakId]
       );
     }
   });
@@ -585,33 +574,6 @@ db.serialize(() => {
   // Seed Default Gallery Items
   const galleryItems = [
     {
-      category_name: 'Monochrome Magic',
-      title: 'Eternal Bond Wedding Sketch',
-      description: 'An exquisite hand-drawn graphite and charcoal wedding couple portrait capturing the finest details of bridal jewelry and emotions.',
-      image_url: '/couple_sketch.jpg',
-      dimensions: 'A3 Size Frame',
-      medium: 'Charcoal & Graphite on Archival paper',
-      year: '2026',
-      is_featured: 1
-    },
-    {
-      category_name: 'Forever Blooms',
-      title: 'Everlasting Paper Rose Bouquet',
-      description: 'Delicately hand-folded red and pink cardstock roses, meticulously styled into a luxury bouquet that lasts forever.',
-      image_url: '/paper_roses.jpg',
-      dimensions: '12" Bouquet Height',
-      medium: 'Premium Matte Craft Cardstock',
-      year: '2026',
-      is_featured: 1
-    },
-    {
-      category_name: 'Treasures of Memories',
-      title: 'Handcrafted Multi-Layer Explosion Box',
-      description: 'A premium handcrafted exploding gift box featuring layered photo panels, custom pocket folds, and decorative top embellishments.',
-      image_url: '/explosion_box.jpg',
-      dimensions: '10" x 10" (Opened)',
-      medium: 'Craft Cardstock & Ribbon accents',
-      year: '2026',
       is_featured: 1
     },
     {
@@ -635,26 +597,6 @@ db.serialize(() => {
       is_featured: 0
     },
     {
-      category_name: 'The Forever Nest',
-      title: 'Tejas & Bhargavi Name Ring Holder',
-      description: 'Custom ring holder decorated with dried flowers and custom lettering.',
-      image_url: '/ring_holder.png',
-      dimensions: '8" Round velvet base',
-      medium: 'Glitter Loop Outlines & Paper Florals',
-      year: '2021',
-      is_featured: 0
-    },
-    {
-      category_name: 'Crafted for Your Corner',
-      title: 'Krishna Mandala Bookmark',
-      description: 'Lord Krishna silhouette drawing bordered with fine concentric mandalas.',
-      image_url: '/krishna_bookmark.png',
-      dimensions: '3" x 9" Bookmark Strip',
-      medium: 'Black Ink Silhouette & Concentric Patterns',
-      year: '2020',
-      is_featured: 0
-    },
-    {
       category_name: 'Crafted for Your Corner',
       title: 'Vibrant Paper Lotus Decor',
       description: 'Handfolded pink and teal lotuses designed to make home celebrations bloom.',
@@ -665,16 +607,6 @@ db.serialize(() => {
       is_featured: 0
     },
     {
-      category_name: 'Monochrome Magic',
-      title: 'Intricate Rabbit Mandala Sketch',
-      description: 'A detailed rabbit drawing layered with mandala ink textures.',
-      image_url: '/mandala_rabbit.png',
-      dimensions: 'A4 size paper',
-      medium: 'Fineliner ink and orange graphite shadings',
-      year: '2021',
-      is_featured: 0
-    },
-    {
       category_name: 'Walls That Speak',
       title: 'Peacock Tassel Toran Hanging',
       description: 'Traditional handcrafted toran featuring colorful circular designs, mirrors, bead strings, and dangling peacock accents.',
@@ -682,15 +614,55 @@ db.serialize(() => {
       dimensions: '3ft Width',
       medium: 'Embroidery, Wooden beads, Mirror panels & Woolen tassels',
       year: '2026',
+      is_featured: 1
+    },
+    {
+      category_name: 'Walls That Speak',
+      title: 'Celestial Phoenix Mandala Art',
+      description: 'Vibrant colored pencil and ink illustration of a phoenix with a detailed mandala backdrop on black cardstock.',
+      image_url: '/phoenix_mandala.jpg',
+      dimensions: '12" x 12" Frame',
+      medium: 'Prismacolor Pencils & White Gel Pen on Black Board',
+      year: '2026',
+      is_featured: 1
+    },
+    {
+      category_name: 'Memories in Colors',
+      title: 'Lord Ganesha & Lotus Portrait',
+      description: 'Vibrant color pencil sketch of Lord Ganesha combined with a blooming purple lotus flower.',
+      image_url: '/ganesha_lotus.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Colored Pencil & Soft Pastels on Paper',
+      year: '2026',
+      is_featured: 1
+    },
+    {
+      category_name: 'Memories in Colors',
+      title: 'Under the Starry Night Painting',
+      description: 'A touching painting depicting a parent carrying a child on their shoulders, gazing at a starry night sky and full moon.',
+      image_url: '/starry_sky_parent_child.jpg',
+      dimensions: 'A4 Size Canvas',
+      medium: 'Acrylic Paint on Archival Canvas Paper',
+      year: '2026',
+      is_featured: 1
+    },
+    {
+      category_name: 'Crafted for Your Corner',
+      title: 'Bespoke Red Paper Roses Bouquet',
+      description: 'Meticulously handfolded bright red paper roses styled into a classic everlasting hand bouquet.',
+      image_url: '/red_paper_roses.jpg',
+      dimensions: '12" Bouquet Height',
+      medium: 'Premium Cardstock & Green floral wire',
+      year: '2026',
       is_featured: 0
     },
     {
-      category_name: 'Blooming Memories Bouquet',
-      title: 'Cherished Moments Photo Bouquet',
-      description: 'A unique handmade bouquet arrangement combining printed photograph cutouts, premium floral wrapping, and a customizable bestie tag.',
-      image_url: '/photo_bouquet.jpg',
-      dimensions: '14" Height',
-      medium: 'Laminated Photo Prints & Luxury Wrapping Paper',
+      category_name: 'Crafted for Your Corner',
+      title: 'Everlasting Pink Paper Roses Bouquet',
+      description: 'Hand-rolled pastel pink roses arranged in a gorgeous decorative bouquet.',
+      image_url: '/pink_paper_roses.jpg',
+      dimensions: '12" Bouquet Height',
+      medium: 'Premium Cardstock & Wrapping accents',
       year: '2026',
       is_featured: 0
     }
@@ -740,10 +712,10 @@ db.serialize(() => {
 
   // Seed initial FAQ
   const faqs = [
-    ['How long does it take to make a custom portrait?', 'Typically, it takes 5 to 7 business days to complete a sketch portrait, depending on the complexity and paper size. Delivery takes another 2-4 days.', 'Delivery'],
-    ['Can I request changes to my custom sketch?', 'Yes! We send you a preview photo of the completed sketch before framing and shipping. You can request minor modifications at this stage.', 'Customization'],
+    ['How long does it take to make a custom painting or mandala?', 'Typically, it takes 5 to 7 business days to complete a customized painting or mandala art design, depending on the complexity. Delivery takes another 2-4 days.', 'Delivery'],
+    ['Can I request changes to my custom artwork?', 'Yes! We send you a preview photo of the completed painting or mandala before framing and shipping. You can request minor modifications at this stage.', 'Customization'],
     ['Do you offer express shipping?', 'Yes, we have express shipping options available at checkout for an additional fee, which speeds up shipping to 24-48 hours after completion.', 'Delivery'],
-    ['How is the price calculated for custom gifts?', 'Pricing is dynamic and depends on the artwork type (e.g. Sketch Art, Paper Craft), selected dimensions (A4, A3), and additional features like framing or custom text boxes.', 'Pricing']
+    ['How is the price calculated for custom orders?', 'Pricing is dynamic and depends on the artwork type (e.g. Mandala Art, Canvas Painting), selected dimensions, and additional features like framing or custom text boxes.', 'Pricing']
   ];
   faqs.forEach(f => {
     db.get(`SELECT id FROM faq WHERE question = ?`, [f[0]], (err, row) => {

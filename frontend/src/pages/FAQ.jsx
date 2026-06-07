@@ -14,10 +14,10 @@ const FAQ = () => {
   });
 
   const fallbackFaqs = [
-    { id: 1, category: 'Delivery', question: 'How long does it take to make a custom portrait?', answer: 'Typically, it takes 5 to 7 business days to complete a sketch portrait, depending on the complexity and paper size. Delivery takes another 2-4 days.' },
-    { id: 2, category: 'Customization', question: 'Can I request changes to my custom sketch?', answer: 'Yes! We send you a preview photo of the completed sketch before framing and shipping. You can request minor modifications at this stage.' },
+    { id: 1, category: 'Delivery', question: 'How long does it take to make a custom painting or mandala?', answer: 'Typically, it takes 5 to 7 business days to complete a customized painting or mandala art design, depending on the complexity. Delivery takes another 2-4 days.' },
+    { id: 2, category: 'Customization', question: 'Can I request changes to my custom artwork?', answer: 'Yes! We send you a preview photo of the completed painting or mandala before framing and shipping. You can request minor modifications at this stage.' },
     { id: 3, category: 'Delivery', question: 'Do you offer express shipping?', answer: 'Yes, we have express shipping options available at checkout for an additional fee, which speeds up shipping to 24-48 hours after completion.' },
-    { id: 4, category: 'Pricing', question: 'How is the price calculated for custom gifts?', answer: 'Pricing is dynamic and depends on the artwork type (e.g. Sketch Art, Paper Craft), selected dimensions (A4, A3), and additional features like framing or custom text boxes.' }
+    { id: 4, category: 'Pricing', question: 'How is the price calculated for custom orders?', answer: 'Pricing is dynamic and depends on the artwork type (e.g. Mandala Art, Canvas Painting), selected dimensions, and additional features like framing or custom text boxes.' }
   ];
 
   const displayFaqs = faqs.length > 0 ? faqs : fallbackFaqs;

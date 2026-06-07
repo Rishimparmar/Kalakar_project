@@ -29,33 +29,6 @@ const Gallery = () => {
 
   const fallbackItems = [
     {
-      id: 'f1',
-      title: 'Eternal Bond Wedding Sketch',
-      category_name: 'Monochrome Magic',
-      image_url: '/couple_sketch.jpg',
-      dimensions: 'A3 Size Frame',
-      medium: 'Charcoal & Graphite on Archival paper',
-      year: '2026'
-    },
-    {
-      id: 'f2',
-      title: 'Everlasting Paper Rose Bouquet',
-      category_name: 'Forever Blooms',
-      image_url: '/paper_roses.jpg',
-      dimensions: '12" Bouquet Height',
-      medium: 'Premium Matte Craft Cardstock',
-      year: '2026'
-    },
-    {
-      id: 'f3',
-      title: 'Handcrafted Multi-Layer Explosion Box',
-      category_name: 'Treasures of Memories',
-      image_url: '/explosion_box.jpg',
-      dimensions: '10" x 10" (Opened)',
-      medium: 'Craft Cardstock & Ribbon accents',
-      year: '2026'
-    },
-    {
       id: 'f4',
       title: 'Lord Buddha Lippan Art Painting',
       category_name: 'Crafted for Your Corner',
@@ -74,15 +47,6 @@ const Gallery = () => {
       year: '2022'
     },
     {
-      id: 'f6',
-      title: 'Tejas & Bhargavi Name Ring Holder',
-      category_name: 'The Forever Nest',
-      image_url: '/ring_holder.png',
-      dimensions: '8" Round velvet base',
-      medium: 'Glitter Loop Outlines & Paper Florals',
-      year: '2021'
-    },
-    {
       id: 'f8',
       title: 'Peacock Tassel Toran Hanging',
       category_name: 'Walls That Speak',
@@ -92,12 +56,48 @@ const Gallery = () => {
       year: '2026'
     },
     {
-      id: 'f9',
-      title: 'Cherished Moments Photo Bouquet',
-      category_name: 'Blooming Memories Bouquet',
-      image_url: '/photo_bouquet.jpg',
-      dimensions: '14" Height',
-      medium: 'Laminated Photo Prints & Luxury Wrapping Paper',
+      id: 'f11',
+      title: 'Celestial Phoenix Mandala Art',
+      category_name: 'Walls That Speak',
+      image_url: '/phoenix_mandala.jpg',
+      dimensions: '12" x 12" Frame',
+      medium: 'Prismacolor Pencils & White Gel Pen on Black Board',
+      year: '2026'
+    },
+    {
+      id: 'f12',
+      title: 'Lord Ganesha & Lotus Portrait',
+      category_name: 'Memories in Colors',
+      image_url: '/ganesha_lotus.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Colored Pencil & Soft Pastels on Paper',
+      year: '2026'
+    },
+    {
+      id: 'f13',
+      title: 'Under the Starry Night Painting',
+      category_name: 'Memories in Colors',
+      image_url: '/starry_sky_parent_child.jpg',
+      dimensions: 'A4 Size Canvas',
+      medium: 'Acrylic Paint on Archival Canvas Paper',
+      year: '2026'
+    },
+    {
+      id: 'f14',
+      title: 'Bespoke Red Paper Roses Bouquet',
+      category_name: 'Crafted for Your Corner',
+      image_url: '/red_paper_roses.jpg',
+      dimensions: '12" Bouquet Height',
+      medium: 'Premium Cardstock & Green floral wire',
+      year: '2026'
+    },
+    {
+      id: 'f15',
+      title: 'Everlasting Pink Paper Roses Bouquet',
+      category_name: 'Crafted for Your Corner',
+      image_url: '/pink_paper_roses.jpg',
+      dimensions: '12" Bouquet Height',
+      medium: 'Premium Cardstock & Wrapping accents',
       year: '2026'
     }
   ];
@@ -110,13 +110,8 @@ const Gallery = () => {
 
   const fallbackCategories = [
     { name: 'Memories in Colors' },
-    { name: 'Monochrome Magic' },
     { name: 'Crafted for Your Corner' },
-    { name: 'Blooming Memories Bouquet' },
-    { name: 'Treasures of Memories' },
-    { name: 'Walls That Speak' },
-    { name: 'Forever Blooms' },
-    { name: 'The Forever Nest' }
+    { name: 'Walls That Speak' }
   ];
 
   const displayCategories = categories.length > 0 ? categories : fallbackCategories;
