@@ -179,21 +179,10 @@ const Gallery = () => {
 
       {/* Grid Filter and Controls */}
       <div className="border-t border-cream-dark/50 pt-16 mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-        {/* Category Tabs */}
-        <div className="flex flex-wrap gap-2.5">
-          {['All', ...displayCategories.map(c => c.name)].map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all ${
-                selectedCategory === cat
-                  ? 'bg-gold-rose text-white shadow-premium'
-                  : 'bg-white text-charcoal border border-cream-dark/50 hover:bg-canvas/50'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+        {/* Section Title instead of Category Filters */}
+        <div className="flex items-center gap-3">
+          <span className="h-2 w-2 rounded-full bg-gold-rose animate-pulse"></span>
+          <h2 className="font-serif text-xl md:text-2xl font-bold text-charcoal">All Creations</h2>
         </div>
 
         {/* Search Input */}
