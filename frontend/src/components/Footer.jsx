@@ -27,16 +27,12 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
         {/* About Column */}
         <div className="flex flex-col space-y-4">
-          <Link to="/" className="flex flex-col group">
-            <span className="font-serif text-3xl font-black tracking-widest text-gold-artistic flex items-baseline gap-1 transition-all duration-300 group-hover:text-gold-rose">
-              काला
-              <span className="font-script text-lg font-bold text-gold-rose tracking-normal ml-0.5 lowercase">
-                by Mahek
-              </span>
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.22em] text-white/50 mt-0.5 group-hover:text-gold-rose transition-colors">
-              Turning Memories Into Art
-            </span>
+          <Link to="/" className="flex items-center group">
+            <img 
+              src="/logo_white.png" 
+              alt="काला by Mahek Logo" 
+              className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]" 
+            />
           </Link>
           <p className="text-white/70 text-sm font-light leading-relaxed">
             A boutique studio transforming your treasured moments, photos, and milestones into luxury handmade art, custom portraits, and bespoke gift boxes.
