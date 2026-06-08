@@ -24,13 +24,13 @@ const About = () => {
       {/* Grid: Artist & Mission */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
         <div className="lg:col-span-5 relative">
-          <div className="w-full h-[450px] bg-cream-dark rounded-2xl overflow-hidden shadow-premium relative">
+          <div className="w-full h-[520px] bg-cream-dark rounded-2xl overflow-hidden shadow-premium relative">
             <img 
               src="/mahek_story.jpg" 
               alt="Mahek Thakor - Founder & Artist" 
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-[center_82%]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 to-transparent"></div>
           </div>
           <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-premium border border-cream border-l-4 border-l-gold-artistic max-w-xs hidden md:block">
             <p className="text-xs text-charcoal-light italic">

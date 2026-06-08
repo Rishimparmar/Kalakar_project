@@ -47,7 +47,7 @@ const Navbar = () => {
           <img 
             src="/logo.png" 
             alt="काला by Mahek Logo" 
-            className="h-12 md:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]" 
+            className="h-16 md:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]" 
           />
         </Link>
 

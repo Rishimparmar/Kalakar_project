@@ -31,7 +31,7 @@ const Footer = () => {
             <img 
               src="/logo_white.png" 
               alt="काला by Mahek Logo" 
-              className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]" 
+              className="h-16 md:h-18 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]" 
             />
           </Link>
           <p className="text-white/70 text-sm font-light leading-relaxed">
