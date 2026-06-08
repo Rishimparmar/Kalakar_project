@@ -9,6 +9,13 @@ const journalPages = [
     note: 'Turning Memories Into Art'
   },
   {
+    title: 'Hand-drawn Parents Portrait',
+    category: 'Memories in Colors',
+    image: '/parents_portrait.png',
+    isCover: false,
+    note: 'Detailed colored pencil artwork capturing life-like parent smiles and traditional warmth.'
+  },
+  {
     title: 'Celestial Phoenix Mandala Art',
     category: 'Walls That Speak',
     image: '/phoenix_mandala.jpg',

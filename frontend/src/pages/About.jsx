@@ -25,11 +25,10 @@ const About = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
         <div className="lg:col-span-5 relative">
           <div className="w-full h-[450px] bg-cream-dark rounded-2xl overflow-hidden shadow-premium relative">
-            {/* High-quality Unsplash image illustrating an artist handcrafting/sketching */}
             <img 
-              src="/phoenix_mandala.jpg" 
-              alt="Handmade sketching process" 
-              className="w-full h-full object-cover"
+              src="/mahek_story.jpg" 
+              alt="Mahek Thakor - Founder & Artist" 
+              className="w-full h-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 to-transparent"></div>
           </div>

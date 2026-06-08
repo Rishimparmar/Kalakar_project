@@ -47,12 +47,48 @@ const Gallery = () => {
       year: '2022'
     },
     {
+      id: 'f6',
+      title: 'Vibrant Paper Lotus Decor',
+      category_name: 'Crafted for Your Corner',
+      image_url: '/paper_lotus.png',
+      dimensions: '12" x 12" Base',
+      medium: 'Handfolded Premium Craft Cardstock',
+      year: '2025'
+    },
+    {
+      id: 'f7',
+      title: 'Krishna Mandala Bookmark',
+      category_name: 'Memories in Colors',
+      image_url: '/krishna_bookmark.png',
+      dimensions: '3" x 9"',
+      medium: 'Charcoal Silhouette & Fineliner Ink on Paper',
+      year: '2025'
+    },
+    {
       id: 'f8',
       title: 'Peacock Tassel Toran Hanging',
       category_name: 'Walls That Speak',
       image_url: '/wall_hanging_peacock.jpg',
       dimensions: '3ft Width',
       medium: 'Embroidery, Wooden beads, Mirror panels & Woolen tassels',
+      year: '2026'
+    },
+    {
+      id: 'f9',
+      title: 'Customized Name Ring Holder',
+      category_name: 'Crafted for Your Corner',
+      image_url: '/ring_holder.png',
+      dimensions: '8" Diameter Base',
+      medium: 'Glitter Ring Outlines & Paper Florals on Velvet',
+      year: '2025'
+    },
+    {
+      id: 'f10',
+      title: 'Cherished Moments Photo Bouquet',
+      category_name: 'Crafted for Your Corner',
+      image_url: '/photo_bouquet.jpg',
+      dimensions: '12" Bouquet Height',
+      medium: 'Custom Photos, Premium Cardstock & Wrapping Accents',
       year: '2026'
     },
     {

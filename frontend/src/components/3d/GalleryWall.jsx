@@ -5,7 +5,7 @@ const exhibitionArtworks = [
   {
     id: 1,
     title: 'Indian Couple Pencil Portrait',
-    category: 'Sketch Art',
+    category: 'Memories in Colors',
     image: '/parents_portrait.png',
     dimensions: 'A3 Size Frame',
     medium: 'Colored Pencils on Textured Paper',
@@ -14,7 +14,7 @@ const exhibitionArtworks = [
   {
     id: 2,
     title: 'Customized Name Ring Holder',
-    category: 'Wedding Crafts',
+    category: 'Crafted for Your Corner',
     image: '/ring_holder.png',
     dimensions: '8" Diameter base',
     medium: 'Glitter Ring Outlines on Velvet Base',
@@ -23,7 +23,7 @@ const exhibitionArtworks = [
   {
     id: 3,
     title: 'Vibrant Paper Lotus Decor',
-    category: 'Event Crafts',
+    category: 'Crafted for Your Corner',
     image: '/paper_lotus.png',
     dimensions: '12 x 12 inches',
     medium: 'Handfolded Craft Cardstock',
@@ -32,7 +32,7 @@ const exhibitionArtworks = [
   {
     id: 4,
     title: 'Krishna Mandala Bookmark',
-    category: 'Sketch Art',
+    category: 'Memories in Colors',
     image: '/krishna_bookmark.png',
     dimensions: '3 x 9 inches',
     medium: 'Charcoal Silhouette & Fineliner Ink',

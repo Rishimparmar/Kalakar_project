@@ -125,6 +125,36 @@ const galleryItems = [
     medium: 'Premium Cardstock & Wrapping accents',
     year: '2026',
     is_featured: 0
+  },
+  {
+    category_name: 'Memories in Colors',
+    title: 'Krishna Mandala Bookmark',
+    description: 'Lord Krishna playing a flute silhouette flanked by intricate concentric mandala drawings and yellow blossoms.',
+    image_url: '/krishna_bookmark.png',
+    dimensions: '3" x 9"',
+    medium: 'Charcoal Silhouette & Fineliner Ink on Paper',
+    year: '2025',
+    is_featured: 0
+  },
+  {
+    category_name: 'Crafted for Your Corner',
+    title: 'Customized Name Ring Holder',
+    description: 'Bespoke wedding ring pedestal featuring personalized glitter lettering and handcrafted paper florals on a velvet base.',
+    image_url: '/ring_holder.png',
+    dimensions: '8" Diameter Base',
+    medium: 'Glitter Ring Outlines & Paper Florals on Velvet',
+    year: '2025',
+    is_featured: 0
+  },
+  {
+    category_name: 'Crafted for Your Corner',
+    title: 'Cherished Moments Photo Bouquet',
+    description: 'A custom floral bouquet featuring personalized photos nestled within handfolded paper flowers, creating an everlasting keepsake.',
+    image_url: '/photo_bouquet.jpg',
+    dimensions: '12" Bouquet Height',
+    medium: 'Custom Photos, Premium Cardstock & Wrapping Accents',
+    year: '2026',
+    is_featured: 0
   }
 ];
 

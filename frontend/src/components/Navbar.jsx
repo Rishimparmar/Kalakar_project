@@ -43,11 +43,14 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
         {/* Brand Logo */}
-        <Link to="/" className="flex flex-col">
-          <span className="font-serif text-2xl font-bold tracking-wider text-charcoal flex items-center gap-1.5">
-            Kalaakar
+        <Link to="/" className="flex flex-col group">
+          <span className="font-serif text-2xl md:text-3xl font-black tracking-widest text-charcoal flex items-baseline gap-1 transition-all duration-300 group-hover:text-gold-rose">
+            काला
+            <span className="font-script text-base md:text-lg font-bold text-gold-artistic tracking-normal ml-0.5 lowercase">
+              by Mahek
+            </span>
           </span>
-          <span className="text-[10px] uppercase tracking-[0.2em] text-gold-rose font-medium">
+          <span className="text-[9px] uppercase tracking-[0.22em] text-charcoal-light/60 font-semibold mt-0.5 group-hover:text-gold-rose/80 transition-colors">
             Turning Memories Into Art
           </span>
         </Link>

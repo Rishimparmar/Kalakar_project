@@ -27,11 +27,14 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
         {/* About Column */}
         <div className="flex flex-col space-y-4">
-          <Link to="/" className="flex flex-col">
-            <span className="font-serif text-3xl font-bold tracking-wider text-gold-artistic">
-              Kalaakar
+          <Link to="/" className="flex flex-col group">
+            <span className="font-serif text-3xl font-black tracking-widest text-gold-artistic flex items-baseline gap-1 transition-all duration-300 group-hover:text-gold-rose">
+              काला
+              <span className="font-script text-lg font-bold text-gold-rose tracking-normal ml-0.5 lowercase">
+                by Mahek
+              </span>
             </span>
-            <span className="text-[10px] uppercase tracking-[0.25em] text-gold-rose">
+            <span className="text-[10px] uppercase tracking-[0.22em] text-white/50 mt-0.5 group-hover:text-gold-rose transition-colors">
               Turning Memories Into Art
             </span>
           </Link>
