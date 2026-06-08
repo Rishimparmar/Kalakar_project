@@ -155,6 +155,17 @@ if (dbConnectionString) {
       }
       console.log('PostgreSQL Tables initialized successfully.');
 
+      // Create indexes for database optimization
+      const pgIndexes = [
+        `CREATE INDEX IF NOT EXISTS idx_gallery_category ON gallery(category_id)`,
+        `CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_id)`,
+        `CREATE INDEX IF NOT EXISTS idx_status_logs_order ON order_status_logs(order_id)`
+      ];
+      for (const idxSql of pgIndexes) {
+        await pool.query(idxSql);
+      }
+      console.log('PostgreSQL Indexes initialized.');
+
       // Seed Default Admin User in PostgreSQL/Supabase if it doesn't exist
       try {
         const adminEmail = 'admin@kalaakar.com';
@@ -226,6 +237,74 @@ if (dbConnectionString) {
           await pool.query("INSERT INTO testimonials (name, avatar_url, review, rating, is_approved) VALUES ($1, $2, $3, $4, $5)", t);
         }
         console.log('PostgreSQL Testimonials recreated successfully.');
+
+        // Recreate products in PostgreSQL
+        await pool.query("DELETE FROM products");
+        const pgCatRes = await pool.query('SELECT id, name FROM categories');
+        const pgCategoryMap = {};
+        pgCatRes.rows.forEach(r => { pgCategoryMap[r.name] = r.id; });
+
+        const pgProductsToSeed = [
+          {
+            category: 'Monochrome Magic',
+            name: 'Black & White Sketch (Monochrome Magic)',
+            description: 'Classic custom pencil portrait sketch capturing memories in elegant monochrome.',
+            price: 1000.00
+          },
+          {
+            category: 'Memories in Colors',
+            name: 'Colour Sketch Art (Memories in Colors)',
+            description: 'Vibrant custom color sketch to bring your favorite moments to life.',
+            price: 1500.00
+          },
+          {
+            category: 'Crafted for Your Corner',
+            name: 'Lord Buddha Lippan Art Painting (Hand Decor)',
+            description: 'Hand-painted Lord Buddha panel adorned with traditional mirror work.',
+            price: 1000.00
+          },
+          {
+            category: 'Crafted for Your Corner',
+            name: 'Vibrant Paper Lotus Decor (Hand Decor)',
+            description: 'Handfolded decorative paper lotuses for festivals and home styling.',
+            price: 1000.00
+          },
+          {
+            category: 'Walls That Speak',
+            name: 'Peacock Tassel Toran Hanging (Hand Decor)',
+            description: 'Stunning handcrafted toran with mirrors and wool tassels for doorways.',
+            price: 1000.00
+          },
+          {
+            category: 'Crafted for Your Corner',
+            name: 'Personalized Glass Frame Decor (Hand Decor)',
+            description: 'Custom pressed flower glass frame or acrylic calligraphy decor.',
+            price: 1000.00
+          },
+          {
+            category: 'Forever Blooms',
+            name: 'Bespoke Paper Roses Bouquet (Hand Decor)',
+            description: 'Meticulously crafted paper roses bouquet that never fades.',
+            price: 1000.00
+          },
+          {
+            category: 'Blooming Memories Bouquet',
+            name: 'Blooming Memories Photo Bouquet (Hand Decor)',
+            description: 'Custom bouquet where photographs blossom into unforgettable keepsakes.',
+            price: 1000.00
+          }
+        ];
+
+        for (const p of pgProductsToSeed) {
+          const catId = pgCategoryMap[p.category];
+          if (catId) {
+            await pool.query(
+              "INSERT INTO products (category_id, name, description, base_price) VALUES ($1, $2, $3, $4)",
+              [catId, p.name, p.description, p.price]
+            );
+          }
+        }
+        console.log('PostgreSQL products table cleared and seeded successfully.');
 
       } catch (seedErr) {
         console.error('Error seeding default data in PostgreSQL:', seedErr.message);
@@ -501,6 +580,10 @@ db.serialize(() => {
     FOREIGN KEY (admin_id) REFERENCES users (id)
   )`);
 
+  db.run(`CREATE INDEX IF NOT EXISTS idx_gallery_category ON gallery(category_id)`);
+  db.run(`CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_id)`);
+  db.run(`CREATE INDEX IF NOT EXISTS idx_status_logs_order ON order_status_logs(order_id)`);
+
   console.log('Tables initialized successfully.');
 
   // Seed Default Settings
@@ -524,58 +607,97 @@ db.serialize(() => {
   // Seed Default Categories
   const defaultCategories = [
     ['Memories in Colors', 'memories-in-colors', 'Turn your favorite moments into vibrant masterpieces.'],
+    ['Monochrome Magic', 'monochrome-magic', 'Classic sketches that never go out of style.'],
     ['Crafted for Your Corner', 'crafted-for-your-corner', 'Decor that tells your story.'],
-    ['Walls That Speak', 'walls-that-speak', 'Beautiful creations that bring life to every wall.']
+    ['Blooming Memories Bouquet', 'blooming-memories-bouquet', 'Where photographs blossom into unforgettable gifts.'],
+    ['Treasures of Memories', 'treasures-of-memories', 'Open the box, relive the moments.'],
+    ['Walls That Speak', 'walls-that-speak', 'Beautiful creations that bring life to every wall.'],
+    ['Forever Blooms', 'forever-blooms', 'Flowers that never fade, memories that never end.'],
+    ['The Forever Nest', 'the-forever-nest', 'A beautiful home for your precious promise.']
   ];
 
   defaultCategories.forEach(cat => {
     db.run(`INSERT OR IGNORE INTO categories (name, slug, description) VALUES (?, ?, ?)`, cat);
   });
 
-  // Seed Default Products/Pricing
-  db.all(`SELECT id, name FROM categories`, [], (err, rows) => {
-    if (err || !rows.length) return;
+  // Clear and Seed Default Products/Pricing
+  db.run(`DELETE FROM products`, [], (err) => {
+    if (err) {
+      console.error('Error clearing products:', err.message);
+      return;
+    }
     
-    const categoryMap = {};
-    rows.forEach(r => { categoryMap[r.name] = r.id; });
+    db.all(`SELECT id, name FROM categories`, [], (err, rows) => {
+      if (err || !rows.length) return;
+      
+      const categoryMap = {};
+      rows.forEach(r => { categoryMap[r.name] = r.id; });
 
-    const memoriesInColorsId = categoryMap['Memories in Colors'];
-    const craftedForYourCornerId = categoryMap['Crafted for Your Corner'];
-    const wallsThatSpeakId = categoryMap['Walls That Speak'];
+      const productsToSeed = [
+        {
+          category: 'Monochrome Magic',
+          name: 'Black & White Sketch (Monochrome Magic)',
+          description: 'Classic custom pencil portrait sketch capturing memories in elegant monochrome.',
+          price: 1000.00
+        },
+        {
+          category: 'Memories in Colors',
+          name: 'Colour Sketch Art (Memories in Colors)',
+          description: 'Vibrant custom color sketch to bring your favorite moments to life.',
+          price: 1500.00
+        },
+        {
+          category: 'Crafted for Your Corner',
+          name: 'Lord Buddha Lippan Art Painting (Hand Decor)',
+          description: 'Hand-painted Lord Buddha panel adorned with traditional mirror work.',
+          price: 1000.00
+        },
+        {
+          category: 'Crafted for Your Corner',
+          name: 'Vibrant Paper Lotus Decor (Hand Decor)',
+          description: 'Handfolded decorative paper lotuses for festivals and home styling.',
+          price: 1000.00
+        },
+        {
+          category: 'Walls That Speak',
+          name: 'Peacock Tassel Toran Hanging (Hand Decor)',
+          description: 'Stunning handcrafted toran with mirrors and wool tassels for doorways.',
+          price: 1000.00
+        },
+        {
+          category: 'Crafted for Your Corner',
+          name: 'Personalized Glass Frame Decor (Hand Decor)',
+          description: 'Custom pressed flower glass frame or acrylic calligraphy decor.',
+          price: 1000.00
+        },
+        {
+          category: 'Forever Blooms',
+          name: 'Bespoke Paper Roses Bouquet (Hand Decor)',
+          description: 'Meticulously crafted paper roses bouquet that never fades.',
+          price: 1000.00
+        },
+        {
+          category: 'Blooming Memories Bouquet',
+          name: 'Blooming Memories Photo Bouquet (Hand Decor)',
+          description: 'Custom bouquet where photographs blossom into unforgettable keepsakes.',
+          price: 1000.00
+        }
+      ];
 
-    if (memoriesInColorsId) {
-      db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
-        (?, 'Lord Ganesha & Lotus Portrait', 'Vibrant color pencil sketch of Lord Ganesha combined with a blooming purple lotus flower', 1500.00),
-        (?, 'Under the Starry Night Painting', 'Acrylic painting on canvas depicting a parent carrying a child on their shoulders looking at starry sky', 1800.00),
-        (?, 'Hand-drawn Indian Couple Portrait', 'A detailed colored pencil commission capturing life-like parent smiles', 2500.00)`,
-        [memoriesInColorsId, memoriesInColorsId, memoriesInColorsId]
-      );
-    }
-
-    if (craftedForYourCornerId) {
-      db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
-        (?, 'Personalized Glass Frame Decor', 'Custom glass frame decor customized to order', 2200.00),
-        (?, 'Lord Buddha Lippan Art Painting', 'Lord Buddha circular wooden panel detailed with concentric mirror tiles (Lippan work)', 1500.00),
-        (?, 'Vibrant Paper Lotus Decor', 'Handfolded pink and teal lotuses designed to make home celebrations bloom', 1200.00),
-        (?, 'Bespoke Paper Roses Bouquet', 'Meticulously handfolded paper roses styled into a classic bouquet', 1600.00)`,
-        [craftedForYourCornerId, craftedForYourCornerId, craftedForYourCornerId, craftedForYourCornerId]
-      );
-    }
-
-    if (wallsThatSpeakId) {
-      db.run(`INSERT OR IGNORE INTO products (category_id, name, description, base_price) VALUES 
-        (?, 'Peacock Tassel Toran Hanging', 'Traditional handcrafted peacock tassel toran wall hanging decoration with mirror panels', 1800.00),
-        (?, 'Celestial Phoenix Mandala Art', 'Detailed colored pencil phoenix drawing with fine mandala backdrop details', 2000.00)`,
-        [wallsThatSpeakId, wallsThatSpeakId]
-      );
-    }
+      productsToSeed.forEach(p => {
+        const catId = categoryMap[p.category];
+        if (catId) {
+          db.run(`INSERT INTO products (category_id, name, description, base_price) VALUES (?, ?, ?, ?)`,
+            [catId, p.name, p.description, p.price]
+          );
+        }
+      });
+      console.log('Seeded clean products table.');
+    });
   });
 
   // Seed Default Gallery Items
   const galleryItems = [
-    {
-      is_featured: 1
-    },
     {
       category_name: 'Crafted for Your Corner',
       title: 'Lord Buddha Lippan Art Painting',
@@ -617,7 +739,7 @@ db.serialize(() => {
       is_featured: 1
     },
     {
-      category_name: 'Walls That Speak',
+      category_name: 'Memories in Colors',
       title: 'Celestial Phoenix Mandala Art',
       description: 'Vibrant colored pencil and ink illustration of a phoenix with a detailed mandala backdrop on black cardstock.',
       image_url: '/phoenix_mandala.jpg',
@@ -647,7 +769,7 @@ db.serialize(() => {
       is_featured: 1
     },
     {
-      category_name: 'Crafted for Your Corner',
+      category_name: 'Forever Blooms',
       title: 'Bespoke Red Paper Roses Bouquet',
       description: 'Meticulously handfolded bright red paper roses styled into a classic everlasting hand bouquet.',
       image_url: '/red_paper_roses.jpg',
@@ -657,7 +779,7 @@ db.serialize(() => {
       is_featured: 0
     },
     {
-      category_name: 'Crafted for Your Corner',
+      category_name: 'Forever Blooms',
       title: 'Everlasting Pink Paper Roses Bouquet',
       description: 'Hand-rolled pastel pink roses arranged in a gorgeous decorative bouquet.',
       image_url: '/pink_paper_roses.jpg',
@@ -677,7 +799,7 @@ db.serialize(() => {
       is_featured: 0
     },
     {
-      category_name: 'Crafted for Your Corner',
+      category_name: 'The Forever Nest',
       title: 'Customized Name Ring Holder',
       description: 'Bespoke wedding ring pedestal featuring personalized glitter lettering and handcrafted paper florals on a velvet base.',
       image_url: '/ring_holder.png',
@@ -687,12 +809,122 @@ db.serialize(() => {
       is_featured: 0
     },
     {
-      category_name: 'Crafted for Your Corner',
+      category_name: 'Blooming Memories Bouquet',
       title: 'Cherished Moments Photo Bouquet',
       description: 'A custom floral bouquet featuring personalized photos nestled within handfolded paper flowers, creating an everlasting keepsake.',
       image_url: '/photo_bouquet.jpg',
       dimensions: '12" Bouquet Height',
       medium: 'Custom Photos, Premium Cardstock & Wrapping Accents',
+      year: '2026',
+      is_featured: 0
+    },
+    {
+      category_name: 'Monochrome Magic',
+      title: 'Classic Pencil Couple Sketch',
+      description: 'Hand-drawn graphite and charcoal sketch of a couple, detailed with rich shadow tones.',
+      image_url: '/couple_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Graphite & Charcoal on Premium Paper',
+      year: '2026',
+      is_featured: 0
+    },
+    {
+      category_name: 'Treasures of Memories',
+      title: 'Treasures of Memories Explosion Box',
+      description: 'Handcrafted premium paper box that opens to reveal multiple layers of custom photos, personal messages, and details.',
+      image_url: '/explosion_box.jpg',
+      dimensions: '8" x 8" Box',
+      medium: 'Premium Cardstock, Photos & Ribbons',
+      year: '2026',
+      is_featured: 0
+    },
+    {
+      category_name: 'Monochrome Magic',
+      title: 'Intimate Selfie Pencil Portrait',
+      description: 'Hand-drawn graphite and charcoal selfie sketch portrait.',
+      image_url: '/selfie_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Graphite & Charcoal on Premium Paper',
+      year: '2026',
+      is_featured: 0
+    },
+    {
+      category_name: 'Memories in Colors',
+      title: 'Contemplative Standing Portrait',
+      description: 'Pencil drawing of a girl standing with a hand tattoo.',
+      image_url: '/girl_standing_tattoo_sketch.jpg',
+      dimensions: 'A3 Size Frame',
+      medium: 'Graphite on Archival Paper',
+      year: '2026',
+      is_featured: 0
+    },
+    {
+      category_name: 'Monochrome Magic',
+      title: 'Thoughtful Portrait in Glasses',
+      description: 'Detailed sketch of a girl wearing glasses, resting chin on her hand.',
+      image_url: '/girl_glasses_hand_chin_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Charcoal & Pencil on Fine Art Paper',
+      year: '2026',
+      is_featured: 0
+    },
+    {
+      category_name: 'Monochrome Magic',
+      title: 'Vibrant Smile Pencil Portrait',
+      description: 'A cheerful portrait sketch capturing a bright smiling face.',
+      image_url: '/girl_glasses_smile_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Graphite & Charcoal on Fine Art Paper',
+      year: '2026',
+      is_featured: 0
+    },
+    {
+      category_name: 'Monochrome Magic',
+      title: 'Classic Boy Portrait Sketch',
+      description: 'A classic headshot portrait sketch of a boy.',
+      image_url: '/boy_portrait_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Charcoal on Archival Paper',
+      year: '2026',
+      is_featured: 0
+    },
+    {
+      category_name: 'Monochrome Magic',
+      title: 'Vibrant Girl in Striped Dress',
+      description: 'A colored pencil portrait sketch of a girl wearing a striped dress.',
+      image_url: '/girl_striped_dress_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Colored Pencil on Archival Drawing Sheet',
+      year: '2026',
+      is_featured: 0
+    },
+    {
+      category_name: 'Memories in Colors',
+      title: 'Graceful Woman in Red Saree',
+      description: 'A colorful pencil drawing of a woman wearing a red saree.',
+      image_url: '/woman_red_saree_sketch.jpg',
+      dimensions: 'A3 Size Frame',
+      medium: 'Soft Pastels & Colored Pencil on Paper',
+      year: '2026',
+      is_featured: 0
+    },
+    {
+      category_name: 'Memories in Colors',
+      title: 'Joyful Duo in Maroon Sarees',
+      description: 'Vibrant color sketch representing two women smiling in maroon sarees.',
+      image_url: '/two_women_maroon_sarees.jpg',
+      dimensions: 'A3 Size Frame',
+      medium: 'Premium Color Pencil & Charcoal on Board',
+      year: '2026',
+      is_featured: 0
+    },
+    {
+      category_name: 'Monochrome Magic',
+      title: 'Lotus Serenity Portrait',
+      description: 'Black and white portrait sketch set against vibrant pink lotuses.',
+      image_url: '/woman_lotus_backdrop.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Mixed Media (Graphite & Pink Colored Pencil)',
       year: '2026',
       is_featured: 0
     }

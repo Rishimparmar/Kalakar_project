@@ -82,9 +82,57 @@ async function handleFileUpload(file) {
   return localPath;
 }
 
+// Regex for field validations
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^\+?[0-9\s\-()]{9,20}$/;
+
+// XSS Sanitizer Helper (escapes key HTML tokens)
+function escapeHtml(str) {
+  if (typeof str !== 'string') return str;
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// Remote File Deletion helper for Supabase
+async function deleteSupabaseFile(imageUrl) {
+  const supabaseKey = process.env.SUPABASE_KEY ? process.env.SUPABASE_KEY.replace(/^"|"$/g, '').trim() : null;
+  if (!supabaseKey || !imageUrl || !imageUrl.startsWith('http')) return false;
+
+  try {
+    const match = imageUrl.match(/https:\/\/(.+?)\.supabase\.co\/storage\/v1\/object\/public\/(.+?)\/(.+)$/);
+    if (match) {
+      const projectId = match[1];
+      const bucketName = match[2];
+      const filename = match[3];
+
+      const deleteUrl = `https://${projectId}.supabase.co/storage/v1/object/${bucketName}/${filename}`;
+      const response = await fetch(deleteUrl, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${supabaseKey}`
+        }
+      });
+      if (response.ok) {
+        console.log(`Deleted file from Supabase storage: ${filename}`);
+        return true;
+      } else {
+        const errMsg = await response.text();
+        console.error(`Failed to delete Supabase file: ${errMsg}`);
+      }
+    }
+  } catch (err) {
+    console.error('Error deleting file from Supabase:', err);
+  }
+  return false;
+}
+
 // Helper to log administrative actions
 function logActivity(adminId, action, details) {
-  db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (?, ?, ?)`, [adminId, action, details]);
+  db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (?, ?, ?)`, [adminId, escapeHtml(action), escapeHtml(details)]);
 }
 
 // Helper for Mock Email Automation
@@ -186,6 +234,13 @@ router.post('/orders', upload.single('photo'), async (req, res) => {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
+  if (!emailRegex.test(email.trim())) {
+    return res.status(400).json({ message: 'Invalid email address format.' });
+  }
+  if (!phoneRegex.test(phone.trim())) {
+    return res.status(400).json({ message: 'Invalid phone number format.' });
+  }
+
   const orderNumber = 'KK-' + Math.round(100000 + Math.random() * 900000);
   const imageUrl = req.file ? await handleFileUpload(req.file) : null;
 
@@ -205,9 +260,19 @@ router.post('/orders', upload.single('photo'), async (req, res) => {
     color_preference, message, delivery_date, budget, additional_instructions, status, price
   ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?)`;
 
+  const cleanName = escapeHtml(name.trim());
+  const cleanPhone = escapeHtml(phone.trim());
+  const cleanEmail = escapeHtml(email.trim().toLowerCase());
+  const cleanArtworkType = escapeHtml(artwork_type.trim());
+  const cleanSizeSelection = escapeHtml(size_selection.trim());
+  const cleanColorPref = escapeHtml((color_preference || '').trim());
+  const cleanMessage = escapeHtml((message || '').trim());
+  const cleanDeliveryDate = escapeHtml((delivery_date || '').trim());
+  const cleanInstructions = escapeHtml((additional_instructions || '').trim());
+
   db.run(query, [
-    orderNumber, name, phone, email, artwork_type, imageUrl, size_selection,
-    color_preference, message, delivery_date, budget, additional_instructions, estimatedPrice
+    orderNumber, cleanName, cleanPhone, cleanEmail, cleanArtworkType, imageUrl, cleanSizeSelection,
+    cleanColorPref, cleanMessage, cleanDeliveryDate, budget, cleanInstructions, estimatedPrice
   ], function(err) {
     if (err) {
       return res.status(500).json({ message: 'Error saving order: ' + err.message });
@@ -317,17 +382,29 @@ router.post('/quotes', upload.single('photo'), async (req, res) => {
     return res.status(400).json({ message: 'Required fields are missing' });
   }
 
+  if (!emailRegex.test(email.trim())) {
+    return res.status(400).json({ message: 'Invalid email address format.' });
+  }
+  if (!phoneRegex.test(phone.trim())) {
+    return res.status(400).json({ message: 'Invalid phone number format.' });
+  }
+
   const imageUrl = req.file ? await handleFileUpload(req.file) : null;
 
+  const cleanName = escapeHtml(name.trim());
+  const cleanEmail = escapeHtml(email.trim().toLowerCase());
+  const cleanPhone = escapeHtml(phone.trim());
+  const cleanDesc = escapeHtml(description.trim());
+
   db.run(`INSERT INTO quotes (name, email, phone, description, image_url, status) VALUES (?, ?, ?, ?, ?, 'pending')`, 
-    [name, email, phone, description, imageUrl],
+    [cleanName, cleanEmail, cleanPhone, cleanDesc, imageUrl],
     function(err) {
       if (err) return res.status(500).json({ message: err.message });
 
       sendMailNotification(
-        email,
+        cleanEmail,
         'Quotation Request Submitted - Kalaakar',
-        `<h3>Hello ${name},</h3><p>We received your quotation request for customized handmade art.</p><p><strong>Description:</strong> ${description}</p><p>Our artist will review the details and respond with a price estimate within 24-48 hours.</p><p>Best regards,<br/>Kalaakar</p>`
+        `<h3>Hello ${cleanName},</h3><p>We received your quotation request for customized handmade art.</p><p><strong>Description:</strong> ${cleanDesc}</p><p>Our artist will review the details and respond with a price estimate within 24-48 hours.</p><p>Best regards,<br/>Kalaakar</p>`
       );
 
       res.status(201).json({ message: 'Quotation request submitted successfully', quote_id: this.lastID });
@@ -445,10 +522,14 @@ router.delete('/gallery/:id', requireAdmin, (req, res) => {
 
       // Safely delete file
       if (item.image_url) {
-        const filePath = path.join(__dirname, '..', item.image_url);
-        fs.unlink(filePath, (err) => {
-          if (err) console.error('Error deleting file from disk:', err.message);
-        });
+        if (item.image_url.startsWith('http')) {
+          deleteSupabaseFile(item.image_url);
+        } else {
+          const filePath = path.join(__dirname, '..', item.image_url);
+          fs.unlink(filePath, (err) => {
+            if (err) console.error('Error deleting file from disk:', err.message);
+          });
+        }
       }
 
       logActivity(adminId, 'Delete Gallery Item', `Deleted gallery artwork "${item.title}"`);
@@ -520,15 +601,27 @@ router.post('/contact', (req, res) => {
     return res.status(400).json({ message: 'Name, email, and message are required' });
   }
 
+  if (!emailRegex.test(email.trim())) {
+    return res.status(400).json({ message: 'Invalid email address format.' });
+  }
+  if (phone && !phoneRegex.test(phone.trim())) {
+    return res.status(400).json({ message: 'Invalid phone number format.' });
+  }
+
+  const cleanName = escapeHtml(name.trim());
+  const cleanEmail = escapeHtml(email.trim().toLowerCase());
+  const cleanPhone = phone ? escapeHtml(phone.trim()) : null;
+  const cleanMessage = escapeHtml(message.trim());
+
   db.run(`INSERT INTO contact_messages (name, email, phone, message) VALUES (?, ?, ?, ?)`,
-    [name, email, phone, message],
+    [cleanName, cleanEmail, cleanPhone, cleanMessage],
     function(err) {
       if (err) return res.status(500).json({ message: err.message });
 
       sendMailNotification(
-        email,
+        cleanEmail,
         'Thank You for Contacting Kalaakar',
-        `<h3>Hello ${name},</h3><p>We have received your message:</p><p>"${message}"</p><p>We will get back to you shortly.</p><p>Warm regards,<br/>Kalaakar</p>`
+        `<h3>Hello ${cleanName},</h3><p>We have received your message:</p><p>"${cleanMessage}"</p><p>We will get back to you shortly.</p><p>Warm regards,<br/>Kalaakar</p>`
       );
 
       res.status(201).json({ message: 'Contact message sent successfully' });
