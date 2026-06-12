@@ -76,36 +76,7 @@ const galleryItems = [
     year: '2026',
     is_featured: 1
   },
-  {
-    category_name: 'Walls That Speak',
-    title: 'Celestial Phoenix Mandala Art',
-    description: 'Vibrant colored pencil and ink illustration of a phoenix with a detailed mandala backdrop on black cardstock.',
-    image_url: '/phoenix_mandala.jpg',
-    dimensions: '12" x 12" Frame',
-    medium: 'Prismacolor Pencils & White Gel Pen on Black Board',
-    year: '2026',
-    is_featured: 1
-  },
-  {
-    category_name: 'Memories in Colors',
-    title: 'Lord Ganesha & Lotus Portrait',
-    description: 'Vibrant color pencil sketch of Lord Ganesha combined with a blooming purple lotus flower.',
-    image_url: '/ganesha_lotus.jpg',
-    dimensions: 'A4 Size Frame',
-    medium: 'Colored Pencil & Soft Pastels on Paper',
-    year: '2026',
-    is_featured: 1
-  },
-  {
-    category_name: 'Memories in Colors',
-    title: 'Under the Starry Night Painting',
-    description: 'A touching painting depicting a parent carrying a child on their shoulders, gazing at a starry night sky and full moon.',
-    image_url: '/starry_sky_parent_child.jpg',
-    dimensions: 'A4 Size Canvas',
-    medium: 'Acrylic Paint on Archival Canvas Paper',
-    year: '2026',
-    is_featured: 1
-  },
+
   {
     category_name: 'Crafted for Your Corner',
     title: 'Bespoke Red Paper Roses Bouquet',

@@ -369,6 +369,36 @@ router.put('/orders/:id/status', requireAdmin, (req, res) => {
   });
 });
 
+// Admin: Delete Order
+router.delete('/orders/:id', requireAdmin, (req, res) => {
+  const orderId = req.params.id;
+  const adminId = req.user.id;
+
+  db.get(`SELECT * FROM custom_orders WHERE id = ?`, [orderId], (err, order) => {
+    if (err) return res.status(500).json({ message: err.message });
+    if (!order) return res.status(404).json({ message: 'Order not found' });
+
+    db.run(`DELETE FROM custom_orders WHERE id = ?`, [orderId], function(err) {
+      if (err) return res.status(500).json({ message: err.message });
+
+      // Clean up associated file if it exists and is local or supabase
+      if (order.image_url) {
+        if (order.image_url.startsWith('https://')) {
+          deleteSupabaseFile(order.image_url);
+        } else {
+          const filePath = path.join(__dirname, '..', order.image_url);
+          fs.unlink(filePath, (e) => {
+            if (e && e.code !== 'ENOENT') console.error('Error deleting local file:', e);
+          });
+        }
+      }
+
+      logActivity(adminId, 'Delete Order', `Deleted Order ID ${orderId} (${order.order_number})`);
+      res.json({ message: 'Order deleted successfully' });
+    });
+  });
+});
+
 
 // ----------------------------------------------------
 // QUOTATION REQUEST SYSTEM

@@ -89,17 +89,21 @@ export default function GalleryWall() {
             return (
               <div
                 key={art.id}
+                role="button"
+                tabIndex={0}
+                aria-expanded={isActive}
                 onClick={() => setActiveId(isActive ? null : art.id)}
-                className={`polaroid-frame transform ${rotateClass} hover:rotate-0 hover:-translate-y-3 hover:scale-[1.03] transition-all duration-300 cursor-pointer relative preserve-3d`}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveId(isActive ? null : art.id); } }}
+                className={`polaroid-frame transform ${rotateClass} hover:rotate-0 hover:-translate-y-3 hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-gold-rose transition-all duration-300 cursor-pointer relative preserve-3d`}
               >
                 {/* Photo frame */}
-                <div className="w-full aspect-square rounded overflow-hidden bg-cream border border-cream-dark/30 relative mb-3">
+                <div className="w-full aspect-square rounded overflow-hidden bg-cream border border-cream-dark/30 relative mb-3 group">
                   <img 
                     src={art.image} 
                     alt={art.title} 
                     className="w-full h-full object-cover" 
                   />
-                  <div className="absolute inset-0 bg-charcoal/30 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <div className="absolute inset-0 bg-charcoal/30 opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex items-center justify-center">
                     <span className="bg-white/95 px-3 py-1.5 rounded-full text-[9px] uppercase tracking-wider font-bold text-gold-rose flex items-center gap-1 shadow-lg">
                       <Eye size={10} /> Inspect
                     </span>

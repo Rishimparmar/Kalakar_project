@@ -76,7 +76,7 @@ const Gallery = () => {
     {
       id: 'f9',
       title: 'Customized Name Ring Holder',
-      category_name: 'Crafted for Your Corner',
+      category_name: 'The Forever Nest',
       image_url: '/ring_holder.png',
       dimensions: '8" Diameter Base',
       medium: 'Glitter Ring Outlines & Paper Florals on Velvet',
@@ -85,43 +85,17 @@ const Gallery = () => {
     {
       id: 'f10',
       title: 'Cherished Moments Photo Bouquet',
-      category_name: 'Crafted for Your Corner',
+      category_name: 'Blooming Memories Bouquet',
       image_url: '/photo_bouquet.jpg',
       dimensions: '12" Bouquet Height',
       medium: 'Custom Photos, Premium Cardstock & Wrapping Accents',
       year: '2026'
     },
-    {
-      id: 'f11',
-      title: 'Celestial Phoenix Mandala Art',
-      category_name: 'Walls That Speak',
-      image_url: '/phoenix_mandala.jpg',
-      dimensions: '12" x 12" Frame',
-      medium: 'Prismacolor Pencils & White Gel Pen on Black Board',
-      year: '2026'
-    },
-    {
-      id: 'f12',
-      title: 'Lord Ganesha & Lotus Portrait',
-      category_name: 'Memories in Colors',
-      image_url: '/ganesha_lotus.jpg',
-      dimensions: 'A4 Size Frame',
-      medium: 'Colored Pencil & Soft Pastels on Paper',
-      year: '2026'
-    },
-    {
-      id: 'f13',
-      title: 'Under the Starry Night Painting',
-      category_name: 'Memories in Colors',
-      image_url: '/starry_sky_parent_child.jpg',
-      dimensions: 'A4 Size Canvas',
-      medium: 'Acrylic Paint on Archival Canvas Paper',
-      year: '2026'
-    },
+
     {
       id: 'f14',
       title: 'Bespoke Red Paper Roses Bouquet',
-      category_name: 'Crafted for Your Corner',
+      category_name: 'Forever Blooms',
       image_url: '/red_paper_roses.jpg',
       dimensions: '12" Bouquet Height',
       medium: 'Premium Cardstock & Green floral wire',
@@ -130,10 +104,109 @@ const Gallery = () => {
     {
       id: 'f15',
       title: 'Everlasting Pink Paper Roses Bouquet',
-      category_name: 'Crafted for Your Corner',
+      category_name: 'Forever Blooms',
       image_url: '/pink_paper_roses.jpg',
       dimensions: '12" Bouquet Height',
       medium: 'Premium Cardstock & Wrapping accents',
+      year: '2026'
+    },
+    {
+      id: 'f16',
+      title: 'Classic Pencil Couple Sketch',
+      category_name: 'Monochrome Magic',
+      image_url: '/couple_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Graphite & Charcoal on Premium Paper',
+      year: '2026'
+    },
+    {
+      id: 'f17',
+      title: 'Treasures of Memories Explosion Box',
+      category_name: 'Treasures of Memories',
+      image_url: '/explosion_box.jpg',
+      dimensions: '8" x 8" Box',
+      medium: 'Premium Cardstock, Photos & Ribbons',
+      year: '2026'
+    },
+    {
+      id: 'f18',
+      title: 'Intimate Selfie Pencil Portrait',
+      category_name: 'Monochrome Magic',
+      image_url: '/selfie_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Graphite & Charcoal on Premium Paper',
+      year: '2026'
+    },
+    {
+      id: 'f19',
+      title: 'Contemplative Standing Portrait',
+      category_name: 'Memories in Colors',
+      image_url: '/girl_standing_tattoo_sketch.jpg',
+      dimensions: 'A3 Size Frame',
+      medium: 'Graphite on Archival Paper',
+      year: '2026'
+    },
+    {
+      id: 'f20',
+      title: 'Thoughtful Portrait in Glasses',
+      category_name: 'Monochrome Magic',
+      image_url: '/girl_glasses_hand_chin_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Charcoal & Pencil on Fine Art Paper',
+      year: '2026'
+    },
+    {
+      id: 'f21',
+      title: 'Vibrant Smile Pencil Portrait',
+      category_name: 'Monochrome Magic',
+      image_url: '/girl_glasses_smile_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Graphite & Charcoal on Fine Art Paper',
+      year: '2026'
+    },
+    {
+      id: 'f22',
+      title: 'Classic Boy Portrait Sketch',
+      category_name: 'Monochrome Magic',
+      image_url: '/boy_portrait_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Charcoal on Archival Paper',
+      year: '2026'
+    },
+    {
+      id: 'f23',
+      title: 'Vibrant Girl in Striped Dress',
+      category_name: 'Monochrome Magic',
+      image_url: '/girl_striped_dress_sketch.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Colored Pencil on Archival Drawing Sheet',
+      year: '2026'
+    },
+    {
+      id: 'f24',
+      title: 'Graceful Woman in Red Saree',
+      category_name: 'Memories in Colors',
+      image_url: '/woman_red_saree_sketch.jpg',
+      dimensions: 'A3 Size Frame',
+      medium: 'Soft Pastels & Colored Pencil on Paper',
+      year: '2026'
+    },
+    {
+      id: 'f25',
+      title: 'Joyful Duo in Maroon Sarees',
+      category_name: 'Memories in Colors',
+      image_url: '/two_women_maroon_sarees.jpg',
+      dimensions: 'A3 Size Frame',
+      medium: 'Premium Color Pencil & Charcoal on Board',
+      year: '2026'
+    },
+    {
+      id: 'f26',
+      title: 'Lotus Serenity Portrait',
+      category_name: 'Monochrome Magic',
+      image_url: '/woman_lotus_backdrop.jpg',
+      dimensions: 'A4 Size Frame',
+      medium: 'Mixed Media (Graphite & Pink Colored Pencil)',
       year: '2026'
     }
   ];
@@ -145,12 +218,18 @@ const Gallery = () => {
   ];
 
   const fallbackCategories = [
-    { name: 'Memories in Colors' },
-    { name: 'Crafted for Your Corner' },
-    { name: 'Walls That Speak' }
+    { name: 'All', tagline: 'Browse our complete catalog of handcrafted treasures.' },
+    { name: 'Memories in Colors', tagline: 'Turn your favorite moments into vibrant masterpieces.' },
+    { name: 'Monochrome Magic', tagline: 'Classic sketches that never go out of style.' },
+    { name: 'Crafted for Your Corner', tagline: 'Decor that tells your story.' },
+    { name: 'Blooming Memories Bouquet', tagline: 'Where photographs blossom into unforgettable gifts.' },
+    { name: 'Treasures of Memories', tagline: 'Open the box, relive the moments.' },
+    { name: 'Walls That Speak', tagline: 'Beautiful creations that bring life to every wall.' },
+    { name: 'Forever Blooms', tagline: 'Flowers that never fade, memories that never end.' },
+    { name: 'The Forever Nest', tagline: 'A beautiful home for your precious promise.' }
   ];
 
-  const displayCategories = categories.length > 0 ? categories : fallbackCategories;
+  const displayCategories = fallbackCategories;
 
   const filteredItems = displayItems.filter((item) => {
     const matchesCategory =
@@ -164,12 +243,14 @@ const Gallery = () => {
     return matchesCategory && matchesSearch;
   });
 
+  const activeCategory = displayCategories.find(c => c.name === selectedCategory) || displayCategories[0];
+
   return (
     <div className="pt-28 pb-20 max-w-7xl mx-auto px-6 md:px-12">
       
       {/* Immersive 3D Gallery Section */}
       <div className="mb-16">
-        <span className="text-[10px] uppercase tracking-[0.25em] text-gold-rose font-bold">Virtual Exhibition</span>
+        <span className="text-[10px] uppercase tracking-[0.25em] text-gold-rose-dark font-bold">Virtual Exhibition</span>
         <h1 className="text-3xl md:text-5xl font-bold text-charcoal mt-1 mb-4">Art Exhibition Wall</h1>
         <p className="text-sm md:text-base text-charcoal-light font-light max-w-2xl mb-8">
           Welcome to the virtual gallery wall. Click on any frame to zoom in, read catalog details, and explore the craftsmanship.
@@ -178,23 +259,46 @@ const Gallery = () => {
       </div>
 
       {/* Grid Filter and Controls */}
-      <div className="border-t border-cream-dark/50 pt-16 mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-        {/* Section Title instead of Category Filters */}
-        <div className="flex items-center gap-3">
-          <span className="h-2 w-2 rounded-full bg-gold-rose animate-pulse"></span>
-          <h2 className="font-serif text-xl md:text-2xl font-bold text-charcoal">All Creations</h2>
+      <div className="border-t border-cream-dark/50 pt-16 mb-12 space-y-6">
+        
+        {/* Horizontal Category Scroll Tabs */}
+        <div className="flex items-center justify-between flex-wrap gap-4 border-b border-cream-dark/30 pb-4">
+          <div className="flex items-center gap-2 overflow-x-auto py-2 scrollbar-none max-w-full -mx-4 px-4 sm:mx-0 sm:px-0">
+            {displayCategories.map((cat) => (
+              <button
+                key={cat.name}
+                onClick={() => setSelectedCategory(cat.name)}
+                className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-medium uppercase tracking-wider transition-all border ${
+                  selectedCategory === cat.name
+                    ? 'bg-gold-rose-dark border-gold-rose-dark text-white shadow-md'
+                    : 'bg-white border-cream-dark/55 text-charcoal-light hover:border-gold-rose-dark/60 hover:text-gold-rose-dark'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Search Input */}
+          <div className="relative max-w-xs w-full ml-auto">
+            <input
+              type="text"
+              placeholder="Search medium or title..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 border border-cream-dark/80 rounded-full text-xs bg-white text-charcoal focus:outline-none focus:border-gold-rose-dark focus:ring-1 focus:ring-gold-rose-dark"
+            />
+            <Search className="absolute left-3.5 top-3 w-4 h-4 text-charcoal-light" />
+          </div>
         </div>
 
-        {/* Search Input */}
-        <div className="relative max-w-xs w-full">
-          <input
-            type="text"
-            placeholder="Search medium or title..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-cream-dark/80 rounded-full text-xs bg-white text-charcoal focus:outline-none focus:border-gold-rose focus:ring-1 focus:ring-gold-rose"
-          />
-          <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-charcoal-light" />
+        {/* Selected Category Description Info Panel */}
+        <div className="bg-white/45 backdrop-blur-sm p-5 rounded-2xl border border-cream-dark/25 flex items-start gap-4">
+          <div className="h-2.5 w-2.5 rounded-full bg-gold-rose-dark animate-pulse mt-1.5 flex-shrink-0"></div>
+          <div>
+            <h2 className="font-serif text-lg font-bold text-charcoal uppercase tracking-wider">{activeCategory.name}</h2>
+            <p className="text-xs text-charcoal-light font-light mt-1 italic">"{activeCategory.tagline}"</p>
+          </div>
         </div>
       </div>
 
@@ -215,7 +319,7 @@ const Gallery = () => {
                 <img
                   src={getImageUrl(item.image_url)}
                   alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />
                 <div 
@@ -232,7 +336,7 @@ const Gallery = () => {
               <div className="p-6 flex-grow flex flex-col justify-between">
                 <div>
                   <div className="flex justify-between items-start">
-                    <span className="text-[9px] uppercase tracking-wider text-gold-rose font-bold bg-gold-rose/5 px-2.5 py-1 rounded">
+                    <span className="text-[9px] uppercase tracking-wider text-gold-rose-dark font-bold bg-gold-rose/5 px-2.5 py-1 rounded">
                       {item.category_name}
                     </span>
                     {item.year && <span className="text-[10px] text-charcoal-light font-medium">{item.year}</span>}
@@ -254,7 +358,7 @@ const Gallery = () => {
                 
                 <div className="mt-4 pt-4 border-t border-cream-dark/40 flex justify-between items-center">
                   <span className="text-[10px] uppercase tracking-wider text-charcoal-light font-medium">Bespoke Framing Available</span>
-                  <span className="text-[10px] text-gold-soft font-semibold uppercase tracking-wider">Unique Commission</span>
+                  <span className="text-[10px] text-gold-soft-dark font-semibold uppercase tracking-wider">Unique Commission</span>
                 </div>
               </div>
             </div>
@@ -275,18 +379,18 @@ const Gallery = () => {
             </button>
 
             {/* Modal Image */}
-            <div className="h-96 md:h-full bg-cream-light">
+            <div className="h-96 md:h-full bg-cream-light flex items-center justify-center">
               <img
                 src={getImageUrl(selectedArtwork.image_url)}
                 alt={selectedArtwork.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain p-4"
               />
             </div>
 
             {/* Modal Info */}
             <div className="p-8 md:p-12 flex flex-col justify-between">
               <div>
-                <span className="text-xs uppercase tracking-wider text-gold-rose font-bold">
+                <span className="text-xs uppercase tracking-wider text-gold-rose-dark font-bold">
                   {selectedArtwork.category_name}
                 </span>
                 <h2 className="font-serif text-2xl md:text-3xl font-bold text-charcoal mt-2 mb-4">

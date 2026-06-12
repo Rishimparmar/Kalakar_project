@@ -29,6 +29,13 @@ const AdminLogin = () => {
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      setErrorMsg('Please enter a valid email address.');
+      setLoading(false);
+      return;
+    }
+
     try {
       await api.login(email.trim().toLowerCase(), password.trim());
       navigate('/admin/dashboard');
@@ -68,10 +75,10 @@ const AdminLogin = () => {
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <label className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-1.5">Admin Email *</label>
+            <label htmlFor="admin-email" className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-1.5">Admin Email *</label>
             <input
+              id="admin-email"
               type="email"
-              placeholder="admin@kalaakar.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoCapitalize="none"
@@ -82,10 +89,10 @@ const AdminLogin = () => {
           </div>
 
           <div>
-            <label className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-1.5">Password *</label>
+            <label htmlFor="admin-pass" className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-1.5">Password *</label>
             <input
+              id="admin-pass"
               type="password"
-              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose text-charcoal"
@@ -100,13 +107,6 @@ const AdminLogin = () => {
             {loading ? 'Authenticating...' : <><LogIn size={15} /> Sign In</>}
           </button>
         </form>
-
-        <div className="bg-cream/20 p-4 rounded-xl mt-6 border border-cream-dark/40 flex items-start space-x-2">
-          <ShieldAlert size={16} className="text-gold-soft flex-shrink-0 mt-0.5" />
-          <p className="text-[10px] text-charcoal-light/80 leading-relaxed font-light">
-            Demo account seeded: <strong>admin@kalaakar.com</strong> / password: <strong>admin123</strong>. Authorized logins only.
-          </p>
-        </div>
       </div>
 
     </div>

@@ -15,27 +15,7 @@ const journalPages = [
     isCover: false,
     note: 'Detailed colored pencil artwork capturing life-like parent smiles and traditional warmth.'
   },
-  {
-    title: 'Celestial Phoenix Mandala Art',
-    category: 'Walls That Speak',
-    image: '/phoenix_mandala.jpg',
-    isCover: false,
-    note: 'Intricate and colorful mandala drawing of a rising phoenix on black cardstock.'
-  },
-  {
-    title: 'Lord Ganesha & Lotus Portrait',
-    category: 'Memories in Colors',
-    image: '/ganesha_lotus.jpg',
-    isCover: false,
-    note: 'Vibrant color pencil sketch of Lord Ganesha combined with a blooming purple lotus.'
-  },
-  {
-    title: 'Under the Starry Night Painting',
-    category: 'Memories in Colors',
-    image: '/starry_sky_parent_child.jpg',
-    isCover: false,
-    note: 'Acrylic paint canvas depicting a parent carrying a child on their shoulders looking at starry night.'
-  },
+
   {
     title: 'Lord Buddha Lippan Art Painting',
     category: 'Crafted for Your Corner',

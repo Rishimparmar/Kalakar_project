@@ -17,7 +17,7 @@ const CustomOrder = () => {
     name: '',
     email: '',
     phone: '',
-    artwork_type: 'Personalized Glass Frame Decor',
+    artwork_type: 'Black & White Sketch (Monochrome Magic)',
     size_selection: 'A4',
     color_preference: 'Gold Accent Highlights',
     faces_count: '1',
@@ -28,8 +28,20 @@ const CustomOrder = () => {
     description: '' // For Quotations
   });
 
+  // Helper to evaluate base price dynamically
+  const getBasePrice = (artworkType, sizeSelection) => {
+    if (artworkType.includes('Colour Sketch Art')) {
+      return sizeSelection === 'A3' ? 2999 : 1999;
+    }
+    if (artworkType.includes('Black & White Sketch')) {
+      return sizeSelection === 'A3' ? 1999 : 999;
+    }
+    // All other hand decors start at 1000
+    return sizeSelection === 'A3' ? 2000 : 1000;
+  };
+
   // Dynamic Price Estimator State
-  const [estimatedPrice, setEstimatedPrice] = useState(1500);
+  const [estimatedPrice, setEstimatedPrice] = useState(999);
 
   // Set tab from URL query params
   useEffect(() => {
@@ -42,32 +54,25 @@ const CustomOrder = () => {
 
   // Calculate pricing whenever variables change
   useEffect(() => {
-    let price = 1500;
     const type = formData.artwork_type.toLowerCase();
-    const size = formData.size_selection;
-
-    if (type.includes('glass') || type.includes('frame')) {
-      price = 2200;
-    } else if (type.includes('buddha') || type.includes('lippan')) {
-      price = 1500;
-    } else if (type.includes('lotus') && !type.includes('ganesha')) {
-      price = 1200;
-    } else if (type.includes('toran') || type.includes('tassel') || type.includes('hanging')) {
-      price = 1800;
-    } else if (type.includes('phoenix') || type.includes('mandala')) {
-      price = 2000;
-    } else if (type.includes('ganesha')) {
-      price = 1500;
-    } else if (type.includes('starry') || type.includes('sky')) {
-      price = 1800;
-    } else if (type.includes('rose') || type.includes('bouquet')) {
-      price = 1600;
-    } else {
-      price = 2000;
+    let price = getBasePrice(formData.artwork_type, formData.size_selection);
+    
+    if (type.includes('sketch') || type.includes('portrait')) {
+      const faces = parseInt(formData.faces_count) || 1;
+      if (faces > 1) {
+        if (type.includes('colour') || type.includes('color')) {
+          price += (faces - 1) * 1000;
+        } else {
+          price += (faces - 1) * 500;
+        }
+      }
+    }
+    if (formData.color_preference.includes('Gold')) {
+      price += 300;
     }
 
     setEstimatedPrice(price);
-  }, [formData.artwork_type, formData.size_selection, formData.budget]);
+  }, [formData.artwork_type, formData.size_selection, formData.faces_count, formData.color_preference]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -90,6 +95,20 @@ const CustomOrder = () => {
 
     if (!formData.name || !formData.email || !formData.phone || !formData.delivery_date) {
       setErrorMsg('Please fill in all required contact and delivery details.');
+      setSubmitting(false);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\+?[0-9\s\-()]{9,20}$/;
+
+    if (!emailRegex.test(formData.email.trim())) {
+      setErrorMsg('Please enter a valid email address.');
+      setSubmitting(false);
+      return;
+    }
+    if (!phoneRegex.test(formData.phone.trim())) {
+      setErrorMsg('Please enter a valid phone number.');
       setSubmitting(false);
       return;
     }
@@ -131,6 +150,20 @@ const CustomOrder = () => {
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\+?[0-9\s\-()]{9,20}$/;
+
+    if (!emailRegex.test(formData.email.trim())) {
+      setErrorMsg('Please enter a valid email address.');
+      setSubmitting(false);
+      return;
+    }
+    if (!phoneRegex.test(formData.phone.trim())) {
+      setErrorMsg('Please enter a valid phone number.');
+      setSubmitting(false);
+      return;
+    }
+
     try {
       const data = new FormData();
       data.append('name', formData.name);
@@ -158,7 +191,7 @@ const CustomOrder = () => {
       name: '',
       email: '',
       phone: '',
-      artwork_type: 'Personalized Glass Frame Decor',
+      artwork_type: 'Black & White Sketch (Monochrome Magic)',
       size_selection: 'A4',
       color_preference: 'Gold Accent Highlights',
       faces_count: '1',
@@ -181,9 +214,15 @@ const CustomOrder = () => {
             <>
               <h2 className="font-serif text-2xl md:text-3xl font-bold text-charcoal mb-4">Commission Booked!</h2>
               <p className="text-sm text-charcoal-light font-light leading-relaxed mb-6">
-                Thank you, <strong>{formData.name}</strong>. Your custom commission has been recorded. Our artist will review the reference photos shortly.
+                Thank you, <strong>{formData.name}</strong>. Your custom commission has been recorded. Please complete your payment using the QR code below.
               </p>
               
+              <div className="bg-canvas border border-cream-dark/60 p-5 rounded-2xl w-full mb-6 text-center space-y-4">
+                <h3 className="font-serif text-lg font-bold text-charcoal">Payment Scan</h3>
+                <img src="/payment_qr.jpg" alt="Payment QR Code" className="w-48 h-48 mx-auto rounded-xl shadow-sm border border-cream-dark/40 object-cover" />
+                <p className="text-xs text-charcoal-light">Scan to pay via UPI</p>
+              </div>
+
               <div className="bg-canvas border border-cream-dark/60 p-5 rounded-2xl w-full mb-8 text-left space-y-3">
                 <p className="text-xs text-charcoal-light">
                   <strong>Order Tracking ID:</strong> <span className="font-mono text-sm font-bold text-gold-rose select-all">{submitSuccess.number}</span>
@@ -286,27 +325,29 @@ const CustomOrder = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Artwork Type *</label>
+                  <label htmlFor="artwork_type" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Artwork Type *</label>
                   <select
+                    id="artwork_type"
                     name="artwork_type"
                     value={formData.artwork_type}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose"
                   >
-                    <option value="Personalized Glass Frame Decor">Personalized Glass Frame Decor</option>
-                    <option value="Lord Buddha Lippan Art Painting">Lord Buddha Lippan Art Painting</option>
-                    <option value="Vibrant Paper Lotus Decor">Vibrant Paper Lotus Decor</option>
-                    <option value="Peacock Tassel Toran Hanging">Peacock Tassel Toran Hanging</option>
-                    <option value="Celestial Phoenix Mandala Art">Celestial Phoenix Mandala Art</option>
-                    <option value="Lord Ganesha & Lotus Portrait">Lord Ganesha & Lotus Portrait</option>
-                    <option value="Under the Starry Night Painting">Under the Starry Night Painting</option>
-                    <option value="Bespoke Paper Roses Bouquet">Bespoke Paper Roses Bouquet</option>
+                    <option value="Black & White Sketch (Monochrome Magic)">Black & White Sketch (Monochrome Magic)</option>
+                    <option value="Colour Sketch Art (Memories in Colors)">Colour Sketch Art (Memories in Colors)</option>
+                    <option value="Lord Buddha Lippan Art Painting (Hand Decor)">Lord Buddha Lippan Art Painting (Hand Decor)</option>
+                    <option value="Vibrant Paper Lotus Decor (Hand Decor)">Vibrant Paper Lotus Decor (Hand Decor)</option>
+                    <option value="Peacock Tassel Toran Hanging (Hand Decor)">Peacock Tassel Toran Hanging (Hand Decor)</option>
+                    <option value="Personalized Glass Frame Decor (Hand Decor)">Personalized Glass Frame Decor (Hand Decor)</option>
+                    <option value="Bespoke Paper Roses Bouquet (Hand Decor)">Bespoke Paper Roses Bouquet (Hand Decor)</option>
+                    <option value="Blooming Memories Photo Bouquet (Hand Decor)">Blooming Memories Photo Bouquet (Hand Decor)</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Size Selection *</label>
+                  <label htmlFor="size_selection" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Size Selection *</label>
                   <select
+                    id="size_selection"
                     name="size_selection"
                     value={formData.size_selection}
                     onChange={handleInputChange}
@@ -322,8 +363,9 @@ const CustomOrder = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Color Preference *</label>
+                  <label htmlFor="color_preference" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Color Preference *</label>
                   <select
+                    id="color_preference"
                     name="color_preference"
                     value={formData.color_preference}
                     onChange={handleInputChange}
@@ -337,17 +379,18 @@ const CustomOrder = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Number of Faces (For Sketches)</label>
+                  <label htmlFor="faces_count" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Number of Faces (For Sketches)</label>
                   <select
+                    id="faces_count"
                     name="faces_count"
                     value={formData.faces_count}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose"
                   >
                     <option value="1">1 Face</option>
-                    <option value="2">2 Faces (+₹1000)</option>
-                    <option value="3">3 Faces (+₹2000)</option>
-                    <option value="4">4 Faces (+₹3000)</option>
+                    <option value="2">2 Faces</option>
+                    <option value="3">3 Faces</option>
+                    <option value="4">4 Faces</option>
                   </select>
                 </div>
               </div>
@@ -375,8 +418,9 @@ const CustomOrder = () => {
               </div>
 
               <div>
-                <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Message or Inscription to include</label>
+                <label htmlFor="msg-inscribe" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Message or Inscription to include</label>
                 <input
+                  id="msg-inscribe"
                   type="text"
                   name="message"
                   value={formData.message}
@@ -392,8 +436,9 @@ const CustomOrder = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Name *</label>
+                  <label htmlFor="comm-name" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Name *</label>
                   <input
+                    id="comm-name"
                     type="text"
                     name="name"
                     value={formData.name}
@@ -403,8 +448,9 @@ const CustomOrder = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Phone Number *</label>
+                  <label htmlFor="comm-phone" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Phone Number *</label>
                   <input
+                    id="comm-phone"
                     type="tel"
                     name="phone"
                     value={formData.phone}
@@ -417,8 +463,9 @@ const CustomOrder = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Email Address *</label>
+                  <label htmlFor="comm-email" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Email Address *</label>
                   <input
+                    id="comm-email"
                     type="email"
                     name="email"
                     value={formData.email}
@@ -428,8 +475,9 @@ const CustomOrder = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Target Delivery Date *</label>
+                  <label htmlFor="comm-date" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Target Delivery Date *</label>
                   <input
+                    id="comm-date"
                     type="date"
                     name="delivery_date"
                     value={formData.delivery_date}
@@ -440,8 +488,9 @@ const CustomOrder = () => {
               </div>
 
               <div>
-                <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Additional Instructions</label>
+                <label htmlFor="comm-inst" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Additional Instructions</label>
                 <textarea
+                  id="comm-inst"
                   name="additional_instructions"
                   rows={4}
                   value={formData.additional_instructions}
@@ -466,8 +515,9 @@ const CustomOrder = () => {
               </h2>
 
               <div>
-                <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Name *</label>
+                <label htmlFor="quote-name" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Name *</label>
                 <input
+                  id="quote-name"
                   type="text"
                   name="name"
                   value={formData.name}
@@ -479,8 +529,9 @@ const CustomOrder = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Email Address *</label>
+                  <label htmlFor="quote-email" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Email Address *</label>
                   <input
+                    id="quote-email"
                     type="email"
                     name="email"
                     value={formData.email}
@@ -490,8 +541,9 @@ const CustomOrder = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Phone Number *</label>
+                  <label htmlFor="quote-phone" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Phone Number *</label>
                   <input
+                    id="quote-phone"
                     type="tel"
                     name="phone"
                     value={formData.phone}
@@ -503,8 +555,9 @@ const CustomOrder = () => {
               </div>
 
               <div>
-                <label className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Describe Your Gifting/Art Project Idea *</label>
+                <label htmlFor="quote-desc" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Describe Your Gifting/Art Project Idea *</label>
                 <textarea
+                  id="quote-desc"
                   name="description"
                   rows={6}
                   value={formData.description}
@@ -567,12 +620,12 @@ const CustomOrder = () => {
               <div className="border-t border-white/10 pt-6 mt-6 space-y-3 text-xs text-white/70">
                 <div className="flex justify-between">
                   <span>Base Pricing ({formData.size_selection} Canvas)</span>
-                  <span>₹{formData.size_selection === 'A3' ? '2800' : '1500'}</span>
+                  <span>₹{getBasePrice(formData.artwork_type, formData.size_selection)}</span>
                 </div>
-                {formData.artwork_type.toLowerCase().includes('sketch') && parseInt(formData.faces_count) > 1 && (
+                {(formData.artwork_type.toLowerCase().includes('sketch') || formData.artwork_type.toLowerCase().includes('portrait')) && parseInt(formData.faces_count) > 1 && (
                   <div className="flex justify-between text-white/80">
                     <span>Faces Count ({formData.faces_count} faces)</span>
-                    <span>+₹{(parseInt(formData.faces_count) - 1) * 1000}</span>
+                    <span>+₹{(parseInt(formData.faces_count) - 1) * (formData.artwork_type.toLowerCase().includes('colour') || formData.artwork_type.toLowerCase().includes('color') ? 1000 : 500)}</span>
                   </div>
                 )}
                 {formData.color_preference.includes('Gold') && (

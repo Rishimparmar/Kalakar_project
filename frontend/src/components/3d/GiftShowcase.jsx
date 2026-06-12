@@ -3,39 +3,29 @@ import { Sparkles, Calendar, Layers, ShieldCheck, Heart } from 'lucide-react';
 
 const giftItems = [
   {
-    id: 'colors-sketch',
-    name: 'Memories in Colors',
-    image: '/starry_sky_parent_child.jpg',
-    tagline: 'Turn your favorite moments into vibrant masterpieces.',
-    desc: 'Stunning hand-painted starry sky acrylic canvas depicting a parent carrying a child on their shoulders. A beautiful expression of familial love.',
-    materials: ['Acrylic paints', 'Canvas sheet', 'Premium framing options'],
-    dimensions: 'A4 Size Canvas',
-    estCommission: '₹1,800'
+    id: 'bw-portrait',
+    name: 'Black And White Portrait Sketch',
+    image: '/girl_glasses_smile_sketch.jpg',
+    tagline: 'Timeless hand-drawn monochrome sketches.',
+    desc: 'Exquisite hand-drawn black and white portrait sketch. Meticulously detailed using professional-grade graphite and charcoal pencils to capture the depth, emotion, and character of your favorite moments.',
+    materials: ['Graphite pencils', 'Charcoal sticks', 'Premium cartridge paper'],
+    dimensions: 'A4 Size Paper',
+    estCommission: '₹999'
   },
   {
-    id: 'decor-ideas',
-    name: 'Crafted for Your Corner',
-    image: '/buddha_painting.jpg',
-    tagline: 'Decor that tells your story.',
-    desc: 'Hand-painted Lord Buddha circular MDF wooden canvas panel detailed with concentric mirrors (Lippan Art work) to bring peace to any entryway.',
-    materials: ['MDF Round Base', 'Acrylic Painting', 'Concentric Mirror Work'],
-    dimensions: '12" Round Panel',
-    estCommission: '₹1,900'
-  },
-  {
-    id: 'wall-hangings',
-    name: 'Walls That Speak',
-    image: '/phoenix_mandala.jpg',
-    tagline: 'Beautiful creations that bring life to every wall.',
-    desc: 'Vibrant colored pencil phoenix mandala drawing bordered by intricate hand-drawn concentric lines. Adds rich, colorful texture to any empty wall space.',
-    materials: ['Prismacolor pencils', 'White gel pen', 'Black board'],
-    dimensions: '12" x 12" Frame',
-    estCommission: '₹2,000'
+    id: 'color-portrait',
+    name: 'Colourful Portrait Sketch',
+    image: '/woman_red_saree_sketch.jpg',
+    tagline: 'Vibrant hand-sketched colourful portraits.',
+    desc: 'Stunning colourful sketch portrait hand-drawn with premium artist-grade coloured pencils and soft pastels. A beautiful, lively way to bring your photos to life with warmth and rich details.',
+    materials: ['Coloured pencils', 'Soft pastels', 'Acid-free sketching paper'],
+    dimensions: 'A4 Size Paper',
+    estCommission: '₹1,999'
   }
 ];
 
 export default function GiftShowcase() {
-  const [activeId, setActiveId] = useState('colors-sketch');
+  const [activeId, setActiveId] = useState('bw-portrait');
 
   const activeGift = giftItems.find(g => g.id === activeId);
 
@@ -43,11 +33,11 @@ export default function GiftShowcase() {
     <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch bg-white p-8 rounded-3xl shadow-premium border border-cream-dark/30">
       
       {/* PHOTO DISPLAY (LEFT COLUMN) */}
-      <div className="lg:col-span-7 relative h-[420px] rounded-2xl overflow-hidden border border-cream-dark/40 shadow-inner group">
+      <div className="lg:col-span-7 relative h-[420px] rounded-2xl overflow-hidden border border-cream-dark/40 shadow-inner group bg-cream-light/30 flex items-center justify-center">
         <img 
           src={activeGift.image} 
           alt={activeGift.name} 
-          className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" 
+          className="w-full h-full object-contain p-4 transition-transform duration-1000 ease-out group-hover:scale-[1.02]" 
         />
         
         {/* Ambient Dark Overlay on bottom */}

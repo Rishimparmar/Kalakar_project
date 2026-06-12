@@ -12,8 +12,11 @@
   --color-peach: #FCDFD7;
   
   --color-gold-artistic: #C5A059; /* Vintage Gold */
+  --color-gold-artistic-dark: #917033; /* Vintage Gold - Darkened for AA Contrast */
   --color-gold-rose: #B76E79;
+  --color-gold-rose-dark: #8E4C56;     /* Rose Gold - Darkened for AA Contrast */
   --color-gold-soft: #D4AF37;
+  --color-gold-soft-dark: #967812;     /* Soft Gold - Darkened for AA Contrast */
   
   --color-charcoal: #262421;     /* Ink/charcoal black */
   --color-charcoal-light: #54504A;

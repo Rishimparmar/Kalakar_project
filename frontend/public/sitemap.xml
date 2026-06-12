@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://kalaakar.com/</loc>
+    <loc>https://kalakar-project.web.app/</loc>
     <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://kalaakar.com/gallery</loc>
+    <loc>https://kalakar-project.web.app/gallery</loc>
     <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kalaakar.com/about</loc>
+    <loc>https://kalakar-project.web.app/about</loc>
     <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kalaakar.com/custom-order</loc>
+    <loc>https://kalakar-project.web.app/custom-order</loc>
     <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://kalaakar.com/track</loc>
+    <loc>https://kalakar-project.web.app/track</loc>
     <lastmod>2026-06-05</lastmod>
     <changefreq>always</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kalaakar.com/faq</loc>
+    <loc>https://kalakar-project.web.app/faq</loc>
     <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://kalaakar.com/contact</loc>
+    <loc>https://kalakar-project.web.app/contact</loc>
     <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

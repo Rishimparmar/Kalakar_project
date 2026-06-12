@@ -238,7 +238,14 @@ const OrderTracking = () => {
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-xs uppercase text-charcoal">{log.status.replace('_', ' ')}</span>
                         <span className="text-[10px] text-charcoal-light font-light">
-                          {new Date(log.updated_at).toLocaleString()}
+                          {(() => {
+                            if (!log.updated_at) return '';
+                            const safeDateStr = log.updated_at.includes(' ') && !log.updated_at.includes('T')
+                              ? log.updated_at.replace(' ', 'T')
+                              : log.updated_at;
+                            const parsedDate = new Date(safeDateStr);
+                            return isNaN(parsedDate.getTime()) ? log.updated_at : parsedDate.toLocaleString();
+                          })()}
                         </span>
                       </div>
                       <p className="text-xs text-charcoal-light font-light mt-1">{log.notes}</p>

@@ -53,6 +53,20 @@ const Contact = () => {
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\+?[0-9\s\-()]{9,20}$/;
+
+    if (!emailRegex.test(formData.email.trim())) {
+      setErrorMsg('Please enter a valid email address.');
+      setLoading(false);
+      return;
+    }
+    if (formData.phone && !phoneRegex.test(formData.phone.trim())) {
+      setErrorMsg('Please enter a valid phone number.');
+      setLoading(false);
+      return;
+    }
+
     try {
       await api.submitContact(formData);
       setSuccess(true);
@@ -137,8 +151,9 @@ const Contact = () => {
               )}
 
               <div>
-                <label className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-2">Full Name *</label>
+                <label htmlFor="contact-name" className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-2">Full Name *</label>
                 <input
+                  id="contact-name"
                   type="text"
                   name="name"
                   value={formData.name}
@@ -150,8 +165,9 @@ const Contact = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-2">Email Address *</label>
+                  <label htmlFor="contact-email" className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-2">Email Address *</label>
                   <input
+                    id="contact-email"
                     type="email"
                     name="email"
                     value={formData.email}
@@ -161,8 +177,9 @@ const Contact = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-2">Phone Number</label>
+                  <label htmlFor="contact-phone" className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-2">Phone Number</label>
                   <input
+                    id="contact-phone"
                     type="tel"
                     name="phone"
                     value={formData.phone}
@@ -174,8 +191,9 @@ const Contact = () => {
               </div>
 
               <div>
-                <label className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-2">Message *</label>
+                <label htmlFor="contact-message" className="block text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-2">Message *</label>
                 <textarea
+                  id="contact-message"
                   name="message"
                   rows={5}
                   value={formData.message}

@@ -50,8 +50,8 @@ const Home = () => {
           {/* Left Hero Copy */}
           <div className="lg:col-span-6 flex flex-col space-y-6 text-left">
             <div className="flex flex-col space-y-1">
-              <span className="font-script text-3xl text-gold-rose">Luxury Handmade Studio</span>
-              <span className="text-[10px] tracking-[0.25em] text-gold-artistic uppercase font-semibold">Turning Memories Into Art</span>
+              <span className="font-script text-3xl text-gold-rose-dark">Luxury Handmade Studio</span>
+              <span className="text-[10px] tracking-[0.25em] text-gold-artistic-dark uppercase font-semibold">Turning Memories Into Art</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-charcoal leading-tight">
@@ -125,36 +125,36 @@ const Home = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
           {[
             {
-              title: "Celestial Phoenix Mandala Art",
-              category: "Walls That Speak",
-              tagline: "Vibrant and detailed mandala masterpieces.",
-              image: "/phoenix_mandala.jpg",
-              medium: "Pencils & Gel Pen",
-              price: "₹2,000"
+              title: "Black And White Portrait Sketch",
+              category: "Monochrome Magic",
+              tagline: "Timeless hand-drawn black & white portrait.",
+              image: "/couple_sketch.jpg",
+              medium: "Graphite & Charcoal",
+              price: "₹1,499"
             },
             {
-              title: "Lord Ganesha & Lotus Portrait",
-              category: "Memories in Colors",
-              tagline: "Turn your devotions into colorful artwork.",
-              image: "/ganesha_lotus.jpg",
-              medium: "Colored Pencil & Pastels",
-              price: "₹1,500"
+              title: "Colourful Portrait Sketch",
+              category: "Colour Sketch Art",
+              tagline: "Vibrant colourful portrait with stunning detail.",
+              image: "/two_women_maroon_sarees.jpg",
+              medium: "Coloured Pencil & Pastel",
+              price: "₹2,999"
             },
             {
-              title: "Under the Starry Night Painting",
-              category: "Memories in Colors",
-              tagline: "Acrylic paints capturing beautiful night skies.",
-              image: "/starry_sky_parent_child.jpg",
-              medium: "Acrylic Paint on Canvas",
-              price: "₹1,800"
+              title: "Black And White Portrait Sketch",
+              category: "Monochrome Magic",
+              tagline: "Elegant black & white portrait sketch.",
+              image: "/boy_portrait_sketch.jpg",
+              medium: "Graphite on Paper",
+              price: "₹999"
             },
             {
-              title: "Lord Buddha Lippan Painting",
-              category: "Crafted for Your Corner",
-              tagline: "Decor that tells your story.",
-              image: "/buddha_painting.jpg",
-              medium: "Acrylics & Mirror Work",
-              price: "₹1,900"
+              title: "Colourful Portrait Sketch",
+              category: "Colour Sketch Art",
+              tagline: "Stunning colour sketch capturing every detail.",
+              image: "/woman_red_saree_sketch.jpg",
+              medium: "Coloured Pencil & Ink",
+              price: "₹1,999"
             }
           ].map((item, idx) => (
             <div 
@@ -162,10 +162,11 @@ const Home = () => {
               className="group relative bg-white/70 backdrop-blur-md rounded-3xl overflow-hidden border border-cream-dark/30 shadow-premium hover:shadow-gold-rose/20 hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col justify-between"
             >
               {/* Image Container with extraordinary overlay zoom */}
-              <div className="h-80 w-full overflow-hidden bg-cream-light relative">
+              <Link to={`/gallery?search=${encodeURIComponent(item.category)}`} className="block h-80 w-full overflow-hidden bg-cream-light relative cursor-pointer">
                 <img 
                   src={item.image} 
                   alt={item.title} 
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 ease-out"
                 />
                 
@@ -173,7 +174,7 @@ const Home = () => {
                 <div className="absolute inset-0 border-[8px] border-transparent group-hover:border-white/10 transition-all duration-500 rounded-3xl pointer-events-none"></div>
 
                 {/* Glassmorphic category floating tag */}
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-gold-rose font-bold text-[9px] uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-md border border-white/20">
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-gold-rose-dark font-bold text-[9px] uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-md border border-white/20">
                   {item.category}
                 </div>
                 
@@ -182,12 +183,12 @@ const Home = () => {
                   <span className="text-[10px] text-gold-rose font-bold uppercase tracking-wider block mb-1">Medium & Details</span>
                   <p className="text-xs text-white/90 font-light">{item.medium} • {item.price}</p>
                 </div>
-              </div>
+              </Link>
 
               {/* Card Details */}
               <div className="p-6 flex-grow flex flex-col justify-between">
                 <div>
-                  <h3 className="font-serif text-lg font-bold text-charcoal group-hover:text-gold-rose transition-colors duration-300 line-clamp-1">
+                  <h3 className="font-serif text-lg font-bold text-charcoal group-hover:text-gold-rose-dark transition-colors duration-300 line-clamp-1">
                     {item.title}
                   </h3>
                   <p className="text-[11px] text-charcoal-light font-light italic mt-2 leading-relaxed">
@@ -199,7 +200,7 @@ const Home = () => {
                   <span className="text-[10px] uppercase tracking-wider text-charcoal-light/60 font-semibold">Limited Commission</span>
                   <Link 
                     to={`/gallery?search=${encodeURIComponent(item.category)}`}
-                    className="text-[10px] text-gold-soft hover:text-gold-rose font-bold uppercase tracking-widest flex items-center gap-1 transition-colors"
+                    className="text-[10px] text-gold-soft-dark hover:text-gold-rose-dark font-bold uppercase tracking-widest flex items-center gap-1 transition-colors"
                   >
                     View Gallery <ArrowRight size={10} />
                   </Link>
@@ -215,9 +216,9 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="font-script text-3xl text-gold-rose">The Studio Catalog</span>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-charcoal mt-1">Specialty Handcrafted Paintings</h2>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-charcoal mt-1">Specialty Portrait Sketches</h2>
             <p className="text-xs md:text-sm text-charcoal-light font-light mt-3">
-              Explore our boutique offerings. We design detailed mandalas, paint canvas illustrations, and design everlasting floral presentations to mirror your milestones.
+              Explore our custom hand-sketched portraits. We draw detailed black & white graphite portraits and vibrant colourful sketches to preserve your favorite memories forever.
             </p>
           </div>
           <GiftShowcase />
@@ -291,9 +292,10 @@ const Home = () => {
               <img 
                 src="/couple_sketch.jpg" 
                 alt="Mahek Thakor pencil sketch" 
+                loading="lazy"
                 className="w-full h-[88%] object-cover rounded-lg"
               />
-              <div className="text-center pt-3 font-script text-xl text-gold-rose font-bold">
+              <div className="text-center pt-3 font-script text-xl text-gold-rose-dark font-bold">
                 Hand-drawn Sketch by Mahek Thakor
               </div>
             </div>
@@ -304,8 +306,8 @@ const Home = () => {
 
           {/* Right: Narrative Story */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-1.5 bg-gold-rose/10 text-gold-rose px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase">
-              <Heart size={12} className="fill-gold-rose" /> Father & Daughter Legacy
+            <div className="inline-flex items-center gap-1.5 bg-gold-rose/10 text-gold-rose-dark px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase">
+              <Heart size={12} className="fill-gold-rose-dark text-gold-rose-dark" /> Father & Daughter Legacy
             </div>
             <h2 className="font-serif text-3xl md:text-5xl font-bold text-charcoal tracking-tight leading-tight">
               The Soul Behind the Art: <br/>
@@ -320,7 +322,7 @@ const Home = () => {
             <div className="pt-2">
               <Link 
                 to="/about"
-                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold-soft hover:text-gold-rose transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold-soft-dark hover:text-gold-rose-dark transition-colors"
               >
                 Read Our Story <ArrowRight size={12} />
               </Link>
@@ -332,7 +334,7 @@ const Home = () => {
       {/* TESTIMONIALS SECTION */}
       <section className="py-24 max-w-7xl mx-auto px-6 md:px-12">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="font-script text-3xl text-gold-rose">Customer Stories</span>
+          <span className="font-script text-3xl text-gold-rose-dark">Customer Stories</span>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-charcoal mt-1">Emotional Resonance</h2>
           <p className="text-xs md:text-sm text-charcoal-light font-light mt-3">
             Read comments from families who turned memories into physical handmade art.
@@ -348,7 +350,7 @@ const Home = () => {
             {testimonials.map((testi) => (
               <div key={testi.id} className="bg-white p-8 rounded-2xl shadow-premium border border-cream-dark/30 flex flex-col justify-between">
                 <div>
-                  <div className="flex space-x-1 mb-4 text-gold-artistic">
+                  <div className="flex space-x-1 mb-4 text-gold-artistic-dark">
                     {Array.from({ length: testi.rating }).map((_, i) => (
                       <span key={i}>★</span>
                     ))}
@@ -358,10 +360,10 @@ const Home = () => {
                   </p>
                 </div>
                 <div className="flex items-center space-x-4 mt-6 pt-6 border-t border-cream-dark/40">
-                  <img src={testi.avatar_url} alt={testi.name} className="w-10 h-10 rounded-full object-cover" />
+                  <img src={testi.avatar_url} alt={testi.name} loading="lazy" className="w-10 h-10 rounded-full object-cover" />
                   <div>
                     <h4 className="font-serif font-bold text-sm text-charcoal">{testi.name}</h4>
-                    <span className="text-[10px] uppercase tracking-wider text-gold-rose font-medium">Verified Commission</span>
+                    <span className="text-[10px] uppercase tracking-wider text-gold-rose-dark font-medium">Verified Commission</span>
                   </div>
                 </div>
               </div>

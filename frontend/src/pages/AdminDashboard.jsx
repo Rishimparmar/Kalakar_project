@@ -80,6 +80,14 @@ const AdminDashboard = () => {
     }
   });
 
+  const deleteOrderMutation = useMutation({
+    mutationFn: (id) => api.deleteOrder(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['adminOrders']);
+      alert('Order deleted successfully.');
+    }
+  });
+
   const approveTestiMutation = useMutation({
     mutationFn: ({ id, approved }) => api.approveTestimonial(id, approved),
     onSuccess: () => {
@@ -379,12 +387,20 @@ const AdminDashboard = () => {
                               </div>
                             </div>
                           ) : (
-                            <button
-                              onClick={() => startEditOrder(order)}
-                              className="w-full text-center border border-cream-dark/60 hover:bg-canvas/50 font-bold px-3.5 py-1.5 rounded"
-                            >
-                              Update Status
-                            </button>
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => startEditOrder(order)}
+                                className="flex-1 text-center border border-cream-dark/60 hover:bg-canvas/50 font-bold px-3.5 py-1.5 rounded"
+                              >
+                                Update Status
+                              </button>
+                              <button
+                                onClick={() => { if(confirm('Are you sure you want to permanently delete this order?')) deleteOrderMutation.mutate(order.id); }}
+                                className="text-center border border-red-200 text-red-600 hover:bg-red-50 font-bold px-3.5 py-1.5 rounded title='Delete Order'"
+                              >
+                                Delete
+                              </button>
+                            </div>
                           )}
                         </td>
                       </tr>
