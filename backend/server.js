@@ -14,8 +14,22 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Configure CORS options
+const allowedOrigins = [
+  process.env.ALLOWED_ORIGIN,
+  'https://kalaakar.online',
+  'https://www.kalaakar.online',
+  'http://localhost:5173',
+  'https://kalakar-project.web.app'
+].filter(Boolean);
+
 const corsOptions = {
-  origin: process.env.ALLOWED_ORIGIN || '*',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin) || process.env.ALLOWED_ORIGIN === '*') {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
