@@ -40,10 +40,21 @@ const AdminDashboard = () => {
   // Mutations
   const updateOrderMutation = useMutation({
     mutationFn: ({ id, status, notes, price }) => api.updateOrderStatus(id, status, notes, price),
-    onSuccess: () => {
-      queryClient.invalidateQueries(['adminOrders']);
-      queryClient.invalidateQueries(['adminStats']);
-      alert('Order updated successfully!');
+    onMutate: async (newOrder) => {
+      await queryClient.cancelQueries({ queryKey: ['adminOrders'] });
+      const previousOrders = queryClient.getQueryData(['adminOrders']);
+      queryClient.setQueryData(['adminOrders'], old => 
+        old ? old.map(o => o.id === newOrder.id ? { ...o, status: newOrder.status, notes: newOrder.notes, price: newOrder.price } : o) : []
+      );
+      return { previousOrders };
+    },
+    onError: (err, newOrder, context) => {
+      queryClient.setQueryData(['adminOrders'], context.previousOrders);
+      alert('Failed to update order. Reverting changes.');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminOrders'] });
+      queryClient.invalidateQueries({ queryKey: ['adminStats'] });
     }
   });
 
@@ -82,9 +93,21 @@ const AdminDashboard = () => {
 
   const deleteOrderMutation = useMutation({
     mutationFn: (id) => api.deleteOrder(id),
-    onSuccess: () => {
+    onMutate: async (deletedId) => {
+      await queryClient.cancelQueries({ queryKey: ['adminOrders'] });
+      const previousOrders = queryClient.getQueryData(['adminOrders']);
+      queryClient.setQueryData(['adminOrders'], old => 
+        old ? old.filter(o => o.id !== deletedId) : []
+      );
+      return { previousOrders };
+    },
+    onError: (err, newOrder, context) => {
+      queryClient.setQueryData(['adminOrders'], context.previousOrders);
+      alert('Failed to delete order.');
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['adminOrders'] });
-      alert('Order deleted successfully.');
+      queryClient.invalidateQueries({ queryKey: ['adminStats'] });
     }
   });
 

@@ -112,6 +112,10 @@ export const api = {
     const res = await apiClient.put(`/orders/${id}/status`, { status, notes, price });
     return res.data;
   },
+  deleteOrder: async (id) => {
+    const res = await apiClient.delete(`/orders/${id}`);
+    return res.data;
+  },
 
   // Quotation Requests
   createQuote: async (formData) => {
