@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Gift, Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const craftItems = [
   {
@@ -104,6 +105,13 @@ export default function CraftShowcase() {
             Need customized text or specific color themes? We adjust every craft to match your unique celebration requirements.
           </p>
         </div>
+
+        <Link 
+          to="/custom-order?tab=commission"
+          className="w-full py-3.5 bg-gold-rose hover:bg-gold-artistic text-white rounded-xl text-xs uppercase tracking-widest font-bold shadow-premium transition-all duration-300 text-center"
+        >
+          Order Customize Gift Now
+        </Link>
         
       </div>
       

@@ -25,6 +25,8 @@ const CustomOrder = () => {
     delivery_date: '',
     budget: '',
     additional_instructions: '',
+    address: '',
+    delivery_zone: 'Local',
     description: '' // For Quotations
   });
 
@@ -66,9 +68,12 @@ const CustomOrder = () => {
     if (formData.color_preference.includes('Gold')) {
       price += 300;
     }
+    if (formData.delivery_zone === 'Long Distance') {
+      price += 250;
+    }
 
     setEstimatedPrice(price);
-  }, [formData.artwork_type, formData.size_selection, formData.faces_count, formData.color_preference]);
+  }, [formData.artwork_type, formData.size_selection, formData.faces_count, formData.color_preference, formData.delivery_zone]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -121,6 +126,9 @@ const CustomOrder = () => {
       data.append('delivery_date', formData.delivery_date);
       data.append('budget', estimatedPrice.toString());
       data.append('additional_instructions', formData.additional_instructions);
+      data.append('address', formData.address);
+      data.append('delivery_zone', formData.delivery_zone);
+      data.append('calculated_price', estimatedPrice.toString());
       if (photoFile) {
         data.append('photo', photoFile);
       }
@@ -195,6 +203,8 @@ const CustomOrder = () => {
       delivery_date: '',
       budget: '',
       additional_instructions: '',
+      address: '',
+      delivery_zone: 'Local',
       description: ''
     });
   };
@@ -337,6 +347,7 @@ const CustomOrder = () => {
                     <option value="Personalized Glass Frame Decor (Hand Decor)">Personalized Glass Frame Decor (Hand Decor)</option>
                     <option value="Bespoke Paper Roses Bouquet (Hand Decor)">Bespoke Paper Roses Bouquet (Hand Decor)</option>
                     <option value="Blooming Memories Photo Bouquet (Hand Decor)">Blooming Memories Photo Bouquet (Hand Decor)</option>
+                    <option value="Handcrafted Multi-Layer Explosion Box (Hand Decor)">Handcrafted Multi-Layer Explosion Box (Hand Decor)</option>
                   </select>
                 </div>
 
@@ -480,6 +491,36 @@ const CustomOrder = () => {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose text-charcoal-light"
                   />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="comm-address" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Delivery Address *</label>
+                <textarea
+                  id="comm-address"
+                  name="address"
+                  rows={3}
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="Enter your full delivery address including city and pincode..."
+                  className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="comm-delivery-zone" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Delivery Zone *</label>
+                  <select
+                    id="comm-delivery-zone"
+                    name="delivery_zone"
+                    value={formData.delivery_zone}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose text-charcoal-light"
+                  >
+                    <option value="Local">Local Delivery</option>
+                    <option value="Long Distance">Long Distance / Out of State (+₹250)</option>
+                  </select>
                 </div>
               </div>
 
@@ -628,6 +669,12 @@ const CustomOrder = () => {
                   <div className="flex justify-between text-white/80">
                     <span>Acrylic Gold Detailing</span>
                     <span>+₹300</span>
+                  </div>
+                )}
+                {formData.delivery_zone === 'Long Distance' && (
+                  <div className="flex justify-between text-white/80">
+                    <span>Long Distance Delivery Fee</span>
+                    <span>+₹250</span>
                   </div>
                 )}
                 <div className="flex justify-between font-bold text-white border-t border-dashed border-white/10 pt-3 text-sm">

@@ -227,7 +227,8 @@ router.put('/settings', requireAdmin, (req, res) => {
 router.post('/orders', upload.single('photo'), async (req, res) => {
   const {
     name, phone, email, artwork_type, size_selection,
-    color_preference, message, delivery_date, budget, additional_instructions
+    color_preference, message, delivery_date, budget, additional_instructions,
+    address, delivery_zone, calculated_price
   } = req.body;
 
   if (!name || !phone || !email || !artwork_type || !size_selection) {
@@ -244,21 +245,14 @@ router.post('/orders', upload.single('photo'), async (req, res) => {
   const orderNumber = 'KK-' + Math.round(100000 + Math.random() * 900000);
   const imageUrl = req.file ? await handleFileUpload(req.file) : null;
 
-  // Let's estimate price based on size and category from products if available, 
-  // or a default fallback pricing
-  let estimatedPrice = 1500;
-  if (artwork_type.toLowerCase().includes('sketch')) {
-    estimatedPrice = size_selection === 'A3' ? 2800 : 1500;
-  } else if (artwork_type.toLowerCase().includes('holder')) {
-    estimatedPrice = 1800;
-  } else {
-    estimatedPrice = budget ? parseFloat(budget) : 2000;
-  }
+  // Let's use frontend calculated price if provided, else fallback
+  let estimatedPrice = calculated_price ? parseFloat(calculated_price) : (budget ? parseFloat(budget) : 2000);
 
   const query = `INSERT INTO custom_orders (
     order_number, name, phone, email, artwork_type, image_url, size_selection,
-    color_preference, message, delivery_date, budget, additional_instructions, status, price
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?)`;
+    color_preference, message, delivery_date, budget, additional_instructions, 
+    address, delivery_zone, status, price
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?)`;
 
   const cleanName = escapeHtml(name.trim());
   const cleanPhone = escapeHtml(phone.trim());
@@ -269,10 +263,12 @@ router.post('/orders', upload.single('photo'), async (req, res) => {
   const cleanMessage = escapeHtml((message || '').trim());
   const cleanDeliveryDate = escapeHtml((delivery_date || '').trim());
   const cleanInstructions = escapeHtml((additional_instructions || '').trim());
+  const cleanAddress = escapeHtml((address || '').trim());
+  const cleanDeliveryZone = escapeHtml((delivery_zone || 'Local').trim());
 
   db.run(query, [
     orderNumber, cleanName, cleanPhone, cleanEmail, cleanArtworkType, imageUrl, cleanSizeSelection,
-    cleanColorPref, cleanMessage, cleanDeliveryDate, budget, cleanInstructions, estimatedPrice
+    cleanColorPref, cleanMessage, cleanDeliveryDate, budget, cleanInstructions, cleanAddress, cleanDeliveryZone, estimatedPrice
   ], function(err) {
     if (err) {
       return res.status(500).json({ message: 'Error saving order: ' + err.message });

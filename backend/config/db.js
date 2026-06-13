@@ -88,6 +88,8 @@ if (dbConnectionString) {
           delivery_date VARCHAR(100),
           budget DECIMAL(10, 2),
           additional_instructions TEXT,
+          address TEXT,
+          delivery_zone VARCHAR(100),
           status VARCHAR(50) DEFAULT 'pending',
           price DECIMAL(10, 2),
           created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -165,6 +167,14 @@ if (dbConnectionString) {
         await pool.query(idxSql);
       }
       console.log('PostgreSQL Indexes initialized.');
+
+      // Run migrations for existing DBs
+      try {
+        await pool.query(`ALTER TABLE custom_orders ADD COLUMN address TEXT`);
+        await pool.query(`ALTER TABLE custom_orders ADD COLUMN delivery_zone VARCHAR(100)`);
+      } catch (e) {
+        // Ignored if column already exists
+      }
 
       // Seed Default Admin User in PostgreSQL/Supabase if it doesn't exist
       try {
@@ -510,6 +520,8 @@ db.serialize(() => {
     delivery_date TEXT,
     budget REAL,
     additional_instructions TEXT,
+    address TEXT,
+    delivery_zone TEXT,
     status TEXT DEFAULT 'pending',
     price REAL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -583,6 +595,10 @@ db.serialize(() => {
   db.run(`CREATE INDEX IF NOT EXISTS idx_gallery_category ON gallery(category_id)`);
   db.run(`CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_id)`);
   db.run(`CREATE INDEX IF NOT EXISTS idx_status_logs_order ON order_status_logs(order_id)`);
+
+  // Run SQLite migrations
+  db.run(`ALTER TABLE custom_orders ADD COLUMN address TEXT`, [], function(err) {});
+  db.run(`ALTER TABLE custom_orders ADD COLUMN delivery_zone TEXT`, [], function(err) {});
 
   console.log('Tables initialized successfully.');
 
