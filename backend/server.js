@@ -43,10 +43,10 @@ app.use(helmet({
 // Apply compression middleware
 app.use(compression());
 
-// Setup rate limiter: limit each IP to 100 requests per 15 minutes
+// Setup rate limiter: limit each IP to 1000 requests per 15 minutes
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: 1000,
   message: { message: 'Too many requests from this IP, please try again after 15 minutes.' },
   standardHeaders: true,
   legacyHeaders: false,
