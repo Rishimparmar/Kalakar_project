@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, Heart, Gift, Award, ShieldCheck, Phone } from 'lucide-react';
 import Sketchbook from '../components/3d/Sketchbook';
 import GiftShowcase from '../components/3d/GiftShowcase';
+import CraftShowcase from '../components/3d/CraftShowcase';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../services/api';
 
@@ -222,6 +223,15 @@ const Home = () => {
             </p>
           </div>
           <GiftShowcase />
+          
+          <div className="text-center max-w-2xl mx-auto mb-16 mt-32">
+            <span className="font-script text-3xl text-gold-rose">Premium Memorials</span>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-charcoal mt-1">Handcrafted Gifts & Decor</h2>
+            <p className="text-xs md:text-sm text-charcoal-light font-light mt-3">
+              Discover our signature 3D explosion boxes and everlasting photo bouquets. Custom-crafted using premium cardstock and your most cherished personal photographs.
+            </p>
+          </div>
+          <CraftShowcase />
         </div>
       </section>
 

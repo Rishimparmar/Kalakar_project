@@ -60,11 +60,7 @@ const CustomOrder = () => {
     if (type.includes('sketch') || type.includes('portrait')) {
       const faces = parseInt(formData.faces_count) || 1;
       if (faces > 1) {
-        if (type.includes('colour') || type.includes('color')) {
-          price += (faces - 1) * 1000;
-        } else {
-          price += (faces - 1) * 500;
-        }
+        price += (faces - 1) * 500;
       }
     }
     if (formData.color_preference.includes('Gold')) {
@@ -625,7 +621,7 @@ const CustomOrder = () => {
                 {(formData.artwork_type.toLowerCase().includes('sketch') || formData.artwork_type.toLowerCase().includes('portrait')) && parseInt(formData.faces_count) > 1 && (
                   <div className="flex justify-between text-white/80">
                     <span>Faces Count ({formData.faces_count} faces)</span>
-                    <span>+₹{(parseInt(formData.faces_count) - 1) * (formData.artwork_type.toLowerCase().includes('colour') || formData.artwork_type.toLowerCase().includes('color') ? 1000 : 500)}</span>
+                    <span>+₹{(parseInt(formData.faces_count) - 1) * 500}</span>
                   </div>
                 )}
                 {formData.color_preference.includes('Gold') && (

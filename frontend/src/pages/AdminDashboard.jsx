@@ -59,7 +59,7 @@ const AdminDashboard = () => {
   const updateProductMutation = useMutation({
     mutationFn: ({ id, price, active }) => api.updateProduct(id, { base_price: price, is_active: active }),
     onSuccess: () => {
-      queryClient.invalidateQueries(['adminProducts']);
+      queryClient.invalidateQueries({ queryKey: ['adminProducts'] });
       alert('Pricing updated successfully!');
     }
   });
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
   const uploadGalleryMutation = useMutation({
     mutationFn: (formData) => api.createGalleryItem(formData),
     onSuccess: () => {
-      queryClient.invalidateQueries(['adminGallery']);
+      queryClient.invalidateQueries({ queryKey: ['adminGallery'] });
       alert('New artwork added to gallery!');
     }
   });
@@ -75,7 +75,7 @@ const AdminDashboard = () => {
   const deleteGalleryMutation = useMutation({
     mutationFn: (id) => api.deleteGalleryItem(id),
     onSuccess: () => {
-      queryClient.invalidateQueries(['adminGallery']);
+      queryClient.invalidateQueries({ queryKey: ['adminGallery'] });
       alert('Gallery item removed.');
     }
   });
@@ -83,7 +83,7 @@ const AdminDashboard = () => {
   const deleteOrderMutation = useMutation({
     mutationFn: (id) => api.deleteOrder(id),
     onSuccess: () => {
-      queryClient.invalidateQueries(['adminOrders']);
+      queryClient.invalidateQueries({ queryKey: ['adminOrders'] });
       alert('Order deleted successfully.');
     }
   });
@@ -91,21 +91,21 @@ const AdminDashboard = () => {
   const approveTestiMutation = useMutation({
     mutationFn: ({ id, approved }) => api.approveTestimonial(id, approved),
     onSuccess: () => {
-      queryClient.invalidateQueries(['adminTestimonials']);
+      queryClient.invalidateQueries({ queryKey: ['adminTestimonials'] });
     }
   });
 
   const replyContactMutation = useMutation({
     mutationFn: (id) => api.replyContact(id),
     onSuccess: () => {
-      queryClient.invalidateQueries(['adminContacts']);
+      queryClient.invalidateQueries({ queryKey: ['adminContacts'] });
     }
   });
 
   const updateSettingsMutation = useMutation({
     mutationFn: (data) => api.updateSettings(data),
     onSuccess: () => {
-      queryClient.invalidateQueries(['adminSettings']);
+      queryClient.invalidateQueries({ queryKey: ['adminSettings'] });
       alert('Site configuration updated!');
     }
   });
