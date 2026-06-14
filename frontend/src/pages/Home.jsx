@@ -61,7 +61,7 @@ const Home = () => {
             </h1>
             
             <p className="text-base md:text-lg text-charcoal-light font-light leading-relaxed max-w-xl">
-              We design and paint customized treasures. Capture your moments with vibrant mandala drawings, personalized glass frame decor, and starry night canvas paintings.
+              We design and paint customized treasures. Capture your moments with vibrant mandala drawings and personalized glass frame decor.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">

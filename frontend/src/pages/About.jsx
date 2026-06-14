@@ -5,7 +5,7 @@ const About = () => {
     { year: '2022', title: 'The First Canvas', desc: 'Started with simple mandala drawings and customized glass paintings from a small desk at home.' },
     { year: '2023', title: 'Resin & Florals', desc: 'Introduced botanical preservation and customized floral home decor.' },
     { year: '2024', title: 'Kalaakar is Born', desc: 'Officially branded as Kalaakar - Turning Memories Into Art, serving customers globally.' },
-    { year: '2025', title: 'Creative Collective', desc: 'Expanded into event decorations, mandala drawing series, and starry night canvas paintings.' }
+    { year: '2025', title: 'Creative Collective', desc: 'Expanded into event decorations and mandala drawing series.' }
   ];
 
   return (

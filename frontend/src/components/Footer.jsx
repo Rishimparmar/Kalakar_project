@@ -67,8 +67,6 @@ const Footer = () => {
           <ul className="space-y-2.5 text-sm font-light text-white/70">
             <li>Vibrant Mandala Art</li>
             <li>Personalized Glass Decor</li>
-            <li>Lord Ganesha Lotus Art</li>
-            <li>Starry Night Acrylic Paintings</li>
             <li>Everlasting Paper Flowers</li>
           </ul>
         </div>
