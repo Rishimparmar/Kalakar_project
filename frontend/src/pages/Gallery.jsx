@@ -46,15 +46,7 @@ const Gallery = () => {
       medium: 'Handfolded Premium Craft Cardstock',
       year: '2025'
     },
-    {
-      id: 'f6',
-      title: 'Vibrant Paper Lotus Decor',
-      category_name: 'Crafted for Your Corner',
-      image_url: '/paper_lotus.png',
-      dimensions: '12" x 12" Base',
-      medium: 'Handfolded Premium Craft Cardstock',
-      year: '2025'
-    },
+
     {
       id: 'f9',
       title: 'Customized Name Ring Holder',
