@@ -17,11 +17,11 @@ const journalPages = [
   },
 
   {
-    title: 'Lord Buddha Lippan Art Painting',
-    category: 'Crafted for Your Corner',
-    image: '/buddha_painting.jpg',
+    title: 'Classic Pencil Couple Sketch',
+    category: 'Monochrome Magic',
+    image: '/couple_sketch.jpg',
     isCover: false,
-    note: 'Circular wooden panel hand-painted with acrylics and concentric mirror work.'
+    note: 'Hand-drawn graphite and charcoal sketch of a couple, detailed with rich shadow tones.'
   }
 ];
 

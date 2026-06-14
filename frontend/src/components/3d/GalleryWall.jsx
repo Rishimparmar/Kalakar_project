@@ -31,12 +31,12 @@ const exhibitionArtworks = [
   },
   {
     id: 4,
-    title: 'Krishna Mandala Bookmark',
-    category: 'Memories in Colors',
-    image: '/krishna_bookmark.png',
-    dimensions: '3 x 9 inches',
-    medium: 'Charcoal Silhouette & Fineliner Ink',
-    description: 'Lord Krishna playing a flute on a bookmark strip, flanked by concentric mandala art and yellow blossoms.'
+    title: 'Cherished Moments Photo Bouquet',
+    category: 'Blooming Memories Bouquet',
+    image: '/photo_bouquet.jpg',
+    dimensions: '12" Bouquet Height',
+    medium: 'Custom Photos & Paper Florals',
+    description: 'A custom floral bouquet featuring personalized photos nestled within handfolded paper flowers, creating an everlasting keepsake.'
   }
 ];
 

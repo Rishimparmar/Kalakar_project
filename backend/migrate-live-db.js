@@ -31,21 +31,10 @@ const pool = new Pool({
 
 const defaultCategories = [
   ['Memories in Colors', 'memories-in-colors', 'Turn your favorite moments into vibrant masterpieces.'],
-  ['Crafted for Your Corner', 'crafted-for-your-corner', 'Decor that tells your story.'],
-  ['Walls That Speak', 'walls-that-speak', 'Beautiful creations that bring life to every wall.']
+  ['Crafted for Your Corner', 'crafted-for-your-corner', 'Decor that tells your story.']
 ];
 
 const galleryItems = [
-  {
-    category_name: 'Crafted for Your Corner',
-    title: 'Lord Buddha Lippan Art Painting',
-    description: 'Hand-painted Lord Buddha circular wooden panel set in a vibrant lotus background and detailed with concentric mirror tiles (Lippan work).',
-    image_url: '/buddha_painting.jpg',
-    dimensions: '12" Round Panel',
-    medium: 'Acrylics, Mirror Tiles on MDF Board',
-    year: '2026',
-    is_featured: 1
-  },
   {
     category_name: 'Memories in Colors',
     title: 'Hand-drawn Indian Couple Portrait',
@@ -67,18 +56,7 @@ const galleryItems = [
     is_featured: 0
   },
   {
-    category_name: 'Walls That Speak',
-    title: 'Peacock Tassel Toran Hanging',
-    description: 'Traditional handcrafted toran featuring colorful circular designs, mirrors, bead strings, and dangling peacock accents.',
-    image_url: '/wall_hanging_peacock.jpg',
-    dimensions: '3ft Width',
-    medium: 'Embroidery, Wooden beads, Mirror panels & Woolen tassels',
-    year: '2026',
-    is_featured: 1
-  },
-
-  {
-    category_name: 'Crafted for Your Corner',
+    category_name: 'Blooming Memories Bouquet',
     title: 'Bespoke Red Paper Roses Bouquet',
     description: 'Meticulously handfolded bright red paper roses styled into a classic everlasting hand bouquet.',
     image_url: '/red_paper_roses.jpg',
@@ -88,23 +66,13 @@ const galleryItems = [
     is_featured: 0
   },
   {
-    category_name: 'Crafted for Your Corner',
+    category_name: 'Blooming Memories Bouquet',
     title: 'Everlasting Pink Paper Roses Bouquet',
     description: 'Hand-rolled pastel pink roses arranged in a gorgeous decorative bouquet.',
     image_url: '/pink_paper_roses.jpg',
     dimensions: '12" Bouquet Height',
     medium: 'Premium Cardstock & Wrapping accents',
     year: '2026',
-    is_featured: 0
-  },
-  {
-    category_name: 'Memories in Colors',
-    title: 'Krishna Mandala Bookmark',
-    description: 'Lord Krishna playing a flute silhouette flanked by intricate concentric mandala drawings and yellow blossoms.',
-    image_url: '/krishna_bookmark.png',
-    dimensions: '3" x 9"',
-    medium: 'Charcoal Silhouette & Fineliner Ink on Paper',
-    year: '2025',
     is_featured: 0
   },
   {

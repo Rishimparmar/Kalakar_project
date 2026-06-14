@@ -269,20 +269,8 @@ if (dbConnectionString) {
           },
           {
             category: 'Crafted for Your Corner',
-            name: 'Lord Buddha Lippan Art Painting (Hand Decor)',
-            description: 'Hand-painted Lord Buddha panel adorned with traditional mirror work.',
-            price: 1000.00
-          },
-          {
-            category: 'Crafted for Your Corner',
             name: 'Vibrant Paper Lotus Decor (Hand Decor)',
             description: 'Handfolded decorative paper lotuses for festivals and home styling.',
-            price: 1000.00
-          },
-          {
-            category: 'Walls That Speak',
-            name: 'Peacock Tassel Toran Hanging (Hand Decor)',
-            description: 'Stunning handcrafted toran with mirrors and wool tassels for doorways.',
             price: 1000.00
           },
           {
@@ -292,7 +280,7 @@ if (dbConnectionString) {
             price: 1000.00
           },
           {
-            category: 'Forever Blooms',
+            category: 'Blooming Memories Bouquet',
             name: 'Bespoke Paper Roses Bouquet (Hand Decor)',
             description: 'Meticulously crafted paper roses bouquet that never fades.',
             price: 1000.00
@@ -627,8 +615,6 @@ db.serialize(() => {
     ['Crafted for Your Corner', 'crafted-for-your-corner', 'Decor that tells your story.'],
     ['Blooming Memories Bouquet', 'blooming-memories-bouquet', 'Where photographs blossom into unforgettable gifts.'],
     ['Treasures of Memories', 'treasures-of-memories', 'Open the box, relive the moments.'],
-    ['Walls That Speak', 'walls-that-speak', 'Beautiful creations that bring life to every wall.'],
-    ['Forever Blooms', 'forever-blooms', 'Flowers that never fade, memories that never end.'],
     ['The Forever Nest', 'the-forever-nest', 'A beautiful home for your precious promise.']
   ];
 
@@ -664,20 +650,8 @@ db.serialize(() => {
         },
         {
           category: 'Crafted for Your Corner',
-          name: 'Lord Buddha Lippan Art Painting (Hand Decor)',
-          description: 'Hand-painted Lord Buddha panel adorned with traditional mirror work.',
-          price: 1000.00
-        },
-        {
-          category: 'Crafted for Your Corner',
           name: 'Vibrant Paper Lotus Decor (Hand Decor)',
           description: 'Handfolded decorative paper lotuses for festivals and home styling.',
-          price: 1000.00
-        },
-        {
-          category: 'Walls That Speak',
-          name: 'Peacock Tassel Toran Hanging (Hand Decor)',
-          description: 'Stunning handcrafted toran with mirrors and wool tassels for doorways.',
           price: 1000.00
         },
         {
@@ -687,7 +661,7 @@ db.serialize(() => {
           price: 1000.00
         },
         {
-          category: 'Forever Blooms',
+          category: 'Blooming Memories Bouquet',
           name: 'Bespoke Paper Roses Bouquet (Hand Decor)',
           description: 'Meticulously crafted paper roses bouquet that never fades.',
           price: 1000.00
@@ -712,18 +686,7 @@ db.serialize(() => {
     });
   });
 
-  // Seed Default Gallery Items
   const galleryItems = [
-    {
-      category_name: 'Crafted for Your Corner',
-      title: 'Lord Buddha Lippan Art Painting',
-      description: 'Hand-painted Lord Buddha circular wooden panel set in a vibrant lotus background and detailed with concentric mirror tiles (Lippan work).',
-      image_url: '/buddha_painting.jpg',
-      dimensions: '12" Round Panel',
-      medium: 'Acrylics, Mirror Tiles on MDF Board',
-      year: '2026',
-      is_featured: 1
-    },
     {
       category_name: 'Memories in Colors',
       title: 'Hand-drawn Indian Couple Portrait',
@@ -744,19 +707,9 @@ db.serialize(() => {
       year: '2025',
       is_featured: 0
     },
-    {
-      category_name: 'Walls That Speak',
-      title: 'Peacock Tassel Toran Hanging',
-      description: 'Traditional handcrafted toran featuring colorful circular designs, mirrors, bead strings, and dangling peacock accents.',
-      image_url: '/wall_hanging_peacock.jpg',
-      dimensions: '3ft Width',
-      medium: 'Embroidery, Wooden beads, Mirror panels & Woolen tassels',
-      year: '2026',
-      is_featured: 1
-    },
 
     {
-      category_name: 'Forever Blooms',
+      category_name: 'Blooming Memories Bouquet',
       title: 'Bespoke Red Paper Roses Bouquet',
       description: 'Meticulously handfolded bright red paper roses styled into a classic everlasting hand bouquet.',
       image_url: '/red_paper_roses.jpg',
@@ -766,23 +719,13 @@ db.serialize(() => {
       is_featured: 0
     },
     {
-      category_name: 'Forever Blooms',
+      category_name: 'Blooming Memories Bouquet',
       title: 'Everlasting Pink Paper Roses Bouquet',
       description: 'Hand-rolled pastel pink roses arranged in a gorgeous decorative bouquet.',
       image_url: '/pink_paper_roses.jpg',
       dimensions: '12" Bouquet Height',
       medium: 'Premium Cardstock & Wrapping accents',
       year: '2026',
-      is_featured: 0
-    },
-    {
-      category_name: 'Memories in Colors',
-      title: 'Krishna Mandala Bookmark',
-      description: 'Lord Krishna playing a flute silhouette flanked by intricate concentric mandala drawings and yellow blossoms.',
-      image_url: '/krishna_bookmark.png',
-      dimensions: '3" x 9"',
-      medium: 'Charcoal Silhouette & Fineliner Ink on Paper',
-      year: '2025',
       is_featured: 0
     },
     {

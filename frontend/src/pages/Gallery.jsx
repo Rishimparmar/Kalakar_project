@@ -29,15 +29,6 @@ const Gallery = () => {
 
   const fallbackItems = [
     {
-      id: 'f4',
-      title: 'Lord Buddha Lippan Art Painting',
-      category_name: 'Crafted for Your Corner',
-      image_url: '/buddha_painting.jpg',
-      dimensions: '12" Round Panel',
-      medium: 'Acrylics, Mirror Tiles on MDF Board',
-      year: '2026'
-    },
-    {
       id: 'f5',
       title: 'Hand-drawn Indian Couple Portrait',
       category_name: 'Memories in Colors',
@@ -56,22 +47,13 @@ const Gallery = () => {
       year: '2025'
     },
     {
-      id: 'f7',
-      title: 'Krishna Mandala Bookmark',
-      category_name: 'Memories in Colors',
-      image_url: '/krishna_bookmark.png',
-      dimensions: '3" x 9"',
-      medium: 'Charcoal Silhouette & Fineliner Ink on Paper',
+      id: 'f6',
+      title: 'Vibrant Paper Lotus Decor',
+      category_name: 'Crafted for Your Corner',
+      image_url: '/paper_lotus.png',
+      dimensions: '12" x 12" Base',
+      medium: 'Handfolded Premium Craft Cardstock',
       year: '2025'
-    },
-    {
-      id: 'f8',
-      title: 'Peacock Tassel Toran Hanging',
-      category_name: 'Walls That Speak',
-      image_url: '/wall_hanging_peacock.jpg',
-      dimensions: '3ft Width',
-      medium: 'Embroidery, Wooden beads, Mirror panels & Woolen tassels',
-      year: '2026'
     },
     {
       id: 'f9',
@@ -95,7 +77,7 @@ const Gallery = () => {
     {
       id: 'f14',
       title: 'Bespoke Red Paper Roses Bouquet',
-      category_name: 'Forever Blooms',
+      category_name: 'Blooming Memories Bouquet',
       image_url: '/red_paper_roses.jpg',
       dimensions: '12" Bouquet Height',
       medium: 'Premium Cardstock & Green floral wire',
@@ -224,8 +206,6 @@ const Gallery = () => {
     { name: 'Crafted for Your Corner', tagline: 'Decor that tells your story.' },
     { name: 'Blooming Memories Bouquet', tagline: 'Where photographs blossom into unforgettable gifts.' },
     { name: 'Treasures of Memories', tagline: 'Open the box, relive the moments.' },
-    { name: 'Walls That Speak', tagline: 'Beautiful creations that bring life to every wall.' },
-    { name: 'Forever Blooms', tagline: 'Flowers that never fade, memories that never end.' },
     { name: 'The Forever Nest', tagline: 'A beautiful home for your precious promise.' }
   ];
 
