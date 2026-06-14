@@ -860,7 +860,13 @@ db.serialize(() => {
     }
   ];
 
-  galleryItems.forEach(item => {
+  db.run('DELETE FROM gallery', [], (err) => {
+    if (err) {
+      console.error('Error clearing gallery:', err.message);
+      return;
+    }
+    
+    galleryItems.forEach(item => {
     db.get(`SELECT id FROM categories WHERE name = ?`, [item.category_name], (err, catRow) => {
       if (catRow) {
         db.get(`SELECT id FROM gallery WHERE image_url = ?`, [item.image_url], (err, galRow) => {
@@ -873,6 +879,7 @@ db.serialize(() => {
         });
       }
     });
+  });
   });
 
   // Seed Admin user

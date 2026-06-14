@@ -123,7 +123,9 @@ async function migrate() {
     catRes.rows.forEach(r => { categoryMap[r.name] = r.id; });
 
     // 3. Seed Gallery Items
-    console.log('Seeding gallery items...');
+    console.log('Clearing old gallery items...');
+    await client.query('DELETE FROM gallery');
+    console.log('Seeding new gallery items...');
     for (const item of galleryItems) {
       const categoryId = categoryMap[item.category_name];
       if (!categoryId) {
