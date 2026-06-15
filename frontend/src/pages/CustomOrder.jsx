@@ -384,7 +384,10 @@ const CustomOrder = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="faces_count" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Number of Faces (For Sketches)</label>
+                  <label htmlFor="faces_count" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">
+                    Number of Faces (For Sketches)
+                    <span className="text-[10px] text-gold-artistic ml-2 lowercase font-normal">(+₹500 for each additional face)</span>
+                  </label>
                   <select
                     id="faces_count"
                     name="faces_count"

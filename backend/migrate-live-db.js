@@ -42,7 +42,7 @@ const galleryItems = [
   {
     category_name: 'Memories in Colors',
     title: 'Hand-drawn Indian Couple Portrait',
-    description: 'A detailed colored pencil commission capturing life-like parent smiles.',
+    description: 'A detailed colored pencil commission capturing life-like parent smiles. (*Note: ₹500 per extra face.)',
     image_url: '/parents_portrait.png',
     dimensions: 'A3 Size Frame',
     medium: 'Colored Pencil on Archival Drawing Sheet',
@@ -102,7 +102,7 @@ const galleryItems = [
   {
     category_name: 'Monochrome Magic',
     title: 'Classic Pencil Couple Sketch',
-    description: 'A beautiful graphite and charcoal couple sketch on premium paper.',
+    description: 'A beautiful graphite and charcoal couple sketch on premium paper. (*Note: ₹500 per extra face.)',
     image_url: '/couple_sketch.jpg',
     dimensions: 'A4 Size Frame',
     medium: 'Graphite & Charcoal on Premium Paper',
@@ -122,7 +122,7 @@ const galleryItems = [
   {
     category_name: 'Monochrome Magic',
     title: 'Intimate Selfie Pencil Portrait',
-    description: 'A stunning pencil portrait capturing an intimate selfie moment.',
+    description: 'A stunning pencil portrait capturing an intimate selfie moment. (*Note: ₹500 per extra face.)',
     image_url: '/selfie_sketch.jpg',
     dimensions: 'A4 Size Frame',
     medium: 'Graphite & Charcoal on Premium Paper',
@@ -132,7 +132,7 @@ const galleryItems = [
   {
     category_name: 'Memories in Colors',
     title: 'Contemplative Standing Portrait',
-    description: 'A thoughtful standing portrait done in graphite.',
+    description: 'A thoughtful standing portrait done in graphite. (*Note: ₹500 per extra face.)',
     image_url: '/girl_standing_tattoo_sketch.jpg',
     dimensions: 'A3 Size Frame',
     medium: 'Graphite on Archival Paper',
@@ -142,7 +142,7 @@ const galleryItems = [
   {
     category_name: 'Monochrome Magic',
     title: 'Thoughtful Portrait in Glasses',
-    description: 'A highly detailed charcoal and pencil sketch of a woman in glasses.',
+    description: 'A highly detailed charcoal and pencil sketch of a woman in glasses. (*Note: ₹500 per extra face.)',
     image_url: '/girl_glasses_hand_chin_sketch.jpg',
     dimensions: 'A4 Size Frame',
     medium: 'Charcoal & Pencil on Fine Art Paper',
@@ -152,7 +152,7 @@ const galleryItems = [
   {
     category_name: 'Monochrome Magic',
     title: 'Vibrant Smile Pencil Portrait',
-    description: 'A lively portrait sketch capturing a vibrant smile.',
+    description: 'A lively portrait sketch capturing a vibrant smile. (*Note: ₹500 per extra face.)',
     image_url: '/girl_glasses_smile_sketch.jpg',
     dimensions: 'A4 Size Frame',
     medium: 'Graphite & Charcoal on Fine Art Paper',
@@ -162,7 +162,7 @@ const galleryItems = [
   {
     category_name: 'Monochrome Magic',
     title: 'Classic Boy Portrait Sketch',
-    description: 'A classic and expressive boy portrait sketch in charcoal.',
+    description: 'A classic and expressive boy portrait sketch in charcoal. (*Note: ₹500 per extra face.)',
     image_url: '/boy_portrait_sketch.jpg',
     dimensions: 'A4 Size Frame',
     medium: 'Charcoal on Archival Paper',
@@ -172,7 +172,7 @@ const galleryItems = [
   {
     category_name: 'Monochrome Magic',
     title: 'Vibrant Girl in Striped Dress',
-    description: 'A lively colored pencil sketch of a girl in a striped dress.',
+    description: 'A lively colored pencil sketch of a girl in a striped dress. (*Note: ₹500 per extra face.)',
     image_url: '/girl_striped_dress_sketch.jpg',
     dimensions: 'A4 Size Frame',
     medium: 'Colored Pencil on Archival Drawing Sheet',
@@ -182,7 +182,7 @@ const galleryItems = [
   {
     category_name: 'Memories in Colors',
     title: 'Graceful Woman in Red Saree',
-    description: 'A beautiful mixed media artwork of a woman in a red saree.',
+    description: 'A beautiful mixed media artwork of a woman in a red saree. (*Note: ₹500 per extra face.)',
     image_url: '/woman_red_saree_sketch.jpg',
     dimensions: 'A3 Size Frame',
     medium: 'Soft Pastels & Colored Pencil on Paper',
@@ -192,7 +192,7 @@ const galleryItems = [
   {
     category_name: 'Memories in Colors',
     title: 'Joyful Duo in Maroon Sarees',
-    description: 'A vibrant portrait of two women in maroon sarees.',
+    description: 'A vibrant portrait of two women in maroon sarees. (*Note: ₹500 per extra face.)',
     image_url: '/two_women_maroon_sarees.jpg',
     dimensions: 'A3 Size Frame',
     medium: 'Premium Color Pencil & Charcoal on Board',
@@ -202,7 +202,7 @@ const galleryItems = [
   {
     category_name: 'Monochrome Magic',
     title: 'Lotus Serenity Portrait',
-    description: 'A serene mixed media portrait featuring a lotus backdrop.',
+    description: 'A serene mixed media portrait featuring a lotus backdrop. (*Note: ₹500 per extra face.)',
     image_url: '/woman_lotus_backdrop.jpg',
     dimensions: 'A4 Size Frame',
     medium: 'Mixed Media (Graphite & Pink Colored Pencil)',

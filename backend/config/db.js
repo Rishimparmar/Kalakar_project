@@ -690,7 +690,7 @@ db.serialize(() => {
     {
       category_name: 'Memories in Colors',
       title: 'Hand-drawn Indian Couple Portrait',
-      description: 'A detailed colored pencil commission capturing life-like parent smiles.',
+      description: 'A detailed colored pencil commission capturing life-like parent smiles. (*Note: ₹500 per extra face.)',
       image_url: '/parents_portrait.png',
       dimensions: 'A3 Size Frame',
       medium: 'Colored Pencil on Archival Drawing Sheet',
@@ -751,7 +751,7 @@ db.serialize(() => {
     {
       category_name: 'Monochrome Magic',
       title: 'Classic Pencil Couple Sketch',
-      description: 'Hand-drawn graphite and charcoal sketch of a couple, detailed with rich shadow tones.',
+      description: 'Hand-drawn graphite and charcoal sketch of a couple, detailed with rich shadow tones. (*Note: ₹500 per extra face.)',
       image_url: '/couple_sketch.jpg',
       dimensions: 'A4 Size Frame',
       medium: 'Graphite & Charcoal on Premium Paper',
@@ -771,7 +771,7 @@ db.serialize(() => {
     {
       category_name: 'Monochrome Magic',
       title: 'Intimate Selfie Pencil Portrait',
-      description: 'Hand-drawn graphite and charcoal selfie sketch portrait.',
+      description: 'Hand-drawn graphite and charcoal selfie sketch portrait. (*Note: ₹500 per extra face.)',
       image_url: '/selfie_sketch.jpg',
       dimensions: 'A4 Size Frame',
       medium: 'Graphite & Charcoal on Premium Paper',
@@ -781,7 +781,7 @@ db.serialize(() => {
     {
       category_name: 'Memories in Colors',
       title: 'Contemplative Standing Portrait',
-      description: 'Pencil drawing of a girl standing with a hand tattoo.',
+      description: 'Pencil drawing of a girl standing with a hand tattoo. (*Note: ₹500 per extra face.)',
       image_url: '/girl_standing_tattoo_sketch.jpg',
       dimensions: 'A3 Size Frame',
       medium: 'Graphite on Archival Paper',
@@ -791,7 +791,7 @@ db.serialize(() => {
     {
       category_name: 'Monochrome Magic',
       title: 'Thoughtful Portrait in Glasses',
-      description: 'Detailed sketch of a girl wearing glasses, resting chin on her hand.',
+      description: 'Detailed sketch of a girl wearing glasses, resting chin on her hand. (*Note: ₹500 per extra face.)',
       image_url: '/girl_glasses_hand_chin_sketch.jpg',
       dimensions: 'A4 Size Frame',
       medium: 'Charcoal & Pencil on Fine Art Paper',
@@ -801,7 +801,7 @@ db.serialize(() => {
     {
       category_name: 'Monochrome Magic',
       title: 'Vibrant Smile Pencil Portrait',
-      description: 'A cheerful portrait sketch capturing a bright smiling face.',
+      description: 'A cheerful portrait sketch capturing a bright smiling face. (*Note: ₹500 per extra face.)',
       image_url: '/girl_glasses_smile_sketch.jpg',
       dimensions: 'A4 Size Frame',
       medium: 'Graphite & Charcoal on Fine Art Paper',
@@ -811,7 +811,7 @@ db.serialize(() => {
     {
       category_name: 'Monochrome Magic',
       title: 'Classic Boy Portrait Sketch',
-      description: 'A classic headshot portrait sketch of a boy.',
+      description: 'A classic headshot portrait sketch of a boy. (*Note: ₹500 per extra face.)',
       image_url: '/boy_portrait_sketch.jpg',
       dimensions: 'A4 Size Frame',
       medium: 'Charcoal on Archival Paper',
@@ -821,7 +821,7 @@ db.serialize(() => {
     {
       category_name: 'Monochrome Magic',
       title: 'Vibrant Girl in Striped Dress',
-      description: 'A colored pencil portrait sketch of a girl wearing a striped dress.',
+      description: 'A colored pencil portrait sketch of a girl wearing a striped dress. (*Note: ₹500 per extra face.)',
       image_url: '/girl_striped_dress_sketch.jpg',
       dimensions: 'A4 Size Frame',
       medium: 'Colored Pencil on Archival Drawing Sheet',
@@ -831,7 +831,7 @@ db.serialize(() => {
     {
       category_name: 'Memories in Colors',
       title: 'Graceful Woman in Red Saree',
-      description: 'A colorful pencil drawing of a woman wearing a red saree.',
+      description: 'A colorful pencil drawing of a woman wearing a red saree. (*Note: ₹500 per extra face.)',
       image_url: '/woman_red_saree_sketch.jpg',
       dimensions: 'A3 Size Frame',
       medium: 'Soft Pastels & Colored Pencil on Paper',
@@ -841,7 +841,7 @@ db.serialize(() => {
     {
       category_name: 'Memories in Colors',
       title: 'Joyful Duo in Maroon Sarees',
-      description: 'Vibrant color sketch representing two women smiling in maroon sarees.',
+      description: 'Vibrant color sketch representing two women smiling in maroon sarees. (*Note: ₹500 per extra face.)',
       image_url: '/two_women_maroon_sarees.jpg',
       dimensions: 'A3 Size Frame',
       medium: 'Premium Color Pencil & Charcoal on Board',
@@ -851,7 +851,7 @@ db.serialize(() => {
     {
       category_name: 'Monochrome Magic',
       title: 'Lotus Serenity Portrait',
-      description: 'Black and white portrait sketch set against vibrant pink lotuses.',
+      description: 'Black and white portrait sketch set against vibrant pink lotuses. (*Note: ₹500 per extra face.)',
       image_url: '/woman_lotus_backdrop.jpg',
       dimensions: 'A4 Size Frame',
       medium: 'Mixed Media (Graphite & Pink Colored Pencil)',
