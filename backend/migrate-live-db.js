@@ -31,7 +31,11 @@ const pool = new Pool({
 
 const defaultCategories = [
   ['Memories in Colors', 'memories-in-colors', 'Turn your favorite moments into vibrant masterpieces.'],
-  ['Crafted for Your Corner', 'crafted-for-your-corner', 'Decor that tells your story.']
+  ['Monochrome Magic', 'monochrome-magic', 'Classic sketches that never go out of style.'],
+  ['Crafted for Your Corner', 'crafted-for-your-corner', 'Decor that tells your story.'],
+  ['Blooming Memories Bouquet', 'blooming-memories-bouquet', 'Where photographs blossom into unforgettable gifts.'],
+  ['Treasures of Memories', 'treasures-of-memories', 'Open the box, relive the moments.'],
+  ['The Forever Nest', 'the-forever-nest', 'A beautiful home for your precious promise.']
 ];
 
 const galleryItems = [
@@ -76,7 +80,7 @@ const galleryItems = [
     is_featured: 0
   },
   {
-    category_name: 'Crafted for Your Corner',
+    category_name: 'The Forever Nest',
     title: 'Customized Name Ring Holder',
     description: 'Bespoke wedding ring pedestal featuring personalized glitter lettering and handcrafted paper florals on a velvet base.',
     image_url: '/ring_holder.png',
@@ -86,7 +90,7 @@ const galleryItems = [
     is_featured: 0
   },
   {
-    category_name: 'Crafted for Your Corner',
+    category_name: 'Blooming Memories Bouquet',
     title: 'Cherished Moments Photo Bouquet',
     description: 'A custom floral bouquet featuring personalized photos nestled within handfolded paper flowers, creating an everlasting keepsake.',
     image_url: '/photo_bouquet.jpg',
