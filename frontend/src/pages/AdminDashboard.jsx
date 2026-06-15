@@ -214,6 +214,9 @@ const AdminDashboard = () => {
     refetchContacts();
     refetchSettings();
     refetchLogs();
+    
+    // Create a temporary toast/alert to show success
+    alert('Data refreshed successfully from the latest database state.');
   };
 
   return (

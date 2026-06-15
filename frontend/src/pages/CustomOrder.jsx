@@ -19,7 +19,7 @@ const CustomOrder = () => {
     phone: '',
     artwork_type: 'Black & White Sketch (Monochrome Magic)',
     size_selection: 'A4',
-    color_preference: 'Gold Accent Highlights',
+    color_preference: 'None',
     faces_count: '1',
     message: '',
     delivery_date: '',
@@ -65,8 +65,8 @@ const CustomOrder = () => {
         price += (faces - 1) * 500;
       }
     }
-    if (formData.color_preference.includes('Gold')) {
-      price += 300;
+    if (formData.color_preference.includes('(+₹100)')) {
+      price += 100;
     }
     if (formData.delivery_zone === 'Long Distance') {
       price += 250;
@@ -88,8 +88,8 @@ const CustomOrder = () => {
     }
   };
 
-  // Submit Commission Order
-  const handleCommissionSubmit = async (e) => {
+  // Submit Custom Order
+  const handleOrderSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     setErrorMsg('');
@@ -136,7 +136,7 @@ const CustomOrder = () => {
       const res = await api.createOrder(data);
       setSubmitSuccess({ type: 'order', number: res.order_number, price: res.estimated_price });
     } catch (err) {
-      setErrorMsg(err.response?.data?.message || 'Error booking commission. Please try again.');
+      setErrorMsg(err.response?.data?.message || 'Error booking order. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -197,7 +197,7 @@ const CustomOrder = () => {
       phone: '',
       artwork_type: 'Black & White Sketch (Monochrome Magic)',
       size_selection: 'A4',
-      color_preference: 'Gold Accent Highlights',
+      color_preference: 'None',
       faces_count: '1',
       message: '',
       delivery_date: '',
@@ -218,9 +218,9 @@ const CustomOrder = () => {
           
           {submitSuccess.type === 'order' ? (
             <>
-              <h2 className="font-serif text-2xl md:text-3xl font-bold text-charcoal mb-4">Commission Booked!</h2>
+              <h2 className="font-serif text-2xl md:text-3xl font-bold text-charcoal mb-4">Order Booked!</h2>
               <p className="text-sm text-charcoal-light font-light leading-relaxed mb-6">
-                Thank you, <strong>{formData.name}</strong>. Your custom commission has been recorded. Please complete your payment using the QR code below.
+                Thank you, <strong>{formData.name}</strong>. Your custom order has been recorded. Please complete your payment using the QR code below.
               </p>
               
               <div className="bg-canvas border border-cream-dark/60 p-5 rounded-2xl w-full mb-6 text-center space-y-4">
@@ -285,7 +285,7 @@ const CustomOrder = () => {
       
       {/* Header Copy */}
       <div className="text-center max-w-2xl mx-auto mb-12">
-        <span className="text-[10px] uppercase tracking-[0.25em] text-gold-rose font-bold">Commission Studio</span>
+        <span className="text-[10px] uppercase tracking-[0.25em] text-gold-rose font-bold">Custom Order Studio</span>
         <h1 className="text-3xl md:text-5xl font-bold text-charcoal mt-1 mb-4">Create Custom Art</h1>
         <p className="text-sm text-charcoal-light font-light leading-relaxed">
           Order a portrait or request pricing quotes for custom crafts. Choose your booking type below.
@@ -299,7 +299,7 @@ const CustomOrder = () => {
               activeTab === 'commission' ? 'text-gold-rose border-b-2 border-gold-rose' : 'text-charcoal-light hover:text-charcoal'
             }`}
           >
-            Commission
+            Book Order
           </button>
           <button
             onClick={() => { setActiveTab('quote'); setErrorMsg(''); }}
@@ -307,7 +307,7 @@ const CustomOrder = () => {
               activeTab === 'quote' ? 'text-gold-rose border-b-2 border-gold-rose' : 'text-charcoal-light hover:text-charcoal'
             }`}
           >
-            Request Custom Quotation
+            Request Custom Order
           </button>
         </div>
       </div>
@@ -324,7 +324,7 @@ const CustomOrder = () => {
           )}
 
           {activeTab === 'commission' ? (
-            <form onSubmit={handleCommissionSubmit} className="space-y-6">
+            <form onSubmit={handleOrderSubmit} className="space-y-6">
               <h2 className="font-serif text-lg font-bold text-charcoal mb-4 flex items-center gap-1.5 border-b border-cream-dark pb-2">
                 <FileText size={18} className="text-gold-rose" /> 1. Project Parameters
               </h2>
@@ -368,7 +368,7 @@ const CustomOrder = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="color_preference" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Color Preference *</label>
+                  <label htmlFor="color_preference" className="block text-xs text-charcoal-light font-medium uppercase tracking-wider mb-2">Extra Drawing Details</label>
                   <select
                     id="color_preference"
                     name="color_preference"
@@ -376,10 +376,8 @@ const CustomOrder = () => {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-cream-dark/60 rounded-xl bg-canvas text-sm focus:outline-none focus:border-gold-rose"
                   >
-                    <option value="Gold Accent Highlights">Golden Highlights (Acrylic accents)</option>
-                    <option value="Multi-color Detailing">Vibrant Multi-color Detailing</option>
-                    <option value="Acrylics on Board/Canvas">Acrylics on Board/Canvas</option>
-                    <option value="Dried Flowers Resin">Resin embedded flowers</option>
+                    <option value="None">No Extra Details</option>
+                    <option value="Extra Flowers/Background (+₹100)">Yes, Extra Flowers or Background (+₹100)</option>
                   </select>
                 </div>
 
@@ -545,7 +543,7 @@ const CustomOrder = () => {
                 disabled={submitting}
                 className="w-full bg-gradient-to-r from-gold-rose to-gold-soft text-white font-medium py-4 rounded-xl shadow-premium hover:opacity-90 transition-opacity"
               >
-                {submitting ? 'Booking Commission...' : `Book Commission (Est. ₹${estimatedPrice})`}
+                {submitting ? 'Booking Order...' : `Book Order (Est. ₹${estimatedPrice})`}
               </button>
             </form>
           ) : (
@@ -633,7 +631,7 @@ const CustomOrder = () => {
                 disabled={submitting}
                 className="w-full bg-gradient-to-r from-gold-rose to-gold-soft text-white font-medium py-4 rounded-xl shadow-premium hover:opacity-90 transition-opacity"
               >
-                {submitting ? 'Submitting request...' : 'Submit Quotation Request'}
+                {submitting ? 'Submitting request...' : 'Submit Order Request'}
               </button>
             </form>
           )}
@@ -649,7 +647,7 @@ const CustomOrder = () => {
               
               <div className="flex items-center space-x-2 text-gold-artistic mb-4">
                 <Calculator size={18} />
-                <span className="text-xs font-semibold uppercase tracking-wider">Dynamic Commission Calculator</span>
+                <span className="text-xs font-semibold uppercase tracking-wider">Dynamic Order Calculator</span>
               </div>
               
               <span className="text-xs text-white/50 block uppercase tracking-wider">Estimated Price Quote</span>
@@ -668,10 +666,10 @@ const CustomOrder = () => {
                     <span>+₹{(parseInt(formData.faces_count) - 1) * 500}</span>
                   </div>
                 )}
-                {formData.color_preference.includes('Gold') && (
+                {formData.color_preference.includes('(+₹100)') && (
                   <div className="flex justify-between text-white/80">
-                    <span>Acrylic Gold Detailing</span>
-                    <span>+₹300</span>
+                    <span>Extra Drawing Details</span>
+                    <span>+₹100</span>
                   </div>
                 )}
                 {formData.delivery_zone === 'Long Distance' && (
@@ -681,7 +679,7 @@ const CustomOrder = () => {
                   </div>
                 )}
                 <div className="flex justify-between font-bold text-white border-t border-dashed border-white/10 pt-3 text-sm">
-                  <span>Total Est. Commission</span>
+                  <span>Total Est. Order</span>
                   <span className="text-gold-artistic">₹{estimatedPrice}</span>
                 </div>
               </div>
@@ -709,7 +707,7 @@ const CustomOrder = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-gold-rose mt-0.5">✔</span>
-                <span><strong>Gift Packaging:</strong> Custom commissions ship in luxury canvas wrapping with optional greeting tags.</span>
+                <span><strong>Gift Packaging:</strong> Custom orders ship in luxury canvas wrapping with optional greeting tags.</span>
               </li>
             </ul>
           </div>

@@ -4,7 +4,7 @@
   "description": "Backend API for Kalaakar - Handmade Gifting and 3D Portfolio Website",
   "main": "server.js",
   "scripts": {
-    "start": "node migrate-live-db.js && node server.js",
+    "start": "node server.js",
     "dev": "node server.js"
   },
   "dependencies": {
