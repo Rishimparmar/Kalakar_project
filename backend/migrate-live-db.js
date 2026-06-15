@@ -98,6 +98,116 @@ const galleryItems = [
     medium: 'Custom Photos, Premium Cardstock & Wrapping Accents',
     year: '2026',
     is_featured: 0
+  },
+  {
+    category_name: 'Monochrome Magic',
+    title: 'Classic Pencil Couple Sketch',
+    description: 'A beautiful graphite and charcoal couple sketch on premium paper.',
+    image_url: '/couple_sketch.jpg',
+    dimensions: 'A4 Size Frame',
+    medium: 'Graphite & Charcoal on Premium Paper',
+    year: '2026',
+    is_featured: 0
+  },
+  {
+    category_name: 'Treasures of Memories',
+    title: 'Treasures of Memories Explosion Box',
+    description: 'An interactive explosion box filled with memories.',
+    image_url: '/explosion_box.jpg',
+    dimensions: '8" x 8" Box',
+    medium: 'Premium Cardstock, Photos & Ribbons',
+    year: '2026',
+    is_featured: 0
+  },
+  {
+    category_name: 'Monochrome Magic',
+    title: 'Intimate Selfie Pencil Portrait',
+    description: 'A stunning pencil portrait capturing an intimate selfie moment.',
+    image_url: '/selfie_sketch.jpg',
+    dimensions: 'A4 Size Frame',
+    medium: 'Graphite & Charcoal on Premium Paper',
+    year: '2026',
+    is_featured: 0
+  },
+  {
+    category_name: 'Memories in Colors',
+    title: 'Contemplative Standing Portrait',
+    description: 'A thoughtful standing portrait done in graphite.',
+    image_url: '/girl_standing_tattoo_sketch.jpg',
+    dimensions: 'A3 Size Frame',
+    medium: 'Graphite on Archival Paper',
+    year: '2026',
+    is_featured: 0
+  },
+  {
+    category_name: 'Monochrome Magic',
+    title: 'Thoughtful Portrait in Glasses',
+    description: 'A highly detailed charcoal and pencil sketch of a woman in glasses.',
+    image_url: '/girl_glasses_hand_chin_sketch.jpg',
+    dimensions: 'A4 Size Frame',
+    medium: 'Charcoal & Pencil on Fine Art Paper',
+    year: '2026',
+    is_featured: 0
+  },
+  {
+    category_name: 'Monochrome Magic',
+    title: 'Vibrant Smile Pencil Portrait',
+    description: 'A lively portrait sketch capturing a vibrant smile.',
+    image_url: '/girl_glasses_smile_sketch.jpg',
+    dimensions: 'A4 Size Frame',
+    medium: 'Graphite & Charcoal on Fine Art Paper',
+    year: '2026',
+    is_featured: 0
+  },
+  {
+    category_name: 'Monochrome Magic',
+    title: 'Classic Boy Portrait Sketch',
+    description: 'A classic and expressive boy portrait sketch in charcoal.',
+    image_url: '/boy_portrait_sketch.jpg',
+    dimensions: 'A4 Size Frame',
+    medium: 'Charcoal on Archival Paper',
+    year: '2026',
+    is_featured: 0
+  },
+  {
+    category_name: 'Monochrome Magic',
+    title: 'Vibrant Girl in Striped Dress',
+    description: 'A lively colored pencil sketch of a girl in a striped dress.',
+    image_url: '/girl_striped_dress_sketch.jpg',
+    dimensions: 'A4 Size Frame',
+    medium: 'Colored Pencil on Archival Drawing Sheet',
+    year: '2026',
+    is_featured: 0
+  },
+  {
+    category_name: 'Memories in Colors',
+    title: 'Graceful Woman in Red Saree',
+    description: 'A beautiful mixed media artwork of a woman in a red saree.',
+    image_url: '/woman_red_saree_sketch.jpg',
+    dimensions: 'A3 Size Frame',
+    medium: 'Soft Pastels & Colored Pencil on Paper',
+    year: '2026',
+    is_featured: 0
+  },
+  {
+    category_name: 'Memories in Colors',
+    title: 'Joyful Duo in Maroon Sarees',
+    description: 'A vibrant portrait of two women in maroon sarees.',
+    image_url: '/two_women_maroon_sarees.jpg',
+    dimensions: 'A3 Size Frame',
+    medium: 'Premium Color Pencil & Charcoal on Board',
+    year: '2026',
+    is_featured: 0
+  },
+  {
+    category_name: 'Monochrome Magic',
+    title: 'Lotus Serenity Portrait',
+    description: 'A serene mixed media portrait featuring a lotus backdrop.',
+    image_url: '/woman_lotus_backdrop.jpg',
+    dimensions: 'A4 Size Frame',
+    medium: 'Mixed Media (Graphite & Pink Colored Pencil)',
+    year: '2026',
+    is_featured: 0
   }
 ];
 
