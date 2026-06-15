@@ -348,6 +348,12 @@ const AdminDashboard = () => {
                         <td className="py-4 px-4">
                           <div><strong>{order.name}</strong></div>
                           <div className="text-[10px] text-charcoal-light">{order.phone} • {order.email}</div>
+                          {order.address && (
+                            <div className="text-[10px] text-charcoal-light mt-1">
+                              <strong>Address:</strong> {order.address}
+                              {order.delivery_zone && ` (${order.delivery_zone})`}
+                            </div>
+                          )}
                         </td>
                         <td className="py-4 px-4">
                           <div><strong>{order.artwork_type}</strong></div>
