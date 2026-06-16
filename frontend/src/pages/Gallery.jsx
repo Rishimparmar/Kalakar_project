@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import SEO from '../components/SEO';
 import { api, getUploadUrl } from '../services/api';
 import GalleryWall from '../components/3d/GalleryWall';
 import { Search, Eye, Filter } from 'lucide-react';
@@ -219,6 +220,11 @@ const Gallery = () => {
 
   return (
     <div className="pt-28 pb-20 max-w-7xl mx-auto px-6 md:px-12">
+      <SEO 
+        title="Art Gallery | Kalaakar | Handcrafted Masterpieces" 
+        description="Explore the Kalaakar art gallery. View our custom handmade portraits, sketches, and beautiful handcrafted gifts."
+        url="https://kalaakar.online/gallery"
+      />
       
       {/* Immersive 3D Gallery Section */}
       <div className="mb-16">

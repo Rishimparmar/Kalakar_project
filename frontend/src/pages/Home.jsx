@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, Heart, Gift, Award, ShieldCheck, Phone } from 'lucide-react';
+import SEO from '../components/SEO';
 import Sketchbook from '../components/3d/Sketchbook';
 import GiftShowcase from '../components/3d/GiftShowcase';
 import CraftShowcase from '../components/3d/CraftShowcase';
@@ -43,7 +44,11 @@ const Home = () => {
 
   return (
     <div className="pt-20">
-      
+      <SEO 
+        title="Kalaakar | Turning Memories Into Art" 
+        description="Luxury handcrafted gifting brand specializing in custom sketch portraits, couple sketches, resin ring holders, and personalized decor."
+        url="https://kalaakar.online"
+      />
       {/* HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center max-w-7xl mx-auto px-6 md:px-12 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { api } from '../services/api';
 import { Calendar, Upload, FileText, CheckCircle, Calculator, Info } from 'lucide-react';
 
@@ -282,6 +283,11 @@ const CustomOrder = () => {
 
   return (
     <div className="pt-28 pb-20 max-w-6xl mx-auto px-6 md:px-12">
+      <SEO 
+        title="Book Custom Art | Kalaakar" 
+        description="Book your custom handmade artwork today. Use our dynamic calculator to get an instant quote on portraits, paper crafts, and more."
+        url="https://kalaakar.online/book-art"
+      />
       
       {/* Header Copy */}
       <div className="text-center max-w-2xl mx-auto mb-12">

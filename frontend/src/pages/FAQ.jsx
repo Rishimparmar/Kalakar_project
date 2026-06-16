@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import SEO from '../components/SEO';
 import { api } from '../services/api';
 import { ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
 
@@ -33,7 +34,12 @@ const FAQ = () => {
   };
 
   return (
-    <div className="pt-28 pb-20 max-w-4xl mx-auto px-6">
+    <div className="pt-28 pb-20 max-w-4xl mx-auto px-6 md:px-12 min-h-screen">
+      <SEO 
+        title="FAQs | Kalaakar" 
+        description="Frequently asked questions about Kalaakar's custom handmade gifts, delivery times, and pricing."
+        url="https://kalaakar.online/faq"
+      />
       
       {/* Header */}
       <div className="text-center mb-12">

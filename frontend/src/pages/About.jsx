@@ -1,4 +1,5 @@
 import { Sparkles, Calendar, Heart, Shield } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const About = () => {
   const milestones = [
@@ -10,6 +11,11 @@ const About = () => {
 
   return (
     <div className="pt-28 pb-20 max-w-7xl mx-auto px-6 md:px-12">
+      <SEO 
+        title="Our Story | Meet Mahek | Kalaakar" 
+        description="Learn about the journey of Kalaakar. Founded by Mahek, creating beautiful custom handmade portraits, resin jewelry, and gifts."
+        url="https://kalaakar.online/about"
+      />
       {/* Intro Header */}
       <div className="max-w-3xl mb-16">
         <span className="text-[10px] uppercase tracking-[0.25em] text-gold-rose font-bold">Our Journey</span>

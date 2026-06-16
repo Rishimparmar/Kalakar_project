@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import SEO from '../components/SEO';
 import { api } from '../services/api';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 
@@ -79,6 +80,11 @@ const Contact = () => {
 
   return (
     <div className="pt-28 pb-20 max-w-7xl mx-auto px-6 md:px-12">
+      <SEO 
+        title="Contact Us | Kalaakar" 
+        description="Get in touch with Kalaakar. We would love to hear from you about custom handmade gifts or general inquiries."
+        url="https://kalaakar.online/contact"
+      />
       
       {/* Page Header */}
       <div className="text-center max-w-2xl mx-auto mb-16">
