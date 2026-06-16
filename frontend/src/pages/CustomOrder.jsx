@@ -342,7 +342,6 @@ const CustomOrder = () => {
                     <option value="Black & White Sketch (Monochrome Magic)">Black & White Sketch (Monochrome Magic)</option>
                     <option value="Colour Sketch Art (Memories in Colors)">Colour Sketch Art (Memories in Colors)</option>
                     <option value="Vibrant Paper Lotus Decor (Hand Decor)">Vibrant Paper Lotus Decor (Hand Decor)</option>
-                    <option value="Personalized Glass Frame Decor (Hand Decor)">Personalized Glass Frame Decor (Hand Decor)</option>
                     <option value="Bespoke Paper Roses Bouquet (Hand Decor)">Bespoke Paper Roses Bouquet (Hand Decor)</option>
                     <option value="Blooming Memories Photo Bouquet (Hand Decor)">Blooming Memories Photo Bouquet (Hand Decor)</option>
                     <option value="Handcrafted Multi-Layer Explosion Box (Hand Decor)">Handcrafted Multi-Layer Explosion Box (Hand Decor)</option>
