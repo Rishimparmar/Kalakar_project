@@ -72,14 +72,17 @@ async function handleFileUpload(file) {
         } else {
           const errMsg = await response.text();
           console.error('Supabase storage upload failed:', errMsg);
+          throw new Error('Supabase Storage Error: Please create a public bucket named "kalakar-uploads"');
         }
       }
     } catch (err) {
       console.error('Error uploading file to Supabase storage:', err);
+      throw new Error(err.message || 'Error uploading file to Supabase storage');
     }
+  } else {
+    // If Supabase is completely disabled, use local path
+    return localPath;
   }
-  
-  return localPath;
 }
 
 // Regex for field validations
