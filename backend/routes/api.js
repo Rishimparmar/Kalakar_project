@@ -780,51 +780,7 @@ router.get('/stats', requireAdmin, (req, res) => {
   });
 });
 
-router.get('/test-version', (req, res) => {
-  res.json({ version: '1.0.1-diagnostic' });
-});
 
-router.get('/test-email', async (req, res) => {
-  try {
-    const result = await sendEmail(
-      'rishimparmar19@gmail.com',
-      'Diagnostic Test Email (Gmail API)',
-      '<h3>Gmail API is working perfectly over HTTPS!</h3>'
-    );
-    if (result && result.success) {
-      res.json(result);
-    } else {
-      res.status(500).json(result);
-    }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-  }
-});
-
-router.get('/test-env', (req, res) => {
-  const getMasked = (val) => {
-    if (!val) return 'MISSING';
-    const len = val.length;
-    const clean = val.replace(/^"|"$/g, '').trim();
-    const cleanLen = clean.length;
-    return {
-      rawLength: len,
-      cleanLength: cleanLen,
-      startsWith: clean.substring(0, 8) + '...',
-      endsWith: '...' + clean.substring(cleanLen - 8)
-    };
-  };
-
-  res.json({
-    GMAIL_CLIENT_ID: getMasked(process.env.GMAIL_CLIENT_ID),
-    GMAIL_CLIENT_SECRET: getMasked(process.env.GMAIL_CLIENT_SECRET),
-    GMAIL_REFRESH_TOKEN: getMasked(process.env.GMAIL_REFRESH_TOKEN),
-    EMAIL_USER: getMasked(process.env.EMAIL_USER)
-  });
-});
 
 module.exports = router;
 
