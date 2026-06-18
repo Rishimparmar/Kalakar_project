@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('../config/db');
 const { requireAdmin, JWT_SECRET } = require('../middleware/auth');
+const { sendEmail, templates } = require('../utils/mailer');
 
 // Setup Multer storage for image uploads
 const uploadDir = path.join(__dirname, '..', 'uploads');
@@ -138,14 +139,10 @@ function logActivity(adminId, action, details) {
   db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (?, ?, ?)`, [adminId, escapeHtml(action), escapeHtml(details)]);
 }
 
-// Helper for Mock Email Automation
+// Helper for Email Automation
 function sendMailNotification(to, subject, htmlContent) {
-  console.log(`\n==================================================`);
-  console.log(`[AUTOMATED EMAIL NOTIFICATION]`);
-  console.log(`To: ${to}`);
-  console.log(`Subject: ${subject}`);
-  console.log(`Content Outline:\n${htmlContent.replace(/<[^>]*>/g, ' ').substring(0, 300)}...`);
-  console.log(`==================================================\n`);
+  // Send actual email using Nodemailer via mailer.js
+  sendEmail(to, subject, htmlContent).catch(err => console.error('Failed to send email async', err));
   
   // Save mail activity to activity log
   db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (NULL, 'Email Sent', 'To: ' || ? || ' | Subject: ' || ?)`, [to, subject]);
@@ -282,11 +279,18 @@ router.post('/orders', upload.single('photo'), async (req, res) => {
     // Log initial status
     db.run(`INSERT INTO order_status_logs (order_id, status, notes) VALUES (?, 'pending', 'Order placed successfully.')`, [orderId]);
 
-    // Send confirmation email
+    // Send confirmation email to Customer
     sendMailNotification(
-      email,
+      cleanEmail,
       `Order Received - Kalaakar (Order No: ${orderNumber})`,
-      `<h3>Hello ${name},</h3><p>We have received your custom order request for a <strong>${artwork_type}</strong>.</p><p><strong>Order ID:</strong> ${orderNumber}</p><p>We are reviewing your instructions and will follow up with pricing confirmation soon.</p><p>Warm regards,<br/>Team Kalaakar</p>`
+      templates.customerOrderConfirmation(cleanName, orderNumber, estimatedPrice, cleanArtworkType)
+    );
+
+    // Send alert email to Admin
+    sendMailNotification(
+      process.env.EMAIL_USER, // Send to self
+      `New Order Alert: ${orderNumber}`,
+      templates.adminNewOrderAlert(cleanName, orderNumber, cleanArtworkType, cleanEmail, cleanPhone)
     );
 
     res.status(201).json({
@@ -360,7 +364,7 @@ router.put('/orders/:id/status', requireAdmin, (req, res) => {
       sendMailNotification(
         order.email,
         `Order Update: ${status.toUpperCase()} - Kalaakar (Order No: ${order.order_number})`,
-        `<h3>Hello ${order.name},</h3><p>Your custom order (No. <strong>${order.order_number}</strong>) status has been updated to: <strong>${status}</strong>.</p><p><strong>Admin Notes:</strong> ${notes || 'No notes added.'}</p><p>Track your order status live on our website anytime using your credentials.</p><p>Thank you for choosing Kalaakar!</p>`
+        templates.customerStatusUpdate(order.name, order.order_number, status)
       );
 
       res.json({ message: 'Order status updated successfully' });
