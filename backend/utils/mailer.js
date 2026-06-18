@@ -1,32 +1,75 @@
-const nodemailer = require('nodemailer');
+// Helper to refresh access token using refresh_token
+async function getAccessToken() {
+  const response = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      client_id: process.env.GMAIL_CLIENT_ID,
+      client_secret: process.env.GMAIL_CLIENT_SECRET,
+      refresh_token: process.env.GMAIL_REFRESH_TOKEN,
+      grant_type: 'refresh_token'
+    })
+  });
 
-// Configure transport
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error('Failed to refresh Gmail access token: ' + errText);
   }
-});
 
-// Helper to send emails
+  const data = await response.json();
+  return data.access_token;
+}
+
+// Helper to send emails using Gmail REST API (over HTTPS port 443)
 const sendEmail = async (to, subject, htmlContent) => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.warn('Email credentials missing. Skipping email notification to:', to);
-    return { success: false, error: 'Email credentials (EMAIL_USER or EMAIL_PASS) are missing in environment variables.' };
+  if (!process.env.GMAIL_CLIENT_ID || !process.env.GMAIL_CLIENT_SECRET || !process.env.GMAIL_REFRESH_TOKEN || !process.env.EMAIL_USER) {
+    console.warn('Gmail API credentials missing. Skipping email notification to:', to);
+    return { success: false, error: 'Gmail REST API credentials (GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN, or EMAIL_USER) are missing in environment variables.' };
   }
 
   try {
-    const info = await transporter.sendMail({
-      from: `"Kalaakar" <${process.env.EMAIL_USER}>`,
-      to,
-      subject,
-      html: htmlContent
+    const accessToken = await getAccessToken();
+
+    const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;
+    const messageParts = [
+      `From: "Kalaakar" <${process.env.EMAIL_USER}>`,
+      `To: ${to}`,
+      'Content-Type: text/html; charset=utf-8',
+      'MIME-Version: 1.0',
+      `Subject: ${utf8Subject}`,
+      '',
+      htmlContent
+    ];
+    const message = messageParts.join('\r\n');
+
+    // Gmail API requires base64url encoding
+    const encodedMessage = Buffer.from(message)
+      .toString('base64')
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
+
+    const response = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        raw: encodedMessage
+      })
     });
-    console.log('Email sent: %s', info.messageId);
-    return { success: true, messageId: info.messageId };
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error('Gmail API response error: ' + errText);
+    }
+
+    const result = await response.json();
+    console.log('Email sent via Gmail API: %s', result.id);
+    return { success: true, messageId: result.id };
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error sending email via Gmail API:', error);
     return { success: false, error: error.message };
   }
 };

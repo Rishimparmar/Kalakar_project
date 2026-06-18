@@ -785,37 +785,21 @@ router.get('/test-version', (req, res) => {
 });
 
 router.get('/test-email', async (req, res) => {
-  const nodemailer = require('nodemailer');
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-
   try {
-    console.log('Verifying transporter...');
-    await transporter.verify();
-    console.log('Transporter verified. Sending test email...');
-    
-    const info = await transporter.sendMail({
-      from: `"Kalaakar Test" <${process.env.EMAIL_USER}>`,
-      to: 'rishimparmar19@gmail.com',
-      subject: 'Diagnostic Test Email',
-      text: 'This is a test email sent from the Kalaakar backend diagnostic endpoint.'
-    });
-
-    res.json({
-      success: true,
-      message: 'SMTP is working perfectly!',
-      messageId: info.messageId
-    });
+    const result = await sendEmail(
+      'rishimparmar19@gmail.com',
+      'Diagnostic Test Email (Gmail API)',
+      '<h3>Gmail API is working perfectly over HTTPS!</h3>'
+    );
+    if (result && result.success) {
+      res.json(result);
+    } else {
+      res.status(500).json(result);
+    }
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: error.message,
-      stack: error.stack
+      error: error.message
     });
   }
 });
