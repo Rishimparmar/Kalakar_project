@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 const sendEmail = async (to, subject, htmlContent) => {
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
     console.warn('Email credentials missing. Skipping email notification to:', to);
-    return false;
+    return { success: false, error: 'Email credentials (EMAIL_USER or EMAIL_PASS) are missing in environment variables.' };
   }
 
   try {
@@ -24,10 +24,10 @@ const sendEmail = async (to, subject, htmlContent) => {
       html: htmlContent
     });
     console.log('Email sent: %s', info.messageId);
-    return true;
+    return { success: true, messageId: info.messageId };
   } catch (error) {
     console.error('Error sending email:', error);
-    return false;
+    return { success: false, error: error.message };
   }
 };
 

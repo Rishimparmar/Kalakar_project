@@ -142,10 +142,18 @@ function logActivity(adminId, action, details) {
 // Helper for Email Automation
 function sendMailNotification(to, subject, htmlContent) {
   // Send actual email using Nodemailer via mailer.js
-  sendEmail(to, subject, htmlContent).catch(err => console.error('Failed to send email async', err));
-  
-  // Save mail activity to activity log
-  db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (NULL, 'Email Sent', 'To: ' || ? || ' | Subject: ' || ?)`, [to, subject]);
+  sendEmail(to, subject, htmlContent)
+    .then(result => {
+      if (result && result.success) {
+        db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (NULL, 'Email Sent', 'To: ' || ? || ' | Subject: ' || ?)`, [to, subject]);
+      } else {
+        const errorMsg = result ? result.error : 'Unknown error';
+        db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (NULL, 'Email Failed', 'To: ' || ? || ' | Subject: ' || ? || ' | Error: ' || ?)`, [to, subject, errorMsg]);
+      }
+    })
+    .catch(err => {
+      db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (NULL, 'Email Error', 'To: ' || ? || ' | Subject: ' || ? || ' | Error: ' || ?)`, [to, subject, err.message]);
+    });
 }
 
 // ----------------------------------------------------
