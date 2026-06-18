@@ -282,8 +282,20 @@ router.post('/orders', upload.single('photo'), async (req, res) => {
     // Send confirmation email to Customer
     sendMailNotification(
       cleanEmail,
-      `Order Received - Kalaakar (Order No: ${orderNumber})`,
-      templates.customerOrderConfirmation(cleanName, orderNumber, estimatedPrice, cleanArtworkType)
+      `Order Receipt & Confirmation - Kalaakar (Order No: ${orderNumber})`,
+      templates.customerOrderConfirmation({
+        name: cleanName,
+        phone: cleanPhone,
+        email: cleanEmail,
+        orderNumber: orderNumber,
+        type: cleanArtworkType,
+        size: cleanSizeSelection,
+        color: cleanColorPref,
+        instructions: cleanInstructions,
+        address: cleanAddress,
+        deliveryZone: cleanDeliveryZone,
+        price: estimatedPrice
+      })
     );
 
     // Send alert email to Admin
