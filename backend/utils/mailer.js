@@ -1,12 +1,22 @@
+// Helper to clean environment variables (removing quotes and trimming spaces)
+function cleanEnvVar(val) {
+  if (!val) return '';
+  return val.replace(/^"|"$/g, '').trim();
+}
+
 // Helper to refresh access token using refresh_token
 async function getAccessToken() {
+  const clientId = cleanEnvVar(process.env.GMAIL_CLIENT_ID);
+  const clientSecret = cleanEnvVar(process.env.GMAIL_CLIENT_SECRET);
+  const refreshToken = cleanEnvVar(process.env.GMAIL_REFRESH_TOKEN);
+
   const response = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
-      client_id: process.env.GMAIL_CLIENT_ID,
-      client_secret: process.env.GMAIL_CLIENT_SECRET,
-      refresh_token: process.env.GMAIL_REFRESH_TOKEN,
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken,
       grant_type: 'refresh_token'
     })
   });
@@ -22,7 +32,12 @@ async function getAccessToken() {
 
 // Helper to send emails using Gmail REST API (over HTTPS port 443)
 const sendEmail = async (to, subject, htmlContent) => {
-  if (!process.env.GMAIL_CLIENT_ID || !process.env.GMAIL_CLIENT_SECRET || !process.env.GMAIL_REFRESH_TOKEN || !process.env.EMAIL_USER) {
+  const clientId = cleanEnvVar(process.env.GMAIL_CLIENT_ID);
+  const clientSecret = cleanEnvVar(process.env.GMAIL_CLIENT_SECRET);
+  const refreshToken = cleanEnvVar(process.env.GMAIL_REFRESH_TOKEN);
+  const emailUser = cleanEnvVar(process.env.EMAIL_USER);
+
+  if (!clientId || !clientSecret || !refreshToken || !emailUser) {
     console.warn('Gmail API credentials missing. Skipping email notification to:', to);
     return { success: false, error: 'Gmail REST API credentials (GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN, or EMAIL_USER) are missing in environment variables.' };
   }
@@ -32,7 +47,7 @@ const sendEmail = async (to, subject, htmlContent) => {
 
     const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;
     const messageParts = [
-      `From: "Kalaakar" <${process.env.EMAIL_USER}>`,
+      `From: "Kalaakar" <${emailUser}>`,
       `To: ${to}`,
       'Content-Type: text/html; charset=utf-8',
       'MIME-Version: 1.0',
