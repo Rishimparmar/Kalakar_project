@@ -780,4 +780,45 @@ router.get('/stats', requireAdmin, (req, res) => {
   });
 });
 
+router.get('/test-version', (req, res) => {
+  res.json({ version: '1.0.1-diagnostic' });
+});
+
+router.get('/test-email', async (req, res) => {
+  const nodemailer = require('nodemailer');
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+
+  try {
+    console.log('Verifying transporter...');
+    await transporter.verify();
+    console.log('Transporter verified. Sending test email...');
+    
+    const info = await transporter.sendMail({
+      from: `"Kalaakar Test" <${process.env.EMAIL_USER}>`,
+      to: 'rishimparmar19@gmail.com',
+      subject: 'Diagnostic Test Email',
+      text: 'This is a test email sent from the Kalaakar backend diagnostic endpoint.'
+    });
+
+    res.json({
+      success: true,
+      message: 'SMTP is working perfectly!',
+      messageId: info.messageId
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      stack: error.stack
+    });
+  }
+});
+
 module.exports = router;
+
