@@ -12,7 +12,7 @@ const AdminLogin = () => {
 
   // Redirect if already logged in
   useEffect(() => {
-    const token = localStorage.getItem('kalaakar_token');
+    const token = sessionStorage.getItem('kalaakar_token');
     if (token) {
       navigate('/admin/dashboard');
     }
