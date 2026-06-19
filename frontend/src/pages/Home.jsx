@@ -91,7 +91,7 @@ const Home = () => {
                 <span className="text-[10px] uppercase tracking-wider text-charcoal-light font-bold">Handcrafted</span>
               </div>
               <div>
-                <span className="block font-serif text-3xl font-bold text-gold-artistic">500+</span>
+                <span className="block font-serif text-3xl font-bold text-gold-artistic">50+</span>
                 <span className="text-[10px] uppercase tracking-wider text-charcoal-light font-bold">Memories Saved</span>
               </div>
               <div>
@@ -375,7 +375,7 @@ const Home = () => {
                   </p>
                 </div>
                 <div className="flex items-center space-x-4 mt-6 pt-6 border-t border-cream-dark/40">
-                  <img src={testi.avatar_url} alt={testi.name} loading="lazy" className="w-10 h-10 rounded-full object-cover" />
+                  <img src="/user_avatar.png" alt={testi.name} loading="lazy" className="w-10 h-10 rounded-full object-contain p-0.5 border border-cream-dark/20 bg-cream/10" />
                   <div>
                     <h4 className="font-serif font-bold text-sm text-charcoal">{testi.name}</h4>
                     <span className="text-[10px] uppercase tracking-wider text-gold-rose-dark font-medium">Verified Commission</span>
