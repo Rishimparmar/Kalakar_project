@@ -8,6 +8,81 @@ const bcrypt = require('bcryptjs');
 const db = require('../config/db');
 const { requireAdmin, JWT_SECRET } = require('../middleware/auth');
 const { sendEmail, templates } = require('../utils/mailer');
+const rateLimit = require('express-rate-limit');
+
+// Rate limiter for Admin Login
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5,
+  message: { message: 'Too many login attempts from this IP, please try again after 15 minutes.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Rate limiter for Order Tracking (Prevent IDOR / Brute-forcing order numbers)
+const trackLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 10,
+  message: { message: 'Too many order tracking attempts, please try again in a minute.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Rate limiter for Checkout / Submitting orders (Prevent spamming)
+const orderLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5,
+  message: { message: 'Order submission limit reached. Please try again after an hour.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Rate limiter for Contact / Quotes / Testimonials
+const formLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5,
+  message: { message: 'Form submission limit reached. Please try again after an hour.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// CSRF Origin verification middleware for mutate requests (POST, PUT, DELETE)
+const csrfCheck = (req, res, next) => {
+  const allowedOrigins = [
+    process.env.ALLOWED_ORIGIN,
+    'https://kalaakar.online',
+    'https://www.kalaakar.online',
+    'http://localhost:5173',
+    'https://kalakar-project.web.app'
+  ].filter(Boolean);
+
+  const origin = req.headers.origin || req.headers.referer;
+  if (!origin) {
+    return next(); // Safe for direct programmatic requests or server-to-server requests
+  }
+
+  try {
+    const originUrl = new URL(origin);
+    const isAllowed = allowedOrigins.some(o => o.includes(originUrl.hostname) || o === '*');
+    if (!isAllowed) {
+      db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (NULL, 'CSRF_BLOCKED', ?)`, 
+        [`Blocked request from disallowed origin: ${origin} | IP: ${req.ip}`]
+      );
+      return res.status(403).json({ message: 'Request blocked due to origin mismatch (CSRF protection)' });
+    }
+  } catch (e) {
+    // Ignore invalid URL formats
+  }
+  next();
+};
+
+// Apply CSRF check middleware to all non-GET requests inside the router
+router.use((req, res, next) => {
+  if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
+    return csrfCheck(req, res, next);
+  }
+  next();
+});
 
 // Setup Multer storage for image uploads
 const uploadDir = path.join(__dirname, '..', 'uploads');
@@ -24,7 +99,25 @@ const storage = multer.diskStorage({
     cb(null, uniqueSuffix + path.extname(file.originalname));
   }
 });
-const upload = multer({ storage: storage });
+
+// Hardened upload configuration (10MB limit, whitelist check)
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB
+  },
+  fileFilter: (req, file, cb) => {
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg', 'application/pdf'];
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.pdf'];
+    const ext = path.extname(file.originalname).toLowerCase();
+    
+    if (allowedMimeTypes.includes(file.mimetype) && allowedExtensions.includes(ext)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only JPEG, PNG, WEBP and PDF uploads are allowed.'));
+    }
+  }
+});
 
 // Helper to handle persistent file uploads (Supabase Storage in production, Local disk in development)
 async function handleFileUpload(file) {
@@ -160,8 +253,8 @@ function sendMailNotification(to, subject, htmlContent) {
 // AUTH ENDPOINTS
 // ----------------------------------------------------
 
-// Admin Login
-router.post('/auth/login', (req, res) => {
+// Admin Login with Rate Limiting and Failure logging
+router.post('/auth/login', loginLimiter, (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json({ message: 'Email and password are required' });
@@ -170,14 +263,21 @@ router.post('/auth/login', (req, res) => {
   const cleanedEmail = email.trim().toLowerCase();
   db.get(`SELECT * FROM users WHERE LOWER(email) = LOWER(?)`, [cleanedEmail], (err, user) => {
     if (err) {
-      return res.status(500).json({ message: 'Database error' });
+      console.error('Login error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
     }
     if (!user) {
+      db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (NULL, 'FAILED_LOGIN_ATTEMPT', ?)`,
+        [`Failed admin login attempt for non-existent email: ${cleanedEmail} | IP: ${req.ip}`]
+      );
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
     const isValid = bcrypt.compareSync(password, user.password_hash);
     if (!isValid) {
+      db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (NULL, 'FAILED_LOGIN_ATTEMPT', ?)`,
+        [`Failed admin login attempt (incorrect password) for email: ${cleanedEmail} | IP: ${req.ip}`]
+      );
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
@@ -203,9 +303,15 @@ router.get('/auth/verify', requireAdmin, (req, res) => {
 // ----------------------------------------------------
 // WEBSITE SETTINGS
 // ----------------------------------------------------
+// ----------------------------------------------------
+// WEBSITE SETTINGS
+// ----------------------------------------------------
 router.get('/settings', (req, res) => {
   db.all(`SELECT * FROM website_settings`, [], (err, rows) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get settings error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     const settingsMap = {};
     rows.forEach(r => { settingsMap[r.key] = r.value; });
     res.json(settingsMap);
@@ -231,8 +337,8 @@ router.put('/settings', requireAdmin, (req, res) => {
 // CUSTOM ORDERS
 // ----------------------------------------------------
 
-// Submit Custom Order
-router.post('/orders', upload.single('photo'), async (req, res) => {
+// Submit Custom Order with Rate Limiting
+router.post('/orders', orderLimiter, upload.single('photo'), async (req, res) => {
   const {
     name, phone, email, artwork_type, size_selection,
     color_preference, message, delivery_date, budget, additional_instructions,
@@ -279,7 +385,8 @@ router.post('/orders', upload.single('photo'), async (req, res) => {
     cleanColorPref, cleanMessage, cleanDeliveryDate, budget, cleanInstructions, cleanAddress, cleanDeliveryZone, estimatedPrice
   ], function(err) {
     if (err) {
-      return res.status(500).json({ message: 'Error saving order: ' + err.message });
+      console.error('Error saving order:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
     }
     
     const orderId = this.lastID;
@@ -322,8 +429,8 @@ router.post('/orders', upload.single('photo'), async (req, res) => {
   });
 });
 
-// Track Order
-router.get('/orders/track', (req, res) => {
+// Track Order with Rate Limiting and security audit logging
+router.get('/orders/track', trackLimiter, (req, res) => {
   const { order_number, phone } = req.query;
   if (!order_number || !phone) {
     return res.status(400).json({ message: 'Order number and phone number are required' });
@@ -331,12 +438,23 @@ router.get('/orders/track', (req, res) => {
 
   // Find order
   db.get(`SELECT * FROM custom_orders WHERE order_number = ? AND phone = ?`, [order_number, phone], (err, order) => {
-    if (err) return res.status(500).json({ message: err.message });
-    if (!order) return res.status(404).json({ message: 'Order not found with provided credentials' });
+    if (err) {
+      console.error('Track order database error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
+    if (!order) {
+      db.run(`INSERT INTO activity_logs (admin_id, action, details) VALUES (NULL, 'FAILED_ORDER_ACCESS', ?)`,
+        [`Failed tracking lookup for order: ${order_number} with phone: ${phone} | IP: ${req.ip}`]
+      );
+      return res.status(404).json({ message: 'Order not found with provided credentials' });
+    }
 
     // Fetch status logs
     db.all(`SELECT * FROM order_status_logs WHERE order_id = ? ORDER BY updated_at DESC`, [order.id], (err, logs) => {
-      if (err) return res.status(500).json({ message: err.message });
+      if (err) {
+        console.error('Track order logs database error:', err);
+        return res.status(500).json({ message: 'An internal server error occurred' });
+      }
       res.json({ order, tracking: logs });
     });
   });
@@ -345,7 +463,10 @@ router.get('/orders/track', (req, res) => {
 // Admin: Get All Orders
 router.get('/orders', requireAdmin, (req, res) => {
   db.all(`SELECT * FROM custom_orders ORDER BY created_at DESC`, [], (err, rows) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get all orders database error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     res.json(rows);
   });
 });
@@ -359,7 +480,10 @@ router.put('/orders/:id/status', requireAdmin, (req, res) => {
   if (!status) return res.status(400).json({ message: 'Status is required' });
 
   db.get(`SELECT * FROM custom_orders WHERE id = ?`, [orderId], (err, order) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Update status find order error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     if (!order) return res.status(404).json({ message: 'Order not found' });
 
     let updateQuery = `UPDATE custom_orders SET status = ?`;
@@ -373,7 +497,10 @@ router.put('/orders/:id/status', requireAdmin, (req, res) => {
     params.push(orderId);
 
     db.run(updateQuery, params, function(err) {
-      if (err) return res.status(500).json({ message: err.message });
+      if (err) {
+        console.error('Update status query error:', err);
+        return res.status(500).json({ message: 'An internal server error occurred' });
+      }
 
       // Add log entry
       db.run(`INSERT INTO order_status_logs (order_id, status, notes) VALUES (?, ?, ?)`, [orderId, status, notes || `Status updated by Admin.`]);
@@ -398,11 +525,17 @@ router.delete('/orders/:id', requireAdmin, (req, res) => {
   const adminId = req.user.id;
 
   db.get(`SELECT * FROM custom_orders WHERE id = ?`, [orderId], (err, order) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Delete order find error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     if (!order) return res.status(404).json({ message: 'Order not found' });
 
     db.run(`DELETE FROM custom_orders WHERE id = ?`, [orderId], function(err) {
-      if (err) return res.status(500).json({ message: err.message });
+      if (err) {
+        console.error('Delete order query error:', err);
+        return res.status(500).json({ message: 'An internal server error occurred' });
+      }
 
       // Clean up associated file if it exists and is local or supabase
       if (order.image_url) {
@@ -427,8 +560,8 @@ router.delete('/orders/:id', requireAdmin, (req, res) => {
 // QUOTATION REQUEST SYSTEM
 // ----------------------------------------------------
 
-// Submit Quote Request
-router.post('/quotes', upload.single('photo'), async (req, res) => {
+// Submit Quote Request with Rate Limiting
+router.post('/quotes', formLimiter, upload.single('photo'), async (req, res) => {
   const { name, email, phone, description } = req.body;
 
   if (!name || !email || !phone || !description) {
@@ -452,7 +585,10 @@ router.post('/quotes', upload.single('photo'), async (req, res) => {
   db.run(`INSERT INTO quotes (name, email, phone, description, image_url, status) VALUES (?, ?, ?, ?, ?, 'pending')`, 
     [cleanName, cleanEmail, cleanPhone, cleanDesc, imageUrl],
     function(err) {
-      if (err) return res.status(500).json({ message: err.message });
+      if (err) {
+        console.error('Insert quote error:', err);
+        return res.status(500).json({ message: 'An internal server error occurred' });
+      }
 
       sendMailNotification(
         cleanEmail,
@@ -468,7 +604,10 @@ router.post('/quotes', upload.single('photo'), async (req, res) => {
 // Admin: Get All Quotes
 router.get('/quotes', requireAdmin, (req, res) => {
   db.all(`SELECT * FROM quotes ORDER BY created_at DESC`, [], (err, rows) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get all quotes error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     res.json(rows);
   });
 });
@@ -480,13 +619,19 @@ router.put('/quotes/:id', requireAdmin, (req, res) => {
   const adminId = req.user.id;
 
   db.get(`SELECT * FROM quotes WHERE id = ?`, [quoteId], (err, quote) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Respond quote find error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     if (!quote) return res.status(404).json({ message: 'Quote not found' });
 
     db.run(`UPDATE quotes SET proposed_price = ?, status = ?, admin_message = ? WHERE id = ?`,
       [proposed_price, status, admin_message, quoteId],
       function(err) {
-        if (err) return res.status(500).json({ message: err.message });
+        if (err) {
+          console.error('Respond quote update error:', err);
+          return res.status(500).json({ message: 'An internal server error occurred' });
+        }
 
         logActivity(adminId, 'Update Quote', `Quote ID ${quoteId} updated to status: ${status} with proposed price: ₹${proposed_price}`);
 
@@ -508,7 +653,10 @@ router.put('/quotes/:id', requireAdmin, (req, res) => {
 // ----------------------------------------------------
 router.get('/products', (req, res) => {
   db.all(`SELECT p.*, c.name as category_name FROM products p JOIN categories c ON p.category_id = c.id`, [], (err, rows) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get products error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     res.json(rows);
   });
 });
@@ -521,7 +669,10 @@ router.put('/products/:id', requireAdmin, (req, res) => {
   db.run(`UPDATE products SET base_price = COALESCE(?, base_price), is_active = COALESCE(?, is_active), name = COALESCE(?, name), description = COALESCE(?, description) WHERE id = ?`,
     [base_price, is_active, name, description, productId],
     function(err) {
-      if (err) return res.status(500).json({ message: err.message });
+      if (err) {
+        console.error('Update product error:', err);
+        return res.status(500).json({ message: 'An internal server error occurred' });
+      }
       
       logActivity(adminId, 'Update Product Pricing', `Product ID ${productId} updated (price/info)`);
       res.json({ message: 'Product updated successfully' });
@@ -533,9 +684,15 @@ router.put('/products/:id', requireAdmin, (req, res) => {
 // ----------------------------------------------------
 // GALLERY ENDPOINTS
 // ----------------------------------------------------
+// ----------------------------------------------------
+// GALLERY ENDPOINTS
+// ----------------------------------------------------
 router.get('/gallery', (req, res) => {
   db.all(`SELECT g.*, c.name as category_name FROM gallery g JOIN categories c ON g.category_id = c.id ORDER BY g.created_at DESC`, [], (err, rows) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get gallery error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     res.json(rows);
   });
 });
@@ -553,7 +710,10 @@ router.post('/gallery', requireAdmin, upload.single('photo'), async (req, res) =
   db.run(`INSERT INTO gallery (category_id, title, description, image_url, dimensions, medium, year, is_featured) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [category_id, title, description, imageUrl, dimensions, medium, year, is_featured ? 1 : 0],
     function(err) {
-      if (err) return res.status(500).json({ message: err.message });
+      if (err) {
+        console.error('Insert gallery item error:', err);
+        return res.status(500).json({ message: 'An internal server error occurred' });
+      }
       
       logActivity(adminId, 'Add Gallery Item', `Added gallery artwork "${title}"`);
       res.status(201).json({ message: 'Gallery item added successfully', item_id: this.lastID });
@@ -567,11 +727,17 @@ router.delete('/gallery/:id', requireAdmin, (req, res) => {
 
   // Fetch the file path to remove it from disk
   db.get(`SELECT image_url, title FROM gallery WHERE id = ?`, [galleryId], (err, item) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get gallery delete item error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     if (!item) return res.status(404).json({ message: 'Gallery item not found' });
 
     db.run(`DELETE FROM gallery WHERE id = ?`, [galleryId], function(err) {
-      if (err) return res.status(500).json({ message: err.message });
+      if (err) {
+        console.error('Delete gallery item query error:', err);
+        return res.status(500).json({ message: 'An internal server error occurred' });
+      }
 
       // Safely delete file
       if (item.image_url) {
@@ -593,7 +759,10 @@ router.delete('/gallery/:id', requireAdmin, (req, res) => {
 
 router.get('/categories', (req, res) => {
   db.all(`SELECT * FROM categories`, [], (err, rows) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get categories error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     res.json(rows);
   });
 });
@@ -604,19 +773,25 @@ router.get('/categories', (req, res) => {
 // ----------------------------------------------------
 router.get('/testimonials', (req, res) => {
   db.all(`SELECT * FROM testimonials WHERE is_approved = 1 ORDER BY created_at DESC`, [], (err, rows) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get approved testimonials error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     res.json(rows);
   });
 });
 
 router.get('/testimonials/all', requireAdmin, (req, res) => {
   db.all(`SELECT * FROM testimonials ORDER BY created_at DESC`, [], (err, rows) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get all testimonials error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     res.json(rows);
   });
 });
 
-router.post('/testimonials', (req, res) => {
+router.post('/testimonials', formLimiter, (req, res) => {
   const { name, review, rating, avatar_url } = req.body;
   if (!name || !review || !rating) {
     return res.status(400).json({ message: 'Missing testimonial details' });
@@ -625,7 +800,10 @@ router.post('/testimonials', (req, res) => {
   db.run(`INSERT INTO testimonials (name, avatar_url, review, rating, is_approved) VALUES (?, ?, ?, ?, 0)`,
     [name, avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150', review, rating],
     function(err) {
-      if (err) return res.status(500).json({ message: err.message });
+      if (err) {
+        console.error('Insert testimonial error:', err);
+        return res.status(500).json({ message: 'An internal server error occurred' });
+      }
       res.status(201).json({ message: 'Testimonial submitted, awaiting administrator approval.' });
     }
   );
@@ -637,7 +815,10 @@ router.put('/testimonials/:id/approve', requireAdmin, (req, res) => {
   const adminId = req.user.id;
 
   db.run(`UPDATE testimonials SET is_approved = ? WHERE id = ?`, [is_approved ? 1 : 0, testimonialId], function(err) {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Approve testimonial error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     
     logActivity(adminId, 'Approve Testimonial', `Testimonial ID ${testimonialId} approval toggled to: ${is_approved}`);
     res.json({ message: 'Testimonial approval status updated successfully.' });
@@ -648,7 +829,7 @@ router.put('/testimonials/:id/approve', requireAdmin, (req, res) => {
 // ----------------------------------------------------
 // CONTACT MESSAGES
 // ----------------------------------------------------
-router.post('/contact', (req, res) => {
+router.post('/contact', formLimiter, (req, res) => {
   const { name, email, phone, message } = req.body;
   if (!name || !email || !message) {
     return res.status(400).json({ message: 'Name, email, and message are required' });
@@ -669,7 +850,10 @@ router.post('/contact', (req, res) => {
   db.run(`INSERT INTO contact_messages (name, email, phone, message) VALUES (?, ?, ?, ?)`,
     [cleanName, cleanEmail, cleanPhone, cleanMessage],
     function(err) {
-      if (err) return res.status(500).json({ message: err.message });
+      if (err) {
+        console.error('Insert contact message error:', err);
+        return res.status(500).json({ message: 'An internal server error occurred' });
+      }
 
       sendMailNotification(
         cleanEmail,
@@ -684,7 +868,10 @@ router.post('/contact', (req, res) => {
 
 router.get('/contact', requireAdmin, (req, res) => {
   db.all(`SELECT * FROM contact_messages ORDER BY created_at DESC`, [], (err, rows) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get contact messages error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     res.json(rows);
   });
 });
@@ -694,7 +881,10 @@ router.put('/contact/:id/reply', requireAdmin, (req, res) => {
   const adminId = req.user.id;
 
   db.run(`UPDATE contact_messages SET is_replied = 1 WHERE id = ?`, [messageId], function(err) {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Reply contact message error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     
     logActivity(adminId, 'Reply Contact Message', `Contact message ID ${messageId} marked as replied`);
     res.json({ message: 'Contact message status updated.' });
@@ -707,7 +897,10 @@ router.put('/contact/:id/reply', requireAdmin, (req, res) => {
 // ----------------------------------------------------
 router.get('/faq', (req, res) => {
   db.all(`SELECT * FROM faq ORDER BY category ASC, id DESC`, [], (err, rows) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get FAQs error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     res.json(rows);
   });
 });
@@ -723,7 +916,10 @@ router.post('/faq', requireAdmin, (req, res) => {
   db.run(`INSERT INTO faq (question, answer, category) VALUES (?, ?, ?)`,
     [question, answer, category],
     function(err) {
-      if (err) return res.status(500).json({ message: err.message });
+      if (err) {
+        console.error('Insert FAQ error:', err);
+        return res.status(500).json({ message: 'An internal server error occurred' });
+      }
       
       logActivity(adminId, 'Add FAQ', `Added FAQ ID ${this.lastID}`);
       res.status(201).json({ message: 'FAQ added successfully', faq_id: this.lastID });
@@ -736,7 +932,10 @@ router.delete('/faq/:id', requireAdmin, (req, res) => {
   const adminId = req.user.id;
 
   db.run(`DELETE FROM faq WHERE id = ?`, [faqId], function(err) {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Delete FAQ error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     
     logActivity(adminId, 'Delete FAQ', `Deleted FAQ ID ${faqId}`);
     res.json({ message: 'FAQ deleted successfully' });
@@ -749,7 +948,10 @@ router.delete('/faq/:id', requireAdmin, (req, res) => {
 // ----------------------------------------------------
 router.get('/activity-logs', requireAdmin, (req, res) => {
   db.all(`SELECT a.*, u.name as admin_name FROM activity_logs a LEFT JOIN users u ON a.admin_id = u.id ORDER BY a.created_at DESC LIMIT 100`, [], (err, rows) => {
-    if (err) return res.status(500).json({ message: err.message });
+    if (err) {
+      console.error('Get activity logs error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     res.json(rows);
   });
 });
@@ -759,18 +961,38 @@ router.get('/stats', requireAdmin, (req, res) => {
   const stats = {};
   
   db.get(`SELECT COUNT(*) as count FROM custom_orders`, (err, r) => {
+    if (err) {
+      console.error('Stats total orders query error:', err);
+      return res.status(500).json({ message: 'An internal server error occurred' });
+    }
     stats.total_orders = r ? r.count : 0;
     
     db.get(`SELECT COUNT(*) as count FROM custom_orders WHERE status = 'pending'`, (err, r) => {
+      if (err) {
+        console.error('Stats pending orders query error:', err);
+        return res.status(500).json({ message: 'An internal server error occurred' });
+      }
       stats.pending_orders = r ? r.count : 0;
       
       db.get(`SELECT COUNT(*) as count FROM quotes WHERE status = 'pending'`, (err, r) => {
+        if (err) {
+          console.error('Stats pending quotes query error:', err);
+          return res.status(500).json({ message: 'An internal server error occurred' });
+        }
         stats.pending_quotes = r ? r.count : 0;
         
         db.get(`SELECT SUM(price) as revenue FROM custom_orders WHERE status = 'delivered' OR status = 'completed'`, (err, r) => {
+          if (err) {
+            console.error('Stats revenue query error:', err);
+            return res.status(500).json({ message: 'An internal server error occurred' });
+          }
           stats.revenue = r && r.revenue ? r.revenue : 0;
           
           db.get(`SELECT COUNT(*) as count FROM contact_messages WHERE is_replied = 0`, (err, r) => {
+            if (err) {
+              console.error('Stats unread messages query error:', err);
+              return res.status(500).json({ message: 'An internal server error occurred' });
+            }
             stats.unread_messages = r ? r.count : 0;
             res.json(stats);
           });
@@ -780,7 +1002,15 @@ router.get('/stats', requireAdmin, (req, res) => {
   });
 });
 
-
+// Global error handling middleware for multer and upload errors inside this router
+router.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({ message: 'File upload error: ' + err.message });
+  } else if (err) {
+    return res.status(400).json({ message: err.message });
+  }
+  next();
+});
 
 module.exports = router;
 
