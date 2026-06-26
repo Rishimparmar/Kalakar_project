@@ -12,13 +12,15 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // Redirect if not authenticated
+  // Redirect if not authenticated & load fresh data
   useEffect(() => {
     const token = localStorage.getItem('kalaakar_token');
     if (!token) {
       navigate('/admin/login');
+    } else {
+      queryClient.invalidateQueries();
     }
-  }, [navigate]);
+  }, [navigate, queryClient]);
 
   const handleLogout = () => {
     api.logout();
