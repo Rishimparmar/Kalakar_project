@@ -1009,6 +1009,9 @@ router.use((err, req, res, next) => {
   } else if (err) {
     return res.status(400).json({ message: err.message });
   }
+  next();
+});
+
 // Diagnostic Test Email Endpoint
 router.get('/test-email', async (req, res) => {
   const { sendEmail } = require('../utils/mailer');
