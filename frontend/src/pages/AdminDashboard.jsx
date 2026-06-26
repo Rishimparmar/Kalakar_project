@@ -14,7 +14,7 @@ const AdminDashboard = () => {
 
   // Redirect if not authenticated & load fresh data
   useEffect(() => {
-    const token = localStorage.getItem('kalaakar_token');
+    const token = sessionStorage.getItem('kalaakar_token');
     if (!token) {
       navigate('/admin/login');
     } else {
