@@ -1009,7 +1009,31 @@ router.use((err, req, res, next) => {
   } else if (err) {
     return res.status(400).json({ message: err.message });
   }
-  next();
+// Diagnostic Test Email Endpoint
+router.get('/test-email', async (req, res) => {
+  const { sendEmail } = require('../utils/mailer');
+  try {
+    const emailTo = req.query.to || 'rishimparmar19@gmail.com';
+    console.log(`Sending diagnostic email to ${emailTo}...`);
+    const result = await sendEmail(emailTo, 'Diagnostic Test Email', 'This is a test email sent from the Kalaakar backend diagnostic endpoint.');
+    if (result.success) {
+      res.json({
+        success: true,
+        message: 'Email sent successfully!',
+        messageId: result.messageId
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: result.error
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
 });
 
 module.exports = router;
