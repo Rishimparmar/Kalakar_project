@@ -37,8 +37,11 @@ const sendEmail = async (to, subject, htmlContent) => {
   const clientId = cleanEnvVar(process.env.GMAIL_CLIENT_ID);
   const clientSecret = cleanEnvVar(process.env.GMAIL_CLIENT_SECRET);
   const refreshToken = cleanEnvVar(process.env.GMAIL_REFRESH_TOKEN);
-  const emailUser = cleanEnvVar(process.env.EMAIL_USER);
-  const emailPass = cleanEnvVar(process.env.EMAIL_PASS);
+  
+  // Support both GMAIL OAuth2 email variables and standard SMTP variables
+  const emailUser = cleanEnvVar(process.env.EMAIL_USER) || cleanEnvVar(process.env.SMTP_USER);
+  const emailPass = cleanEnvVar(process.env.EMAIL_PASS) || cleanEnvVar(process.env.SMTP_PASS);
+  const fromAddress = cleanEnvVar(process.env.SMTP_FROM) || `"Kalaakar" <${emailUser}>`;
 
   // 1. Try Gmail REST API via OAuth2 if credentials are set
   if (clientId && clientSecret && refreshToken && emailUser) {
@@ -48,7 +51,7 @@ const sendEmail = async (to, subject, htmlContent) => {
 
       const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;
       const messageParts = [
-        `From: "Kalaakar" <${emailUser}>`,
+        `From: ${fromAddress}`,
         `To: ${to}`,
         'Content-Type: text/html; charset=utf-8',
         'MIME-Version: 1.0',
@@ -105,7 +108,7 @@ const sendEmail = async (to, subject, htmlContent) => {
       });
 
       const info = await transporter.sendMail({
-        from: `"Kalaakar" <${emailUser}>`,
+        from: fromAddress,
         to,
         subject,
         html: htmlContent
@@ -122,7 +125,7 @@ const sendEmail = async (to, subject, htmlContent) => {
   console.warn('No complete email credentials found. Skipping email notification to:', to);
   return { 
     success: false, 
-    error: 'No complete email credentials found. Please set either GMAIL_CLIENT_ID/GMAIL_CLIENT_SECRET/GMAIL_REFRESH_TOKEN or EMAIL_USER/EMAIL_PASS in environment variables.' 
+    error: 'No complete email credentials found. Please set either GMAIL_CLIENT_ID/GMAIL_CLIENT_SECRET/GMAIL_REFRESH_TOKEN or EMAIL_USER/EMAIL_PASS (or SMTP_USER/SMTP_PASS) in environment variables.' 
   };
 };
 
