@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { ShieldAlert, LogIn, Lock } from 'lucide-react';
 
@@ -9,10 +10,11 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // Redirect if already logged in
   useEffect(() => {
-    const token = sessionStorage.getItem('kalaakar_token');
+    const token = localStorage.getItem('kalaakar_token');
     if (token) {
       navigate('/admin/dashboard');
     }
@@ -38,6 +40,7 @@ const AdminLogin = () => {
 
     try {
       await api.login(email.trim().toLowerCase(), password.trim());
+      queryClient.clear();
       navigate('/admin/dashboard');
     } catch (err) {
       if (!err.response) {

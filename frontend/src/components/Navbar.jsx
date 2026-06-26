@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const isAdmin = sessionStorage.getItem('kalaakar_token') !== null;
+  const isAdmin = localStorage.getItem('kalaakar_token') !== null;
 
   useEffect(() => {
     const handleScroll = () => {

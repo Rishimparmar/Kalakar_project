@@ -21,7 +21,7 @@ export const getUploadUrl = (filePath) => {
 // Request interceptor to attach JWT token
 apiClient.interceptors.request.use(
   (config) => {
-    const token = sessionStorage.getItem('kalaakar_token');
+    const token = localStorage.getItem('kalaakar_token');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
@@ -35,8 +35,8 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-      sessionStorage.removeItem('kalaakar_token');
-      sessionStorage.removeItem('kalaakar_user');
+      localStorage.removeItem('kalaakar_token');
+      localStorage.removeItem('kalaakar_user');
       if (window.location.pathname.startsWith('/admin')) {
         window.location.href = '/admin/login';
       }
@@ -50,14 +50,14 @@ export const api = {
   login: async (email, password) => {
     const res = await apiClient.post('/auth/login', { email, password });
     if (res.data.token) {
-      sessionStorage.setItem('kalaakar_token', res.data.token);
-      sessionStorage.setItem('kalaakar_user', JSON.stringify(res.data.user));
+      localStorage.setItem('kalaakar_token', res.data.token);
+      localStorage.setItem('kalaakar_user', JSON.stringify(res.data.user));
     }
     return res.data;
   },
   logout: () => {
-    sessionStorage.removeItem('kalaakar_token');
-    sessionStorage.removeItem('kalaakar_user');
+    localStorage.removeItem('kalaakar_token');
+    localStorage.removeItem('kalaakar_user');
   },
   verifyToken: async () => {
     const res = await apiClient.get('/auth/verify');
